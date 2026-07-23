@@ -63,8 +63,8 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
 .sb-i svg{width:18px;height:18px;}
 
 /* layout */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
-.topbar{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:12px;flex-shrink:0;z-index:150;}
+.main{flex:1;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;min-width:0;min-height:0;}
+.topbar{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:12px;flex-shrink:0;}
 .tb-sp{flex:1;}
 .tb-link{font-size:14px;color:var(--purple);font-weight:500;cursor:pointer;padding:5px 10px;border:none;background:none;font-family:var(--font);}
 .tb-link:hover{text-decoration:underline;}
@@ -72,13 +72,72 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
 .tb-user{display:flex;align-items:center;gap:7px;cursor:pointer;padding:4px 8px;border-radius:var(--r8);}
 .tb-user:hover{background:var(--stone20);}
 
-.content{flex:1;overflow-y:auto;padding:24px 32px 48px;transition:padding-right .25s ease;max-width:100%;}
+.content{flex:1;overflow:visible;padding:24px 32px 48px;transition:padding-right .25s ease;max-width:100%;}
 .content.aside-open{padding-right:448px;}
+/* slim scroll context — account + task + table head; sticks on scroll (topbar scrolls away) */
+.scroll-ctx{
+  position:fixed;top:0;left:64px;right:0;z-index:140;
+  transform:translateY(-100%);opacity:0;pointer-events:none;
+  background:var(--surface);border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  transition:transform .2s ease,opacity .2s ease,padding-right .25s ease;
+}
+.scroll-ctx.aside-open{padding-right:448px;}
+.scroll-ctx.is-visible{transform:translateY(0);opacity:1;pointer-events:auto;box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.scroll-ctx-stack{display:flex;flex-direction:column;}
+.scroll-ctx-inner{
+  display:flex;align-items:center;gap:14px;padding:0 32px;height:40px;
+  background:linear-gradient(90deg,var(--brand-subtle) 0%,var(--surface) 120px);
+  border-bottom:1px solid var(--border);white-space:nowrap;overflow:visible;
+}
+.scroll-ctx-has-table .scroll-ctx-inner{border-bottom-color:var(--border);}
+.scroll-ctx-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.scroll-ctx-logo{
+  width:22px;height:22px;background:var(--purple);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:7px;font-weight:700;letter-spacing:.03em;line-height:1;
+  box-shadow:0 1px 3px rgba(123,20,239,.35);
+}
+.scroll-ctx-page{display:flex;flex-direction:column;gap:1px;line-height:1;}
+.scroll-ctx-page-kicker{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--purple);opacity:.85;}
+.scroll-ctx-page-title{font-family:var(--font-heading);font-size:14px;font-weight:600;letter-spacing:-.01em;color:var(--text);}
+.scroll-ctx-vrule{width:1px;height:22px;background:var(--border);flex-shrink:0;}
+.scroll-ctx-meta{display:flex;align-items:center;gap:8px;min-width:0;flex:1;overflow:visible;}
+.scroll-ctx-acct-wrap{position:relative;flex-shrink:0;}
+.scroll-ctx-acct-wrap .acct-menu{top:calc(100% + 6px);left:0;z-index:250;}
+.scroll-ctx-acct-pill{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;
+  border-radius:999px;border:1px solid var(--border);background:var(--surface);
+  font-size:12px;font-weight:600;color:var(--text);flex-shrink:0;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);cursor:pointer;font-family:var(--font);
+  transition:border-color .12s,box-shadow .12s;
+}
+.scroll-ctx-acct-pill:hover{border-color:var(--lavender);}
+.scroll-ctx-acct-pill.open{border-color:var(--purple);box-shadow:0 0 0 2px var(--brand-subtle);}
+.scroll-ctx-acct-chev{display:flex;align-items:center;color:var(--muted);margin-left:1px;opacity:.85;}
+.scroll-ctx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
+.scroll-ctx-dot-all{background:linear-gradient(135deg,var(--purple) 0%,var(--lavender) 100%);}
+.scroll-ctx-path-ico{color:#c4c4c4;flex-shrink:0;display:flex;align-items:center;}
+.scroll-ctx-task-pill{
+  display:inline-flex;align-items:center;gap:5px;padding:4px 12px;
+  border-radius:999px;border:1px solid var(--lavender);background:var(--brand-subtle);
+  font-size:12px;line-height:1;overflow:hidden;text-overflow:ellipsis;min-width:0;
+}
+.scroll-ctx-task-primary{font-weight:600;color:var(--purple);}
+.scroll-ctx-task-sep{color:var(--lavender);font-weight:400;}
+.scroll-ctx-task-sub{font-weight:500;color:var(--text);}
+.scroll-ctx-table{margin:0 32px;background:var(--surface);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.scroll-ctx .scroll-ctx-mod-head{position:static;top:auto;z-index:auto;padding:8px 16px 10px;border-bottom:1px solid var(--border);border-radius:0;background:var(--surface);}
+.scroll-ctx-tbl-wrap{margin:0 32px;background:var(--surface);border:1px solid var(--border);border-top:none;overflow:hidden;box-sizing:border-box;}
+.scroll-ctx-tbl-wrap .all-tbl thead th{position:static;background:var(--surface);padding:10px 12px;font-size:12px;}
+.review-tbl{table-layout:fixed;width:100%;}
+.review-tbl td.agent-col{min-width:0!important;overflow:visible;}
+.scroll-ctx-anchor{height:1px;width:1px;pointer-events:none;visibility:hidden;margin:0;padding:0;}
 
 /* aside */
-.aside-backdrop{position:fixed;inset:56px 0 0 64px;background:rgba(0,0,0,.12);z-index:149;display:none;}
+.aside-backdrop{position:fixed;inset:0 0 0 64px;background:rgba(0,0,0,.12);z-index:149;display:none;}
 .aside-backdrop.show{display:block;}
-.aside{position:fixed;right:0;top:56px;bottom:0;width:428px;background:var(--surface);border-left:1px solid var(--border);z-index:150;transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:-8px 0 24px rgba(0,0,0,.08);}
+.aside{position:fixed;right:0;top:0;bottom:0;width:428px;background:var(--surface);border-left:1px solid var(--border);z-index:150;transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:-8px 0 24px rgba(0,0,0,.08);}
 .aside.open{transform:translateX(0);}
 #aside-inner{display:flex;flex-direction:column;height:100%;overflow:hidden;}
 
@@ -608,6 +667,13 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .btn-att-invoice:hover{background:var(--stone20);}
 .btn-att-reject{padding:8px 14px;background:var(--red-bg);color:var(--red);border:1px solid #fca5a5;border-radius:var(--r8);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);text-align:left;}
 .btn-att-reject:hover{background:#fee2e2;}
+.att-modal-upload{
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:12px 14px;
+  border:1.5px dashed var(--border);border-radius:var(--r8);color:var(--muted);font-size:12px;font-weight:500;
+  cursor:pointer;font-family:var(--font);transition:border-color .12s,background .12s,color .12s;
+}
+.att-modal-upload:hover{border-color:var(--purple);color:var(--purple);background:var(--mauve);}
+.att-modal-upload input{display:none;}
 /* ─── Rule detail modal ─── */
 .rdm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
 .rdm{background:#fff;border-radius:14px;width:700px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.22);overflow:hidden;}
@@ -1047,7 +1113,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .all-tbl tr.tr-exiting td:first-child{box-shadow:inset 3px 0 0 var(--success)!important;}
 .rev-card{overflow:visible!important;}
 .rev-card .all-tbl thead{position:relative;z-index:2;}
-/* modern review list — Documents-style */
+/* modern review list — Figma automatching row */
 .rev-toolbar{display:flex;align-items:center;justify-content:flex-end;margin-bottom:12px;gap:8px;}
 .rev-view-toggle{display:inline-flex;border:1px solid var(--border);border-radius:var(--r4);overflow:hidden;background:var(--surface);}
 .rev-view-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
@@ -1057,32 +1123,170 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .rev-mod-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r8);overflow:visible;}
 .rev-mod-head,.rev-mod-row{
   display:grid;
-  grid-template-columns:32px 52px minmax(88px,.8fr) minmax(180px,1.6fr) minmax(96px,.75fr) minmax(118px,1fr) minmax(78px,.7fr) minmax(138px,1.1fr) minmax(188px,1.1fr);
-  align-items:center;gap:14px;padding:14px 20px;
+  grid-template-columns:32px minmax(200px,1.5fr) minmax(100px,.8fr) minmax(540px,2.8fr) 24px;
+  align-items:center;gap:12px;padding:10px 16px;
 }
-.rev-mod-head{font-size:12px;font-weight:500;color:var(--muted);border-bottom:1px solid var(--border);padding-top:16px;padding-bottom:12px;}
-.rev-mod-head .rev-mod-agent-h{color:var(--purple);font-weight:600;}
-.rev-mod-row{border-bottom:1px solid var(--border);cursor:pointer;position:relative;transition:transform .08s linear,opacity .08s linear,background .12s;}
+.rev-mod-head{font-size:14px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border);padding-top:14px;padding-bottom:12px;background:var(--surface);}
+.rev-mod-head .rev-mod-ai-head{display:grid;grid-template-columns:72px 88px 1fr;gap:0;font-size:14px;font-weight:600;color:var(--text);}
+.rev-mod-head .rev-mod-ai-head>div{padding-left:4px;}
+.rev-mod-head .rev-mod-amt-h{text-align:right;}
+.rev-mod-row{border-bottom:1px solid var(--border);cursor:pointer;position:relative;min-height:113px;transition:transform .08s linear,opacity .08s linear,background .12s;}
 .rev-mod-row:hover{background:var(--stone20);}
 .rev-mod-row:last-child{border-bottom:none;}
-.rev-mod-row.rev-mod-upd{background:linear-gradient(90deg,#fffbf0 0%,var(--surface) 120px);}
+.rev-mod-row.rev-mod-upd{background:linear-gradient(90deg,#fffbf0 0%,var(--surface) 44px);}
+.rev-mod-row.is-done{background:var(--success-bg);box-shadow:inset 3px 0 0 var(--success);}
+.rev-mod-row.is-done:hover{background:#e8f6ec;}
+.rev-mod-row.is-done .rev-mod-desc{color:var(--muted);}
+.rev-mod-row.is-done .rev-mod-chev{opacity:.35;}
+.rev-mod-done-badge{
+  display:inline-flex;align-items:center;gap:3px;margin-left:8px;padding:2px 7px;border-radius:var(--r99);
+  font-size:10px;font-weight:700;color:var(--success);background:#dcfce7;letter-spacing:.02em;vertical-align:middle;
+}
+.rev-mod-ai-band.is-done{background:#eef9f1;border-color:#c6ead1;}
+.rev-mod-ai-band.is-done .rev-mod-ai-col+.rev-mod-ai-col{border-left-color:#d9eee0;}
+.all-tbl tr.tr-done{background:var(--success-bg);box-shadow:inset 3px 0 0 var(--success);}
+.rev-row-done-label{font-size:11px;font-weight:600;color:var(--success);white-space:nowrap;}
 .rev-mod-row.tr-exiting{background:linear-gradient(90deg,var(--success-bg) 0%,var(--surface) 28%);box-shadow:inset 3px 0 0 var(--success);}
-.rev-mod-primary{font-size:14px;font-weight:600;color:var(--text);line-height:1.35;}
-.rev-mod-secondary{font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px;}
-.rev-mod-agent{background:var(--stone20);border-radius:var(--r8);padding:10px 12px;min-height:58px;display:flex;flex-direction:column;justify-content:center;gap:4px;align-self:stretch;overflow:visible;}
-.rev-mod-agent.rev-mod-agent-acc{background:var(--success-bg);}
-.rev-mod-agent.rev-mod-agent-empty{background:var(--stone20);}
-.rev-mod-status{display:inline-flex;margin-top:6px;padding:3px 10px;border-radius:var(--r99);font-size:11px;font-weight:600;}
-.rev-mod-status-ready{background:var(--success-bg);color:var(--success);}
-.rev-mod-status-review{background:var(--warning-bg);color:var(--warning);}
-.rev-mod-status-upd{background:var(--warning-bg);color:var(--warning);}
-.rev-mod-status-blocked{background:var(--danger-bg);color:var(--danger);}
-.rev-mod-amt{text-align:right;}
-.rev-mod-amt .rev-mod-primary{font-size:15px;}
-.rev-mod-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;}
-.rev-mod-chev{color:#ccc;font-size:20px;line-height:1;margin-left:2px;flex-shrink:0;}
+.rev-mod-date{font-size:14px;font-weight:500;color:#45464a;line-height:1.35;white-space:nowrap;}
+.rev-mod-date-group{border-bottom:1px solid var(--border);}
+.rev-mod-date-group:last-child{border-bottom:none;}
+.rev-mod-date-hd{
+  padding:10px 16px 8px;font-size:12px;font-weight:700;color:var(--muted);
+  letter-spacing:.02em;background:var(--stone20);border-bottom:1px solid var(--border);
+}
+.rev-mod-date-group .rev-mod-row{border-bottom:1px solid var(--border);}
+.rev-mod-date-group .rev-mod-row:last-child{border-bottom:none;}
+.rev-mod-tx{display:flex;align-items:flex-start;gap:10px;min-width:0;}
+.rev-mod-vendor{width:34px;height:34px;border-radius:10px;background:#f7f6f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:600;color:var(--text);line-height:1;overflow:hidden;}
+.rev-mod-vendor.is-brand{font-weight:700;letter-spacing:-.02em;}
+.rev-mod-vendor.is-customer{background:#e8f4ef;color:#0d7d4e;}
+.rev-mod-vendor.is-supplier{background:#f7f6f2;color:var(--text);}
+.rev-mod-ref{font-size:14px;font-weight:600;color:var(--text);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rev-mod-desc{font-size:14px;font-weight:500;color:#45464a;line-height:1.35;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rev-mod-amt{text-align:right;font-size:14px;font-weight:400;color:var(--text);line-height:1.4;}
+.rev-mod-chev{color:#ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .rev-mod-empty{padding:48px 20px;text-align:center;color:var(--muted);}
-.rev-mod-thumb .rev-att-preview,.rev-mod-thumb .rev-att-placeholder{width:44px;height:52px;}
+/* AI suggestion band */
+.rev-mod-ai-band{display:grid;grid-template-columns:72px 88px 1fr;align-items:stretch;min-height:98px;border-radius:12px;border:1px solid transparent;position:relative;transition:border-color .12s,background .12s;}
+.rev-mod-ai-band.has-ai{background:#f7f6f2;position:relative;overflow:visible;}
+.rev-mod-row:hover .rev-mod-ai-band.has-ai{background:#f2e8fd;border-color:#a762f4;}
+.rev-mod-row:hover .rev-mod-ai-band.has-ai::before{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:54%;border-radius:0 12px 12px 0;pointer-events:none;z-index:1;
+  background:linear-gradient(90deg,rgba(242,232,253,0) 0%,rgba(242,232,253,.55) 16%,rgba(255,255,255,.92) 38%,#fff 58%);
+}
+.rev-mod-ai-band.is-manual{background:transparent;border:none;min-height:98px;}
+.rev-mod-ai-col{display:flex;flex-direction:column;justify-content:flex-start;padding:12px 10px 10px;position:relative;min-height:98px;}
+.rev-mod-ai-band.has-ai .rev-mod-ai-col+.rev-mod-ai-col{border-left:1px solid #e5e5e5;}
+.rev-mod-ai-band.is-manual .rev-mod-ai-col{padding:8px 4px;min-height:98px;}
+.rev-mod-ai-band.is-manual .rev-mod-ai-col+.rev-mod-ai-col{border-left:none;}
+.rev-mod-ai-col-file{overflow:visible;}
+.rev-mod-file-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:8px;height:100%;overflow:visible;}
+.rev-mod-file-thumb{
+  position:relative;width:42px;height:40px;border-radius:4px;border:1px solid var(--border);
+  overflow:visible;background:#fff;flex-shrink:0;cursor:pointer;padding:0;font-family:var(--font);
+}
+.rev-mod-file-thumb:hover{border-color:var(--lavender);box-shadow:0 0 0 2px rgba(123,20,239,.08);}
+.rev-mod-file-thumb--linked:hover{border-color:var(--success);box-shadow:0 0 0 2px rgba(0,133,54,.12);}
+.rev-mod-file-thumb-img{display:block;width:100%;height:100%;border-radius:3px;overflow:hidden;background:#fff;}
+.rev-mod-file-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.rev-mod-file-link-ico{
+  position:absolute;right:3px;bottom:3px;width:15px;height:15px;border-radius:4px;
+  background:rgba(255,255,255,.95);color:var(--purple);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.15);z-index:2;pointer-events:none;
+}
+.rev-mod-file-linked-ico{
+  position:absolute;right:3px;bottom:3px;width:15px;height:15px;border-radius:4px;
+  background:var(--success-bg);color:var(--success);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.12);z-index:2;pointer-events:none;border:1px solid var(--success-border);
+}
+.rev-mod-file-badge{
+  position:absolute;top:3px;right:3px;min-width:14px;height:14px;padding:0 3px;border-radius:10px;
+  background:#232428;color:#fff;font-size:8px;font-weight:600;line-height:14px;text-align:center;
+  box-sizing:border-box;z-index:3;box-shadow:0 1px 2px rgba(0,0,0,.25);pointer-events:none;
+}
+.rev-mod-upload{width:53px;height:81px;border:2px dashed #e5e5e5;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;color:#74767b;cursor:pointer;padding:0;flex-shrink:0;}
+.rev-mod-upload:hover{border-color:var(--lavender);color:var(--purple);background:var(--brand-subtle);}
+.rev-mod-tax-sug,.rev-mod-match-sug{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
+.rev-mod-tax-code{font-size:14px;font-weight:600;line-height:1.35;color:var(--text);}
+.rev-mod-tax-amt{font-size:14px;font-weight:600;line-height:1.35;color:var(--text);}
+.rev-mod-match-cat{font-size:14px;font-weight:500;line-height:1.35;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rev-mod-match-sub{font-size:14px;font-weight:400;line-height:1.35;color:#74767b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rev-mod-conf{margin-top:auto;padding-top:8px;font-size:12px;font-weight:400;line-height:1;color:#008536;text-decoration:underline;text-underline-offset:2px;cursor:help;}
+.rev-mod-combo{display:flex;height:34px;width:100%;border:1px solid #ccc;border-radius:4px;overflow:hidden;background:#fff;cursor:pointer;}
+.rev-mod-combo-field{flex:1;display:flex;align-items:center;padding:0 9px;font-size:14px;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rev-mod-combo-field.is-empty{color:#74767b;}
+.rev-mod-combo-chev{width:34px;border-left:1px solid #ccc;display:flex;align-items:center;justify-content:center;color:#74767b;flex-shrink:0;}
+.rev-mod-combo:hover{border-color:var(--lavender);}
+.rev-mod-find-match{
+  display:flex;align-items:center;gap:10px;width:100%;min-height:58px;padding:10px 12px;
+  border:1.5px dashed var(--border);border-radius:var(--r8);background:var(--surface);
+  cursor:pointer;font-family:var(--font);text-align:left;
+  transition:border-color .12s,background .12s,box-shadow .12s;
+}
+.rev-mod-find-match:hover{border-color:var(--lavender);background:var(--brand-subtle);box-shadow:0 0 0 2px rgba(123,20,239,.08);}
+.rev-mod-find-match:focus-visible{outline:2px solid var(--purple);outline-offset:2px;}
+.rev-mod-find-ico{
+  width:32px;height:32px;border-radius:8px;background:var(--brand-subtle);color:var(--purple);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.rev-mod-find-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;}
+.rev-mod-find-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.2;}
+.rev-mod-find-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.rev-mod-find-tags span{
+  font-size:10px;font-weight:500;color:var(--muted);background:var(--stone20);
+  border-radius:4px;padding:2px 6px;line-height:1.3;
+}
+.rev-mod-find-panel{color:var(--purple);opacity:.75;flex-shrink:0;display:flex;align-items:center;}
+.rev-mod-manual-field{
+  display:flex;flex-direction:column;align-items:flex-start;gap:3px;width:100%;min-height:52px;padding:8px 10px;
+  border:1.5px dashed #ccc;border-radius:var(--r8);background:#fff;cursor:pointer;font-family:var(--font);text-align:left;
+  transition:border-color .12s,background .12s,box-shadow .12s;
+}
+.rev-mod-manual-field:hover{border-color:var(--lavender);background:var(--brand-subtle);box-shadow:0 0 0 2px rgba(123,20,239,.06);}
+.rev-mod-manual-field--filled{border-style:solid;border-color:#c6ead1;background:#f8fdf9;}
+.rev-mod-manual-field--filled:hover{border-color:var(--success);background:#eef9f1;}
+.rev-mod-manual-field--action{align-items:center;justify-content:center;min-height:52px;}
+.rev-mod-manual-field--action .rev-mod-manual-value{font-size:14px;font-weight:600;}
+.rev-mod-manual-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;line-height:1;}
+.rev-mod-manual-value{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;}
+.rev-mod-manual-value.is-placeholder{color:#74767b;font-weight:400;}
+.rev-mod-manual-stack{display:flex;flex-direction:column;gap:6px;width:100%;}
+.rev-mod-manual-file{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;}
+.rev-mod-manual-pick{display:flex;flex-direction:column;gap:6px;width:100%;}
+.rev-mod-manual-field--tax{
+  align-items:center;justify-content:center;min-height:52px;padding:7px 6px;cursor:default;
+  border-style:dashed;
+}
+.rev-mod-manual-field--tax:hover{border-color:#ccc;background:#fff;box-shadow:none;}
+.rev-mod-manual-field--tax.rev-mod-manual-field--filled{border-style:solid;}
+.rev-mod-manual-field--tax.rev-mod-manual-field--filled:hover{border-color:var(--success);background:#eef9f1;}
+.rev-mod-tax-pills{display:flex;flex-wrap:wrap;gap:4px;width:100%;justify-content:center;}
+.rev-mod-manual-field--tax .rev-mod-tax-pills{flex-wrap:nowrap;gap:3px;}
+.rev-mod-manual-field--tax .rev-mod-pill{flex:1;min-width:0;padding:6px 2px;font-size:10px;text-align:center;border-radius:6px;}
+.rev-mod-pill{
+  padding:5px 10px;border:1px solid #ccc;border-radius:var(--r99);background:#fff;
+  font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);line-height:1.2;
+  transition:border-color .12s,background .12s,color .12s;
+}
+.rev-mod-pill:hover{border-color:var(--lavender);background:var(--brand-subtle);}
+.rev-mod-pill.is-active{border-color:var(--success);background:var(--success-bg);color:#0d7d4e;font-weight:600;}
+.rev-mod-inline-sel{width:100%;height:34px;padding:0 28px 0 9px;border:1px solid #ccc;border-radius:4px;font-size:14px;font-family:var(--font);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%2374767b' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center;background-size:10px 6px;color:var(--text);cursor:pointer;appearance:none;-webkit-appearance:none;}
+.rev-mod-agent-acc{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--success);}
+.rev-mod-ai-actions{display:none;position:absolute;right:6px;top:50%;transform:translateY(-50%);align-items:center;gap:6px;z-index:3;padding:4px 2px 4px 16px;}
+.rev-mod-row:hover .rev-mod-ai-band.has-ai .rev-mod-ai-actions{display:flex;}
+.rev-mod-act-review{padding:8px 10px;background:#fff;border:1px solid var(--lavender);border-radius:6px;font-size:12px;font-weight:600;color:var(--purple);cursor:pointer;font-family:var(--font);white-space:nowrap;line-height:1.2;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.rev-mod-act-review:hover{background:var(--brand-subtle);}
+.rev-mod-act-accept,.rev-mod-act-reject{
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  min-width:56px;padding:7px 10px;border-radius:6px;font-size:11px;font-weight:600;line-height:1.15;
+  cursor:pointer;font-family:var(--font);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+.rev-mod-act-accept svg,.rev-mod-act-reject svg{width:14px;height:14px;flex-shrink:0;}
+.rev-mod-act-accept{background:#fff;border:1px solid var(--success-border);color:#008536;}
+.rev-mod-act-accept:hover{background:var(--success-bg);}
+.rev-mod-act-reject{background:#fff;border:1px solid #fca5a5;color:var(--red);}
+.rev-mod-act-reject:hover{background:#fff5f5;}
+.rev-mod-act-accept:disabled,.rev-mod-act-reject:disabled,.rev-mod-act-review:disabled{opacity:.45;cursor:not-allowed;}
 .tr-exit-overlay{position:absolute;right:16px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.96);border:1px solid var(--success-border);border-radius:var(--r8);padding:8px 12px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:5;white-space:nowrap;}
 .tr-exit-progress{width:72px;height:4px;background:var(--stone20);border-radius:99px;overflow:hidden;flex-shrink:0;}
 .tr-exit-progress-fill{height:100%;background:var(--success);border-radius:99px;transition:width .08s linear;}
@@ -1169,6 +1373,34 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .fx-alert-info{background:var(--info-bg);border-color:#B8DFEF;color:var(--text);}
 .fx-alert-warning{background:var(--warning-bg);border-color:var(--warning-border);color:var(--text);}
 .fx-alert-success{background:var(--success-bg);border-color:var(--success-border);}
+/* Reconciliation to-do cards (Figma: To do cards – New v2) */
+.recon-todo-wrap{margin-bottom:20px;}
+.recon-todo-hd{font-size:20px;font-weight:700;font-family:var(--font-heading);margin:0 0 12px;color:var(--text);line-height:1.2;}
+.recon-todo-stack{display:flex;flex-direction:column;gap:8px;}
+.recon-todo-card{
+  display:flex;align-items:center;gap:16px;padding:16px 18px;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r8);
+  transition:box-shadow .12s,border-color .12s;
+}
+.recon-todo-card:hover{border-color:#c8c8c8;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.recon-todo-ico{
+  width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.recon-todo-ico svg{width:22px;height:22px;}
+.recon-todo-ico--receipt{background:var(--info-bg);color:var(--info);}
+.recon-todo-ico--bas{background:var(--warning-bg);color:var(--warning);}
+.recon-todo-ico--pattern{background:linear-gradient(135deg,#f2e8fd 0%,#e8f4ef 100%);color:var(--purple);}
+.recon-todo-body{flex:1;min-width:0;}
+.recon-todo-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;font-family:var(--font-heading);}
+.recon-todo-sub{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.45;}
+.recon-todo-act{flex-shrink:0;}
+.recon-todo-btn{
+  display:inline-flex;align-items:center;gap:4px;padding:8px 14px;
+  border-radius:var(--r6);border:1px solid var(--border);background:var(--surface);
+  font-size:13px;font-weight:600;color:var(--purple);cursor:pointer;font-family:var(--font);
+  transition:background .12s,border-color .12s;
+}
+.recon-todo-btn:hover{background:var(--brand-subtle);border-color:var(--lavender);}
 /* Tabs — Feelix underline pattern */
 .tab:disabled{opacity:.45;cursor:not-allowed;color:var(--muted);}
 .fx-tab-count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 6px;border-radius:var(--r4);font-size:11px;font-weight:600;background:var(--brand-subtle);color:var(--purple);}
@@ -1211,6 +1443,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
       <span style="font-size:13px;font-weight:500">Eco Electrical Co</span>
     </div>
   </header>
+  <div class="scroll-ctx" id="scroll-ctx" aria-hidden="true"></div>
   <div class="content" id="content"></div>
 </div>
 
@@ -1232,7 +1465,7 @@ const BANKS = [
 const TX = [
   // ANZ Business – bank feed pending
   {id:1,  bank:'anz', source:'bank', date:'10/10/2025', desc:'Voltex Electrical – Bill #1302 – Switchboard parts & conduit', ref:'TXN-00234', amount:-259.60,  status:'pending', attach:2, newContext:false,
-   ai:{cat:{val:'Electrical supplies',conf:95,st:'idle'}, match:{val:'#1302 · Voltex Electrical',conf:98,st:'idle'}, tax:{val:'GST',conf:90,st:'idle'}, job:{val:'ECO-0234',conf:72,st:'idle'}, file:{val:null,st:'idle'}}},
+   ai:{cat:{val:'Electrical supplies',conf:95,st:'idle'}, match:{val:'#1302 · Voltex Electrical',conf:98,st:'idle'}, tax:{val:'GST',conf:94,st:'idle'}, job:{val:'ECO-0234',conf:72,st:'idle'}, file:{val:'receipt.jpg',conf:98,st:'idle'}}},
   {id:2,  bank:'anz', source:'bank', date:'06/10/2025', desc:'Naomi Wilson – INV-1234 – Ceiling fan install (Fans project)', ref:'TXN-00235', amount:5200,    status:'pending', attach:0, newContext:false,
    ai:{cat:{val:'Sales income',conf:92,st:'idle'}, match:{val:'INV-1234 · Naomi Wilson',conf:99,st:'idle'}, tax:{val:'N-T',conf:85,st:'idle'}, job:{val:'FANS-2025',conf:68,st:'idle'}, file:{val:null,st:'idle'}}},
   {id:3,  bank:'anz', source:'bank', date:'05/10/2025', desc:'Bunnings – Job ECO-0231 – TPS cable, battens & fixings', ref:'TXN-00236', amount:-247.20, status:'pending', attach:0, newContext:false,
@@ -1291,6 +1524,23 @@ const TX = [
    ai:{cat:{val:'Motor vehicle expenses',conf:83,st:'idle'}, match:{val:null,conf:0,st:'idle'}, tax:{val:'GST',conf:84,st:'idle'}, job:{val:null,conf:0,st:'idle'}, file:{val:null,st:'idle'}}},
   {id:25, bank:'anz', source:'bank', date:'29/09/2025', desc:'SafeWork NSW – Bill #086 – SWMS & compliance documentation', ref:'TXN-00244', amount:-445.00, status:'pending', attach:1, newContext:false,
    ai:{cat:{val:'Compliance & testing',conf:89,st:'idle'}, match:{val:'BILL-086 · SafeWork supplies',conf:88,st:'idle'}, tax:{val:'GST',conf:87,st:'idle'}, job:{val:null,conf:0,st:'idle'}, file:{val:null,st:'idle'}}},
+  // Demo: user rejected all AI — must choose file, tax, and match manually (Figma manual row)
+  {id:26, bank:'cba', source:'bank', date:'10/10/2025', desc:'Office works – Underwood – Stationery & print supplies', ref:'REF 123', amount:-124.20, status:'pending', attach:1, newContext:false,
+   ai:{cat:{val:null,conf:0,st:'idle',rejectedVal:'Office supplies'}, match:{val:null,conf:0,st:'idle',rejectedVal:'EXP-034 · Hardware expense'}, tax:{val:null,conf:0,st:'idle',rejectedVal:'GST'}, job:{val:null,conf:0,st:'idle'}, file:{val:null,conf:0,st:'idle'}}},
+];
+
+// Top 10 Australian suppliers — brand marks for the modern review vendor avatar
+const AU_SUPPLIER_BRANDS=[
+  {keys:['bunnings'],              label:'B',   bg:'#0D5257', fg:'#fff', name:'Bunnings'},
+  {keys:['officeworks','office works'], label:'O', bg:'#D71920', fg:'#fff', name:'Officeworks'},
+  {keys:['woolworths'],            label:'W',   bg:'#00874D', fg:'#fff', name:'Woolworths'},
+  {keys:['coles'],                  label:'C',   bg:'#E01A22', fg:'#fff', name:'Coles'},
+  {keys:['telstra'],                label:'T',   bg:'#001E82', fg:'#fff', name:'Telstra'},
+  {keys:['agl'],                    label:'AGL', bg:'#0033A0', fg:'#fff', name:'AGL Energy', fs:9},
+  {keys:['bp '],                    label:'BP',  bg:'#00994D', fg:'#fff', name:'BP', fs:10},
+  {keys:['jaycar'],                 label:'J',   bg:'#00843D', fg:'#fff', name:'Jaycar'},
+  {keys:['rexel'],                  label:'R',   bg:'#E30613', fg:'#fff', name:'Rexel'},
+  {keys:['beacon'],                 label:'B',   bg:'#F37021', fg:'#fff', name:'Beacon Lighting'},
 ];
 
 const MATCHES = {
@@ -1528,6 +1778,7 @@ const S = {
   page:'main', tab:'all',
   bankFilter:'all',
   acctMenuOpen:false,
+  acctMenuFrom:null,   // 'page' | 'scroll'
   filterStatus:'all', filterSource:'all',
   asideId:null, asideTab:'matches', asideFrom:'all',
   editingCard:null,       // {txId, field}
@@ -1567,6 +1818,7 @@ const S = {
   clearList: CLEAR_LIST_INIT.map(e=>({...e})),
   rules: RULES_DATA.map(r=>({...r})),
   dismissedCtx: new Set(),
+  reviewDone: new Set(),   // tx ids accepted in review — stay visible with done styling
   rowExit:null,           // {txId, snapshot, paused, progress, startTime, pauseAccum, pauseStarted, rafId, hadContext}
   toastUndo:{},
 };
@@ -1604,14 +1856,14 @@ function reviewCount(){return pendingList().length + ctxList().length;}
 function reviewInboxList(){
   const ctx=ctxList();
   const pending=pendingList();
+  const done=TX.filter(t=>S.reviewDone.has(t.id)&&(S.bankFilter==='all'||t.bank===S.bankFilter));
   const seen=new Set();
-  const list=[...ctx,...pending.filter(t=>!seen.has(t.id)&&seen.add(t.id))];
-  if(S.rowExit){
-    const exiting=ftx(S.rowExit.txId);
-    if(exiting&&!list.some(t=>t.id===exiting.id)) list.unshift(exiting);
-  }
+  const list=[...ctx,...pending.filter(t=>!seen.has(t.id)&&seen.add(t.id)),...done.filter(t=>!seen.has(t.id)&&seen.add(t.id))];
   return list;
 }
+function txReviewDone(tx){return S.reviewDone.has(tx.id);}
+function markTxReviewDone(txId){S.reviewDone.add(txId);}
+function unmarkTxReviewDone(txId){S.reviewDone.delete(txId);}
 function txHasChanged(tx){return tx.newContext&&!S.dismissedCtx.has(tx.id);}
 function dimKey(field){return field==='file'?'receipt':field==='cat'?'category':field;}
 function dimStatus(tx,dim){
@@ -1635,7 +1887,8 @@ function dimStatus(tx,dim){
 }
 function txDimensions(tx){return['receipt','match','category','gst'];}
 function txIsReadyForBulk(tx){
-  if(tx.status==='awaiting'||tx.status==='accepted') return false;
+  if(txReviewDone(tx)) return false;
+  if(tx.status==='awaiting'||tx.status==='accepted'||tx.status==='coded') return false;
   if(txHasChanged(tx)) return false;
   return txDimensions(tx).some(d=>{const s=dimStatus(tx,d);return s==='pending';})&&
     !txDimensions(tx).some(d=>dimStatus(tx,d)==='blocked');
@@ -1661,6 +1914,8 @@ function filterReviewList(list,filter){
 function filterCount(filter){return filterReviewList(reviewInboxList(),filter).length;}
 function sortReviewList(list){
   return [...list].sort((a,b)=>{
+    const da=txReviewDone(a)?1:0, db=txReviewDone(b)?1:0;
+    if(da!==db) return da-db;
     const ca=txHasChanged(a)?0:1, cb=txHasChanged(b)?0:1;
     if(ca!==cb) return ca-cb;
     const ra=txIsReadyForBulk(a)?0:1, rb=txIsReadyForBulk(b)?0:1;
@@ -1766,15 +2021,30 @@ function saveRule(){
   showToast(`✓ Rule "${newRule.name}" saved`);
   render();
 }
-function setTab(t){S.tab=t;S.asideId=null;S.acctMenuOpen=false;closeAside();render();}
-function toggleAcctMenu(e){
+function setTab(t){S.tab=t;S.asideId=null;S.acctMenuOpen=false;S.acctMenuFrom=null;closeAside();render();}
+function buildAcctMenuDropdown(){
+  return `
+  <div class="acct-menu" role="listbox">
+    ${BANKS.map(b=>`
+      <button type="button" class="acct-menu-item${S.bankFilter===b.id?' sel':''}" role="option" aria-selected="${S.bankFilter===b.id}" onclick="event.stopPropagation();setBankFilter('${b.id}')">
+        <span class="acct-dot" style="background:${b.dot}"></span>
+        <span class="acct-menu-label">${b.label}</span>
+        <span class="acct-menu-meta">${b.id==='all'?`${BANKS.length-1} accounts`:`$${b.bal.toLocaleString('en-AU',{minimumFractionDigits:2})}`}</span>
+        ${S.bankFilter===b.id?'<span class="acct-menu-check">✓</span>':''}
+      </button>
+    `).join('')}
+  </div>`;
+}
+function toggleAcctMenu(e,from='page'){
   e.stopPropagation();
-  S.acctMenuOpen=!S.acctMenuOpen;
+  if(S.acctMenuOpen&&S.acctMenuFrom===from){S.acctMenuOpen=false;S.acctMenuFrom=null;}
+  else{S.acctMenuOpen=true;S.acctMenuFrom=from;}
   render();
 }
 function setBankFilter(b){
   S.bankFilter=b;
   S.acctMenuOpen=false;
+  S.acctMenuFrom=null;
   if(S.asideId){
     const tx=ftx(S.asideId);
     if(tx&&S.bankFilter!=='all'&&tx.bank!==S.bankFilter){S.asideId=null;closeAside();}
@@ -1837,7 +2107,7 @@ function revCodingInner(tx){
   const cat=tx.ai.cat, match=tx.ai.match;
   const catOk=cat&&cat.val&&cat.st!=='rejected', matchOk=match&&match.val&&match.st!=='rejected';
   const catAcc=cat&&cat.st==='accepted', matchAcc=match&&match.st==='accepted';
-  const manualBtn=`<button type="button" class="rev-inline-btn" onclick="event.stopPropagation();openAside(${tx.id},'review','categorise')">Search category</button>`;
+  const manualBtn=`<button type="button" class="rev-inline-btn" onclick="event.stopPropagation();openAside(${tx.id},'review','matches')">Find match or code</button>`;
   if(catAcc||matchAcc){
     return {html:`${catAcc?`<div class="rev-agent-acc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>${cat.val}</div>`:''}${matchAcc?`<div class="rev-agent-sub">${match.val}</div>`:''}`,cls:'rev-mod-agent-acc'};
   }
@@ -1964,6 +2234,7 @@ function restoreTx(snapshot){
   else S.dismissedCtx.delete(snapshot.id);
   if(snapshot.matchSel) S.matchSel[snapshot.id]=snapshot.matchSel;
   else delete S.matchSel[snapshot.id];
+  unmarkTxReviewDone(snapshot.id);
 }
 function applyAcceptAll(txId){
   const tx=ftx(txId); if(!tx) return false;
@@ -1978,6 +2249,7 @@ function applyAcceptAll(txId){
   });
   if(txHasChanged(tx)) S.dismissedCtx.add(txId);
   tx.status='coded';
+  markTxReviewDone(txId);
   return anyNew;
 }
 function updateRowExitDOM(e){
@@ -2150,8 +2422,8 @@ function bulkAcceptReadyOnly(){
   if(n){
     showSuccessToast({
       title:`${n} transaction${n>1?'s':''} accepted`,
-      message:'All ready AI suggestions applied and removed from review.',
-      undo:()=>{snapshots.forEach(restoreTx);render();},
+      message:'All ready AI suggestions applied — accepted rows stay visible below.',
+      undo:()=>{snapshots.forEach(s=>{restoreTx(s);});render();},
     });
   }
 }
@@ -2168,7 +2440,7 @@ function acceptAllReadyInAside(txId){
   });
   if(txHasChanged(tx)) S.dismissedCtx.add(txId);
   const allDone=Object.entries(tx.ai).every(([k,f])=>!f.val||f.st==='accepted'||k==='job');
-  if(allDone) tx.status='coded';
+  if(allDone){tx.status='coded';markTxReviewDone(txId);}
   showToast('✓ All ready dimensions accepted',2500);
   renderAside();
   render();
@@ -2204,12 +2476,14 @@ function openAside(id,from='all',tab='matches'){
   document.getElementById('aside').classList.add('open');
   document.getElementById('aside-bd').classList.add('show');
   document.getElementById('content').classList.add('aside-open');
+  syncScrollCtxAside(true);
 }
 function closeAside(){
   S.asideId=null;
   document.getElementById('aside').classList.remove('open');
   document.getElementById('aside-bd').classList.remove('show');
   document.getElementById('content').classList.remove('aside-open');
+  syncScrollCtxAside(false);
 }
 function setAsideTab(t){S.asideTab=t;document.getElementById('aside-inner').innerHTML=buildAsideContent();}
 /* ── Context learning ── */
@@ -2252,7 +2526,7 @@ function acceptAC(txId,field){
   const wasIdle=tx.ai[field].st==='idle';
   tx.ai[field].st='accepted';
   const allDone=Object.entries(tx.ai).every(([k,f])=>!f.val||f.st==='accepted'||k==='file');
-  if(allDone) tx.status='coded';
+  if(allDone){tx.status='coded';markTxReviewDone(txId);}
   S.editingCard=null;
   if(wasIdle){addToContext(txId,field);showContextToast();}
   render();
@@ -2266,15 +2540,17 @@ function saveAC(txId,field){
 }
 function cancelAC(){S.editingCard=null;render();}
 function undoAC(txId,field){ftx(txId).ai[field].st='idle';render();}
-function acceptAllTx(txId, opts={}){
-  if(opts.immediate){
-    const hadContext=applyAcceptAll(txId);
-    render();
-    if(hadContext) showContextToast();
-    return;
-  }
+function acceptAllTx(txId){
   if(S.rowExit) return;
-  startRowExit(txId);
+  const snapshot=snapshotTx(txId);
+  const hadContext=applyAcceptAll(txId);
+  render();
+  showSuccessToast({
+    title:'Transaction accepted',
+    message:`${ftx(txId)?.ref||'Transaction'} coded — no further action needed`,
+    undo:()=>{restoreTx(snapshot);render();},
+  });
+  if(hadContext) showContextToast();
 }
 function acceptCtx(txId){S.dismissedCtx.add(txId);ftx(txId).newContext=false;render();}
 function keepCtx(txId){S.dismissedCtx.add(txId);ftx(txId).newContext=false;render();}
@@ -2303,7 +2579,7 @@ function saveEditMemory(id){
   S.editingMem=null;render();
 }
 function viewMemory(){S.stgSection='bizcxt';goSettings();}
-function viewAIMemory(){S.stgSection='transactions';goSettings();}
+function viewAIMemory(){S.stgSection='all';S.memFilter='all';goSettings();}
 function deleteRule(id){S.rules=S.rules.filter(r=>r.id!==id);render();}
 function toggleRule(id){const r=S.rules.find(r=>r.id===id);if(r)r.active=!r.active;render();}
 
@@ -2336,10 +2612,231 @@ function render(){
     div.innerHTML=buildAttachModal();
     document.body.appendChild(div);
   }
+  updateScrollCtxBar();
+  requestAnimationFrame(()=>requestAnimationFrame(syncReviewTableHeadWidths));
+}
+
+function scrollCtxTaskLabel(){
+  if(S.tab==='all') return {primary:'All transactions',detail:''};
+  const filterLabels={
+    all:{primary:'Review inbox',detail:''},
+    ready:{primary:'Review',detail:'Ready to accept'},
+    newcontext:{primary:'Review',detail:'AI updated'},
+    receipt:{primary:'Review',detail:'Receipts'},
+    match:{primary:'Review',detail:'Matches'},
+    gst:{primary:'Review',detail:'GST'},
+    blocked:{primary:'Review',detail:'Blocked'},
+  };
+  return filterLabels[S.revFilter]||filterLabels.all;
+}
+function buildRevModHeadHtml(){
+  return `
+      <div></div>
+      <div>Transaction</div>
+      <div class="rev-mod-amt-h">Amount ($)</div>
+      <div class="rev-mod-ai-head">
+        <div>File</div>
+        <div>Tax</div>
+        <div>Match</div>
+      </div>
+      <div></div>`;
+}
+function groupReviewByDate(list){
+  const order=[];
+  const map=new Map();
+  list.forEach(tx=>{
+    if(!map.has(tx.date)){order.push(tx.date);map.set(tx.date,[]);}
+    map.get(tx.date).push(tx);
+  });
+  return order.map(date=>({date,txs:map.get(date)}));
+}
+function buildModernReviewRow(tx,sel){
+  const isDone=txReviewDone(tx);
+  const exitActive=S.rowExit?.txId===tx.id;
+  const rowCls=['rev-mod-row',isDone?'is-done':'',revExitRowCls(tx.id,txHasChanged(tx),true)].filter(Boolean).join(' ');
+  const exitStyle=revExitStyle(tx.id);
+  const amtCls=tx.amount<0?'amt-neg':'amt-pos';
+  const doneBadge=isDone?`<span class="rev-mod-done-badge"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>Accepted</span>`:'';
+  return `
+    <div class="${rowCls}" data-exit-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'review','matches')`}" style="${exitStyle}">
+      <div onclick="event.stopPropagation()">
+        <input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple);cursor:pointer" ${sel.has(tx.id)?'checked':''} ${exitActive||isDone?'disabled':''}
+          onclick="event.stopPropagation();toggleRevSel(${tx.id})">
+      </div>
+      <div class="rev-mod-tx" style="position:relative">
+        ${revModVendorLogo(tx)}
+        <div style="min-width:0">
+          <div class="rev-mod-ref">${tx.ref||'—'}${doneBadge}</div>
+          <div class="rev-mod-desc">${revModTxDesc(tx)}</div>
+        </div>
+        ${buildReviewExitOverlay(tx.id)}
+      </div>
+      <div class="rev-mod-amt"><span class="${amtCls}">${fmt(tx.amount)}</span></div>
+      ${buildRevModAiBand(tx,exitActive)}
+      <span class="rev-mod-chev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 4l5 5-5 5"/></svg></span>
+    </div>`;
+}
+function reviewTableColgroup(){
+  return `<colgroup>
+    <col style="width:4%">
+    <col style="width:9%">
+    <col style="width:24%">
+    <col style="width:10%">
+    <col style="width:13%">
+    <col style="width:9%">
+    <col style="width:15%">
+    <col style="width:16%">
+  </colgroup>`;
+}
+function buildReviewTableHeadRow({sticky=false,checkbox=false,sortIco='',filtered=[],sel=new Set()}={}){
+  const chk=checkbox&&filtered.length?`<input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple)" ${filtered.every(t=>sel.has(t.id))?'checked':''} onclick="toggleRevSelAll(${JSON.stringify(filtered.map(t=>t.id))})">`:'';
+  return `
+    <tr${sticky?'':' data-scroll-table-head'}>
+      <th class="col-chk">${chk}</th>
+      <th class="col-date">Date ${sortIco}</th>
+      <th class="col-tx">Transaction ${sortIco}</th>
+      <th class="col-amt r">Amount ${sortIco}</th>
+      <th class="col-att">Attachment</th>
+      <th class="col-tax">Tax code</th>
+      <th class="col-code">Coding</th>
+      <th class="col-act">Actions</th>
+    </tr>`;
+}
+function buildReviewTableHeadHtml(){
+  return `
+  <div class="scroll-ctx-tbl-wrap">
+    <table class="all-tbl review-tbl scroll-ctx-review-tbl">
+      ${reviewTableColgroup()}
+      <thead>${buildReviewTableHeadRow({sticky:true})}</thead>
+    </table>
+  </div>`;
+}
+function syncReviewTableHeadWidths(){
+  if(S.tab!=='review'||S.reviewView!=='table') return;
+  const bodyTable=document.querySelector('.rev-card .review-tbl');
+  const headWrap=document.querySelector('.scroll-ctx-tbl-wrap');
+  const headTable=document.querySelector('.scroll-ctx-review-tbl');
+  if(!bodyTable||!headWrap||!headTable) return;
+  const card=bodyTable.closest('.rev-card');
+  if(card) headWrap.style.width=card.getBoundingClientRect().width+'px';
+  headTable.style.width=bodyTable.getBoundingClientRect().width+'px';
+  const srcCells=bodyTable.querySelectorAll('thead tr:first-child > *');
+  const dstCells=headTable.querySelectorAll('thead tr:first-child > *');
+  srcCells.forEach((cell,i)=>{
+    if(!dstCells[i]) return;
+    const w=Math.round(cell.getBoundingClientRect().width);
+    dstCells[i].style.width=w+'px';
+    dstCells[i].style.minWidth=w+'px';
+    dstCells[i].style.maxWidth=w+'px';
+  });
+}
+function bindReviewTableHeadSync(){
+  if(window._reviewHeadSyncBound) return;
+  window._reviewHeadSyncBound=true;
+  window.addEventListener('resize',()=>{
+    syncReviewTableHeadWidths();
+  },{passive:true});
+}
+function scrollCtxTableHeadHtml(){
+  if(S.tab!=='review') return '';
+  if(S.reviewView==='modern') return `
+    <div class="scroll-ctx-table">
+      <div class="rev-mod-head scroll-ctx-mod-head">${buildRevModHeadHtml()}</div>
+    </div>`;
+  if(S.reviewView==='table') return buildReviewTableHeadHtml();
+  return '';
+}
+function buildScrollCtxInner(){
+  const active=BANKS.find(b=>b.id===S.bankFilter)||BANKS[0];
+  const task=scrollCtxTaskLabel();
+  const scrollMenuOpen=S.acctMenuOpen&&S.acctMenuFrom==='scroll';
+  const dot=active.id==='all'
+    ?`<span class="scroll-ctx-dot scroll-ctx-dot-all" aria-hidden="true"></span>`
+    :`<span class="scroll-ctx-dot" style="background:${active.dot}" aria-hidden="true"></span>`;
+  const taskPill=task.detail
+    ?`<span class="scroll-ctx-task-pill"><span class="scroll-ctx-task-primary">${task.primary}</span><span class="scroll-ctx-task-sep">·</span><span class="scroll-ctx-task-sub">${task.detail}</span></span>`
+    :`<span class="scroll-ctx-task-pill"><span class="scroll-ctx-task-primary">${task.primary}</span></span>`;
+  return `
+    <div class="scroll-ctx-brand">
+      <span class="scroll-ctx-logo" aria-hidden="true">MYOB</span>
+      <div class="scroll-ctx-page">
+        <span class="scroll-ctx-page-kicker">Banking</span>
+        <span class="scroll-ctx-page-title">Transactions</span>
+      </div>
+    </div>
+    <span class="scroll-ctx-vrule" aria-hidden="true"></span>
+    <div class="scroll-ctx-meta">
+      <div class="acct-pill-wrap scroll-ctx-acct-wrap">
+        <button type="button" class="scroll-ctx-acct-pill${scrollMenuOpen?' open':''}" onclick="toggleAcctMenu(event,'scroll')" aria-haspopup="listbox" aria-expanded="${scrollMenuOpen}">
+          ${dot}${active.label}
+          <span class="scroll-ctx-acct-chev" aria-hidden="true"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        ${scrollMenuOpen?buildAcctMenuDropdown():''}
+      </div>
+      <span class="scroll-ctx-path-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3l4 4-4 4"/></svg></span>
+      ${taskPill}
+    </div>`;
+}
+function buildScrollCtxBar(){
+  const tableHead=scrollCtxTableHeadHtml();
+  return `
+  <div class="scroll-ctx-stack${tableHead?' scroll-ctx-has-table':''}">
+    <div class="scroll-ctx-inner">${buildScrollCtxInner()}</div>
+    ${tableHead}
+  </div>`;
+}
+function syncScrollCtxAside(open){
+  const bar=document.getElementById('scroll-ctx');
+  if(bar) bar.classList.toggle('aside-open',!!open);
+}
+function setScrollCtxVisible(show){
+  const bar=document.getElementById('scroll-ctx');
+  if(!bar) return;
+  bar.classList.toggle('is-visible',!!show);
+  bar.setAttribute('aria-hidden',show?'false':'true');
+}
+function setupScrollCtxWatch(){
+  const scrollRoot=document.querySelector('.main');
+  const content=document.getElementById('content');
+  const bar=document.getElementById('scroll-ctx');
+  if(!scrollRoot||!content||!bar) return;
+  if(window._scrollCtxObs){window._scrollCtxObs.disconnect();window._scrollCtxObs=null;}
+  const anchor=content.querySelector('[data-scroll-table-head]')||content.querySelector('[data-scroll-ctx-anchor]');
+  if(!anchor) return;
+  const apply=show=>{if(S.page==='main') setScrollCtxVisible(show);};
+  window._scrollCtxObs=new IntersectionObserver(([entry])=>{
+    apply(!entry.isIntersecting);
+  },{root:scrollRoot,threshold:0});
+  window._scrollCtxObs.observe(anchor);
+  if(!scrollRoot.dataset.scrollCtxScrollBound){
+    scrollRoot.dataset.scrollCtxScrollBound='1';
+    scrollRoot.addEventListener('scroll',()=>{
+      if(S.page!=='main') return;
+      apply(scrollRoot.scrollTop>48);
+    },{passive:true});
+  }
+  apply(scrollRoot.scrollTop>48);
+}
+function updateScrollCtxBar(){
+  const bar=document.getElementById('scroll-ctx');
+  const content=document.getElementById('content');
+  if(!bar||!content) return;
+  if(S.page!=='main'){
+    setScrollCtxVisible(false);
+    bar.innerHTML='';
+    if(window._scrollCtxObs){window._scrollCtxObs.disconnect();window._scrollCtxObs=null;}
+    return;
+  }
+  bar.innerHTML=buildScrollCtxBar();
+  syncScrollCtxAside(content.classList.contains('aside-open'));
+  setupScrollCtxWatch();
+  bindReviewTableHeadSync();
+  requestAnimationFrame(()=>requestAnimationFrame(syncReviewTableHeadWidths));
 }
 
 function buildMain(){
   return `
+    <div class="scroll-ctx-anchor" data-scroll-ctx-anchor aria-hidden="true"></div>
     ${buildPageHeader()}
     ${buildTabs()}
     ${S.tab==='all' ? buildAllTab() : buildReviewTab()}
@@ -2355,27 +2852,18 @@ function buildPageHeader(){
   const icoHtml=active.id==='all'
     ?'▾'
     :`<span class="acct-ico-dot" style="background:${active.dot}"></span>`;
+  const pageMenuOpen=S.acctMenuOpen&&S.acctMenuFrom==='page';
   return `
   <div class="ph">
     <div class="ph-l">
       <h1 class="ph-title">Transactions</h1>
       <div class="acct-pill-wrap">
-        <div class="acct-pill${S.acctMenuOpen?' open':''}" onclick="toggleAcctMenu(event)" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="${S.acctMenuOpen}">
+        <div class="acct-pill${pageMenuOpen?' open':''}" onclick="toggleAcctMenu(event,'page')" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="${pageMenuOpen}">
           <div class="acct-ico">${icoHtml}</div>
           ${active.label}
           <span class="acct-count">${badgeCount}</span>
         </div>
-        ${S.acctMenuOpen?`
-        <div class="acct-menu" role="listbox">
-          ${BANKS.map(b=>`
-            <button type="button" class="acct-menu-item${S.bankFilter===b.id?' sel':''}" role="option" aria-selected="${S.bankFilter===b.id}" onclick="event.stopPropagation();setBankFilter('${b.id}')">
-              <span class="acct-dot" style="background:${b.dot}"></span>
-              <span class="acct-menu-label">${b.label}</span>
-              <span class="acct-menu-meta">${b.id==='all'?`${BANKS.length-1} accounts`:`$${b.bal.toLocaleString('en-AU',{minimumFractionDigits:2})}`}</span>
-              ${S.bankFilter===b.id?'<span class="acct-menu-check">✓</span>':''}
-            </button>
-          `).join('')}
-        </div>`:''}
+        ${pageMenuOpen?buildAcctMenuDropdown():''}
       </div>
     </div>
     <div class="ph-r">
@@ -2403,24 +2891,92 @@ function buildTabs(){
 /* ═══════════════════════════════════════════════
    ALL TAB
 ═══════════════════════════════════════════════ */
-function buildReviewSummary(){
+function reconTodoCounts(){
   const inbox=reviewInboxList();
-  const ready=filterReviewList(inbox,'ready').length;
-  const changed=filterReviewList(inbox,'newcontext').length;
-  const blocked=filterReviewList(inbox,'blocked').length;
-  if(!inbox.length) return '';
+  const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
+  const receiptIds=new Set();
+  filterReviewList(inbox,'receipt').filter(bankOk).forEach(t=>receiptIds.add(t.id));
+  filterReviewList(inbox,'newcontext').filter(bankOk).forEach(t=>receiptIds.add(t.id));
+  const receipts=receiptIds.size;
+  const bas=preBasList().filter(bankOk).length;
+  const suggestedRules=S.rules.filter(r=>r.suggested&&r.active!==false).length;
+  const learnedPatterns=S.memory.filter(m=>m.source==='learned'&&m.active).length;
+  const patterns=suggestedRules+learnedPatterns;
+  return {receipts,bas,patterns};
+}
+function reconTodoScrollTo(target){
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const scrollRoot=document.querySelector('.main');
+    const el=document.querySelector('[data-recon-target="'+target+'"]');
+    if(!el||!scrollRoot) return;
+    const top=el.getBoundingClientRect().top-scrollRoot.getBoundingClientRect().top+scrollRoot.scrollTop-12;
+    scrollRoot.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  }));
+}
+function reconTodoReview(kind){
+  if(kind==='receipts'){
+    S.page='main';S.preBasMode=false;S.tab='review';S.revFilter='receipt';S.reviewSel=new Set();closeAside();render();
+    reconTodoScrollTo('review-list');
+    const first=filterReviewList(reviewInboxList(),'receipt')[0];
+    if(first) openAside(first.id,'review','matches');
+  }else if(kind==='bas'){
+    S.page='prebas';S.preBasMode=true;S.revFilter='gst';closeAside();render();
+    reconTodoScrollTo('prebas-list');
+  }else if(kind==='patterns'){
+    S.memFilter='all';
+    S.page='settings';S.stgSection='all';S.ruleWiz=null;S.asideId=null;S.hubSection=null;closeAside();render();
+    reconTodoScrollTo('stg-patterns');
+  }
+}
+function buildReconTodoCard({icoCls,icoSvg,title,sub,action}){
   return `
-  <div class="fx-alert fx-alert-info" role="status">
-    <div class="fx-alert-body">
-      <strong>${inbox.length} transaction${inbox.length>1?'s':''} in your review inbox.</strong>
-      One list for receipts, matches, categories and GST — filter by what needs attention, not by agent type.
-      <div class="fx-alert-tags">
-        <span class="fx-label fx-label-boxed fx-label-success">${ready} ready</span>
-        ${changed?`<span class="fx-label fx-label-boxed fx-label-warning">${changed} AI updated</span>`:''}
-        ${blocked?`<span class="fx-label fx-label-boxed fx-label-danger">${blocked} blocked</span>`:''}
-      </div>
+  <div class="recon-todo-card" role="listitem">
+    <div class="recon-todo-ico ${icoCls}" aria-hidden="true">${icoSvg}</div>
+    <div class="recon-todo-body">
+      <div class="recon-todo-title">${title}</div>
+      <div class="recon-todo-sub">${sub}</div>
+    </div>
+    <div class="recon-todo-act">
+      <button type="button" class="recon-todo-btn" onclick="event.stopPropagation();reconTodoReview('${action}')">Review</button>
     </div>
   </div>`;
+}
+function buildReconTodo(){
+  const {receipts,bas,patterns}=reconTodoCounts();
+  if(!receipts&&!bas&&!patterns) return '';
+  const cards=[];
+  if(receipts){
+    cards.push(buildReconTodoCard({
+      icoCls:'recon-todo-ico--receipt',
+      icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h10a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V5a2 2 0 0 1 2-2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>',
+      title:`${receipts} new receipt${receipts!==1?'s':''} matched to your bank feed`,
+      sub:'We\'ve derived enough from these matches to suggest records or categories.',
+      action:'receipts',
+    }));
+  }
+  if(bas){
+    cards.push(buildReconTodoCard({
+      icoCls:'recon-todo-ico--bas',
+      icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>',
+      title:`${bas} transaction${bas!==1?'s':''} look BAS-claimable`,
+      sub:'Review GST coding before your next BAS.',
+      action:'bas',
+    }));
+  }
+  if(patterns){
+    cards.push(buildReconTodoCard({
+      icoCls:'recon-todo-ico--pattern',
+      icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.4 4.3H18l-3.6 2.6 1.4 4.3L12 11.6 8.2 14.2l1.4-4.3L6 7.3h4.6L12 3z"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/></svg>',
+      title:`${patterns} pattern${patterns!==1?'s':''} you could turn into rules`,
+      sub:'Approve patterns to auto-match similar transactions later.',
+      action:'patterns',
+    }));
+  }
+  return `
+  <section class="recon-todo-wrap" aria-label="Reconciliation tasks">
+    <h2 class="recon-todo-hd">Reconcile your bank accounts</h2>
+    <div class="recon-todo-stack" role="list">${cards.join('')}</div>
+  </section>`;
 }
 function buildFilterBar(){
   return `
@@ -2662,6 +3218,7 @@ function buildReviewExitOverlay(txId){
   </div>`;
 }
 function buildReviewRowActions(tx, exitActive){
+  if(txReviewDone(tx)) return `<span class="rev-row-done-label"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg> Accepted</span>`;
   const hasSuggestions=['cat','match','tax','file'].some(f=>{const a=tx.ai[f];return a&&a.val&&a.st==='idle';})||(tx.attach>0&&ATTACH_DATA[tx.id]);
   return `
   <div class="rev-row-actions" onclick="event.stopPropagation()">
@@ -2670,64 +3227,200 @@ function buildReviewRowActions(tx, exitActive){
     <button class="btn-rev-reject" ${exitActive?'disabled':''} onclick="rejectAllSuggestions(${tx.id})" title="Clear AI suggestions">Reject</button>
   </div>`;
 }
+function revModConfHtml(conf,why){
+  if(!conf||conf<1) return '';
+  return `<span class="why-wrap rev-mod-conf">${conf}%${why?`<div class="why-tip" style="width:220px"><div class="why-tip-head">Why this suggestion?</div>${why}</div>`:''}</span>`;
+}
+function revModFieldSuggest(f){
+  return !!(f&&f.val&&f.st==='idle'&&(f.conf||0)>=1);
+}
+function revModFileSuggest(tx){
+  const f=tx.ai.file;
+  if(f&&f.st==='accepted') return false;
+  return revModFieldSuggest(f);
+}
+function revModTaxSuggest(tx){
+  const f=tx.ai.tax;
+  if(f&&f.st==='accepted') return false;
+  return revModFieldSuggest(f);
+}
+function revModMatchSuggest(tx){
+  const cat=tx.ai.cat, match=tx.ai.match;
+  if((cat&&cat.st==='accepted')||(match&&match.st==='accepted')) return false;
+  return revModFieldSuggest(cat)||revModFieldSuggest(match);
+}
+function revModHasAnyAi(tx){
+  return revModFileSuggest(tx)||revModTaxSuggest(tx)||revModMatchSuggest(tx);
+}
+function revModIsFullManual(tx){
+  return !revModHasAnyAi(tx);
+}
+function revModGstAmount(tx){
+  const f=tx.ai.tax;
+  if(!f||!f.val||f.val==='N-T') return null;
+  return fmtAbs(Math.abs(tx.amount)/11);
+}
+function revModTxDesc(tx){
+  const parts=tx.desc.split(/\s[–\-]\s*/);
+  return parts.length>1?parts.slice(1).join(' – '):tx.desc;
+}
+function revModPartyName(tx){
+  return tx.desc.split(/\s[–\-]/)[0].trim();
+}
+function revModIsCustomer(tx){
+  if(tx.amount>0) return true;
+  const m=tx.ai?.match?.val;
+  if(m&&/invoice/i.test(m)) return true;
+  const cat=tx.ai?.cat?.val;
+  if(cat&&/sales|income|revenue/i.test(cat)) return true;
+  return false;
+}
+function revModFindSupplierBrand(name){
+  const n=name.toLowerCase();
+  return AU_SUPPLIER_BRANDS.find(b=>b.keys.some(k=>n.includes(k)));
+}
+function revModPartyInitial(name){
+  const w=name.replace(/^the\s+/i,'').trim();
+  return(w.charAt(0)||'?').toUpperCase();
+}
+function revModVendorLogo(tx){
+  const name=revModPartyName(tx);
+  if(revModIsCustomer(tx)){
+    return `<div class="rev-mod-vendor is-customer" title="${name}">${revModPartyInitial(name)}</div>`;
+  }
+  const brand=revModFindSupplierBrand(name);
+  if(brand){
+    const fs=brand.fs||13;
+    return `<div class="rev-mod-vendor is-brand" style="background:${brand.bg};color:${brand.fg};font-size:${fs}px" title="${brand.name||name}">${brand.label}</div>`;
+  }
+  return `<div class="rev-mod-vendor is-supplier" title="${name}">${revModPartyInitial(name)}</div>`;
+}
+function revModManualField(label,placeholder,onclick,selected){
+  const filled=selected?` rev-mod-manual-field--filled`:'';
+  const val=selected||placeholder;
+  return `<button type="button" class="rev-mod-manual-field${filled}" onclick="event.stopPropagation();${onclick}">
+    <span class="rev-mod-manual-label">${label}</span>
+    <span class="rev-mod-manual-value${selected?'':' is-placeholder'}">${val}</span>
+  </button>`;
+}
+function revModFileThumbBtn(txId,previewImg,badge='',linked=false){
+  const title=linked?'View linked receipt':'Review & link receipt';
+  const corner=linked
+    ?`<span class="rev-mod-file-linked-ico" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>`
+    :`<span class="rev-mod-file-link-ico" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.2 7.8l-3-3a1.8 1.8 0 012.6-2.6l3 3"/><path d="M7.8 6.2l3 3a1.8 1.8 0 01-2.6 2.6l-3-3"/></svg></span>`;
+  return `<button type="button" class="rev-mod-file-thumb${linked?' rev-mod-file-thumb--linked':''}" onclick="event.stopPropagation();openAttachModal(${txId},0)" title="${title}" aria-label="${title}"><span class="rev-mod-file-thumb-img"><img src="${previewImg}" alt="Receipt preview"></span>${badge}${corner}</button>`;
+}
+function revModFileManual(tx){
+  const previewImg='assets/receipt-officeworks.png';
+  if(tx.attach>0){
+    return revModFileThumbBtn(tx.id,previewImg);
+  }
+  return `<button type="button" class="rev-mod-upload" onclick="event.stopPropagation();openInlineAttach(${tx.id})" title="Find or upload receipt" aria-label="Find or upload receipt"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12V4"/><path d="M6 7l3-3 3 3"/><path d="M3 14h12"/></svg></button>`;
+}
+function revModTaxManual(tx){
+  const f=tx.ai.tax, sel=f?.val||'';
+  const pillLabels={GST:'GST',CAP:'CAP','N-T':'N-T'};
+  const pills=Object.keys(pillLabels).map(v=>`<button type="button" class="rev-mod-pill${sel===v?' is-active':''}" onclick="event.stopPropagation();setInlineTax(${tx.id},'${v}')">${pillLabels[v]}</button>`).join('');
+  return `<div class="rev-mod-manual-field rev-mod-manual-field--tax${sel?' rev-mod-manual-field--filled':''}" onclick="event.stopPropagation()">
+    <div class="rev-mod-tax-pills">${pills}</div>
+  </div>`;
+}
+function revModMatchManual(tx){
+  return `<button type="button" class="rev-mod-manual-field rev-mod-manual-field--action" onclick="event.stopPropagation();openAside(${tx.id},'review','matches')">
+    <span class="rev-mod-manual-value is-placeholder">Find a match</span>
+  </button>`;
+}
+function revModCombo(label,onclick,wide){
+  return `<button type="button" class="rev-mod-combo${wide?' rev-mod-combo-wide':''}" onclick="event.stopPropagation();${onclick}"><span class="rev-mod-combo-field is-empty">${label}</span><span class="rev-mod-combo-chev" aria-hidden="true"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l4 4 4-4"/></svg></span></button>`;
+}
+function revModFileCell(tx){
+  const f=tx.ai.file, att=ATTACH_DATA[tx.id]?.[0], previewImg='assets/receipt-officeworks.png';
+  if(f&&f.st==='accepted'){
+    const badge=tx.attach>1?`<span class="rev-mod-file-badge">${tx.attach}</span>`:'';
+    return `<div class="rev-mod-file-wrap">
+      ${revModFileThumbBtn(tx.id,previewImg,badge,true)}
+      <div class="rev-mod-agent-acc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>Linked</div>
+    </div>`;
+  }
+  if(revModFileSuggest(tx)){
+    const conf=f?.conf||att?.confidence||88;
+    const badge=tx.attach>1?`<span class="rev-mod-file-badge">${tx.attach}</span>`:'';
+    return `<div class="rev-mod-file-wrap">
+      ${revModFileThumbBtn(tx.id,previewImg,badge)}
+      ${revModConfHtml(conf,getWhyFile(tx))}
+    </div>`;
+  }
+  return revModFileManual(tx);
+}
+function revModTaxCell(tx){
+  const f=tx.ai.tax;
+  if(f&&f.st==='accepted'){
+    return `<div class="rev-mod-agent-acc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>${f.val}</div>`;
+  }
+  if(revModTaxSuggest(tx)){
+    const gst=revModGstAmount(tx);
+    return `<div class="rev-mod-tax-sug">
+      <div class="rev-mod-tax-code">${f.val}</div>
+      ${gst?`<div class="rev-mod-tax-amt">${gst}</div>`:''}
+      ${revModConfHtml(f.conf,getWhy(tx,'tax'))}
+    </div>`;
+  }
+  return revModTaxManual(tx);
+}
+function revModMatchCell(tx){
+  const cat=tx.ai.cat, match=tx.ai.match;
+  if((cat&&cat.st==='accepted')||(match&&match.st==='accepted')){
+    return `<div class="rev-mod-match-sug">
+      ${cat&&cat.st==='accepted'?`<div class="rev-mod-match-cat">${cat.val}</div>`:''}
+      ${match&&match.st==='accepted'?`<div class="rev-mod-match-sub">${match.val}</div>`:''}
+    </div>`;
+  }
+  if(revModMatchSuggest(tx)){
+    const conf=revModFieldSuggest(cat)?cat.conf:(match?.conf||0);
+    const why=[revModFieldSuggest(cat)?getWhy(tx,'cat'):'',revModFieldSuggest(match)?getWhy(tx,'match'):''].filter(Boolean).join(' ');
+    return `<div class="rev-mod-match-sug">
+      ${revModFieldSuggest(cat)?`<div class="rev-mod-match-cat">${cat.val}</div>`:''}
+      ${revModFieldSuggest(match)?`<div class="rev-mod-match-sub">${match.val}</div>`:''}
+      ${revModConfHtml(conf,why)}
+    </div>`;
+  }
+  return revModMatchManual(tx);
+}
+function buildRevModAiBand(tx,exitActive){
+  const isDone=txReviewDone(tx);
+  const hasAi=revModHasAnyAi(tx);
+  const manual=revModIsFullManual(tx);
+  const hasSuggestions=['cat','match','tax','file'].some(f=>{const a=tx.ai[f];return a&&a.val&&a.st==='idle';})||(tx.attach>0&&ATTACH_DATA[tx.id]);
+  const actions=hasAi&&!exitActive&&!isDone?`
+    <div class="rev-mod-ai-actions" onclick="event.stopPropagation()">
+      <button type="button" class="rev-mod-act-review" onclick="openAside(${tx.id},'review','matches')">Review</button>
+      <button type="button" class="rev-mod-act-accept" ${hasSuggestions?'':'disabled'} onclick="acceptAllTx(${tx.id})"><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg><span>Accept</span></button>
+      <button type="button" class="rev-mod-act-reject" onclick="rejectAllSuggestions(${tx.id})"><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg><span>Reject</span></button>
+    </div>`:'';
+  return `
+  <div class="rev-mod-ai-band${hasAi&&!isDone?' has-ai':''}${manual&&!isDone?' is-manual':''}${isDone?' is-done':''}">
+    <div class="rev-mod-ai-col rev-mod-ai-col-file">${revModFileCell(tx)}</div>
+    <div class="rev-mod-ai-col rev-mod-ai-col-tax">${revModTaxCell(tx)}</div>
+    <div class="rev-mod-ai-col rev-mod-ai-col-match">${revModMatchCell(tx)}</div>
+    ${actions}
+  </div>`;
+}
 function buildModernReviewList(filtered, sel){
   if(!filtered.length){
     return `<div class="rev-mod-wrap"><div class="rev-mod-empty"><div style="font-size:28px;margin-bottom:8px">✓</div><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">All done here</div><div style="font-size:12px">No transactions match this filter.</div></div></div>`;
   }
-  const rows=filtered.map(tx=>{
-    const meta=revRowMeta(tx);
-    const att=revAttachInner(tx,false);
-    const tax=revTaxInner(tx);
-    const coding=revCodingInner(tx);
-    const exitActive=S.rowExit?.txId===tx.id;
-    const rowCls=['rev-mod-row',revExitRowCls(tx.id,txHasChanged(tx),true)].filter(Boolean).join(' ');
-    const exitStyle=revExitStyle(tx.id);
-    const bank=BANKS.find(b=>b.id===tx.bank);
-    return `
-    <div class="${rowCls}" data-exit-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'review','matches')`}" style="${exitStyle}">
-      <div onclick="event.stopPropagation()">
-        <input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple);cursor:pointer" ${sel.has(tx.id)?'checked':''} ${exitActive?'disabled':''}
-          onclick="event.stopPropagation();toggleRevSel(${tx.id})">
-      </div>
-      <div class="rev-mod-thumb">${revAttachThumb(tx)}</div>
-      <div>
-        <div class="rev-mod-primary">${tx.date}</div>
-        <div class="rev-mod-secondary">${tx.ref||'—'}</div>
-        ${bank?`<div class="rev-mod-secondary">${bank.label}</div>`:''}
-      </div>
-      <div style="position:relative">
-        <div class="rev-mod-primary">${meta.vendor}</div>
-        <div class="rev-mod-secondary">${tx.desc}</div>
-        ${revStatusPill(tx)}
-        ${buildReviewExitOverlay(tx.id)}
-      </div>
-      <div class="rev-mod-amt">
-        <div class="rev-mod-primary ${tx.amount<0?'amt-neg':'amt-pos'}">${fmt(tx.amount)}</div>
-        ${meta.gstLine}
-      </div>
-      <div class="rev-mod-agent ${att.cls}" onclick="event.stopPropagation()">${att.html}</div>
-      <div class="rev-mod-agent ${tax.cls}" onclick="event.stopPropagation()">${tax.html}</div>
-      <div class="rev-mod-agent ${coding.cls}" onclick="event.stopPropagation()">${coding.html}</div>
-      <div class="rev-mod-actions">
-        ${buildReviewRowActions(tx, exitActive)}
-        <span class="rev-mod-chev" aria-hidden="true">›</span>
-      </div>
-    </div>`;
-  }).join('');
+  const groups=groupReviewByDate(filtered);
+  const body=groups.map(g=>`
+    <div class="rev-mod-date-group">
+      <div class="rev-mod-date-hd">${g.date}</div>
+      ${g.txs.map(tx=>buildModernReviewRow(tx,sel)).join('')}
+    </div>`).join('');
   return `
   <div class="rev-mod-wrap">
-    <div class="rev-mod-head">
-      <div></div>
-      <div></div>
-      <div>Date</div>
-      <div>Transaction</div>
-      <div style="text-align:right">Amount</div>
-      <div class="rev-mod-agent-h">Attachment <span class="agent-col-tag">AI</span></div>
-      <div class="rev-mod-agent-h">Tax code <span class="agent-col-tag">AI</span></div>
-      <div class="rev-mod-agent-h">Coding <span class="agent-col-tag">AI</span></div>
-      <div style="text-align:right">Actions</div>
+    <div class="rev-mod-head" data-scroll-table-head>
+      ${buildRevModHeadHtml()}
     </div>
-    ${rows}
+    ${body}
   </div>`;
 }
 function buildReviewTab(){
@@ -2753,8 +3446,9 @@ function buildReviewTab(){
     </div>`:'';
   const rows=filtered.length?filtered.map(tx=>{
     const isCtx=txHasChanged(tx);
+    const isDone=txReviewDone(tx);
     const exitActive=S.rowExit?.txId===tx.id;
-    const rowCls=revExitRowCls(tx.id,isCtx,false);
+    const rowCls=[revExitRowCls(tx.id,isCtx,false),isDone?'tr-done':''].filter(Boolean).join(' ');
     const exitStyle=revExitStyle(tx.id);
     return `
     <tr class="${rowCls}" data-exit-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'review','matches')`}" style="cursor:pointer;${exitStyle}">
@@ -2788,10 +3482,10 @@ function buildReviewTab(){
 
   return `
   <div class="fade-in">
-    ${buildReviewSummary()}
+    ${buildReconTodo()}
     ${bulkBar}
     ${buildFilterBar()}
-    <div class="fx-pill-group" role="group" aria-label="Review filters">
+    <div class="fx-pill-group" role="group" aria-label="Review filters" data-recon-target="review-list">
       ${filters.map(f=>`<button type="button" class="fx-pill${S.revFilter===f.v?' fx-pill-checked':''}" onclick="setRevFilter('${f.v}')" aria-pressed="${S.revFilter===f.v}"><span class="fx-pill-label">${f.l}</span><span class="fx-badge">${f.ct}</span></button>`).join('')}
       <button type="button" class="fx-pill fx-pill-advanced" onclick="goPreBas()" title="Advanced filters">
         <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><line x1="1" y1="3.5" x2="12" y2="3.5"/><line x1="3" y1="6.5" x2="10" y2="6.5"/><line x1="5" y1="9.5" x2="8" y2="9.5"/></svg>
@@ -2812,20 +3506,10 @@ function buildReviewTab(){
     </div>
     ${S.reviewView==='modern'?buildModernReviewList(filtered,sel):`
     <div class="card rev-card" style="padding:0;overflow:visible">
-      <table class="all-tbl">
+      <table class="all-tbl review-tbl">
+        ${reviewTableColgroup()}
         <thead>
-          <tr>
-            <th style="width:36px;padding:8px 12px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple)"
-              ${filtered.length&&filtered.every(t=>sel.has(t.id))?'checked':''}
-              onclick="toggleRevSelAll(${JSON.stringify(filtered.map(t=>t.id))})"></th>
-            <th style="width:96px">Date ${sortIco}</th>
-            <th>Transaction ${sortIco}</th>
-            <th class="r" style="width:110px">Amount ${sortIco}</th>
-            <th class="agent-col-h" style="width:140px">Attachment <span class="agent-col-tag">AI</span></th>
-            <th class="agent-col-h" style="width:90px">Tax code <span class="agent-col-tag">AI</span></th>
-            <th class="agent-col-h" style="width:160px">Coding <span class="agent-col-tag">AI</span></th>
-            <th style="width:220px">Actions</th>
-          </tr>
+          ${buildReviewTableHeadRow({checkbox:true,sortIco,filtered,sel})}
         </thead>
         <tbody>${rows}</tbody>
       </table>
@@ -3210,6 +3894,7 @@ function commitLedger(txId){
   const used=lines.reduce((s,l)=>s+Math.abs(parseFloat(l.amount)||0),0);
   if(Math.abs(total-used)>0.01){ showToast('Allocate remaining amount before committing.',3000); return; }
   tx.status='coded';
+  markTxReviewDone(txId);
   Object.values(tx.ai).forEach(f=>{if(f.val&&f.st==='idle')f.st='accepted';});
   addToContext(txId,'cat');
   showContextToast();
@@ -3604,12 +4289,51 @@ function reassignFromAttachment(txId, newCat){
   tx.ai.cat.val=newCat;
   tx.ai.cat.st='accepted';
   tx.status='coded';
+  markTxReviewDone(txId);
   showToast(`✓ Recoded to "${newCat}" based on receipt`);
   closeAttachModal();
 }
 function rejectAttachment(txId){
   showToast('Receipt rejected — transaction unchanged');
   closeAttachModal();
+}
+function uploadAttachmentReceipt(txId, input){
+  const tx=ftx(txId); if(!tx) return;
+  const atts=ATTACH_DATA[txId]?[...ATTACH_DATA[txId]]:[];
+  const idx=atts.length;
+  const picked=input?.files?.[0];
+  const names=['receipt.jpg','invoice.pdf','tax-invoice.jpg','eftpos-receipt.jpg','delivery-docket.pdf'];
+  const fileName=picked?.name||names[idx%names.length];
+  const vendor=tx.desc.split(/\s[–\-]/)[0].trim();
+  const extractedCat=tx.ai.cat?.val||tx.ai.cat?.rejectedVal||'Office supplies';
+  const extractedTax=tx.ai.tax?.val||tx.ai.tax?.rejectedVal||'GST';
+  const amt=Math.abs(tx.amount);
+  const gst=+(amt/11).toFixed(2);
+  atts.push({
+    id:`att-${txId}-${idx}-${Date.now()}`,
+    name:fileName,
+    vendor,
+    extractedAmt:amt,
+    extractedGst:gst,
+    extractedDate:tx.date,
+    extractedCat,
+    extractedTax,
+    invoiceRef:tx.ai.match?.val||null,
+    confidence:85+((txId+idx)%12),
+    fields:['vendor','amount','date','gst'],
+    isNew:true,
+  });
+  ATTACH_DATA[txId]=atts;
+  tx.attach=atts.length;
+  if(tx.ai.file){
+    tx.ai.file.val=fileName;
+    tx.ai.file.st='idle';
+    tx.ai.file.conf=atts[atts.length-1].confidence;
+  }
+  S.attachModal={txId,attIdx:idx};
+  if(input) input.value='';
+  render();
+  showToast(`✓ ${fileName} uploaded — review extracted fields`,2800);
 }
 
 function buildAttachModal(){
@@ -3724,6 +4448,11 @@ function buildAttachModal(){
         <div style="font-size:11px;color:var(--muted);margin-top:8px">
           Confidence: <strong>${att.confidence}%</strong> · Fields matched: ${att.fields.join(', ')}
         </div>
+        <label class="att-modal-upload" onclick="event.stopPropagation()">
+          <input type="file" id="att-modal-file-${txId}" accept="image/*,.pdf,application/pdf" onchange="uploadAttachmentReceipt(${txId}, this)">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 10V4M4 7l3-3 3 3"/><rect x="1" y="10" width="12" height="3" rx="1"/></svg>
+          ${total>0?'Upload another receipt':'Upload receipt'}
+        </label>
       </div>
       <div class="att-modal-right">
         <div>
@@ -4060,7 +4789,7 @@ function buildPreBasPage(){
       ${unconfirmed} tax code${unconfirmed!==1?'s':''} unconfirmed · ${changed} updated after receipts · Confirm before lodgement to avoid amendments.</div>
     </div>
     ${buildFilterBar()}
-    <div class="card" style="padding:0;overflow:hidden">
+    <div class="card" style="padding:0;overflow:hidden" data-recon-target="prebas-list">
       <table class="all-tbl">
         <thead>
           <tr>
@@ -4090,7 +4819,7 @@ function buildPreBasPage(){
 }
 function buildSettings(){
   if(!S.stgSection) return buildStgOverview();
-  if(S.stgSection==='all') return buildStgTransactions();
+  if(S.stgSection==='all'||S.stgSection==='transactions') return buildStgTransactions();
   if(S.stgSection==='attachments') return buildStgAttachments();
   if(S.stgSection==='taxcodes') return buildStgTaxCodes();
   if(S.stgSection==='bizcxt') return buildStgBizContext();
@@ -4144,6 +4873,40 @@ function buildStgOverview(){
       Changes to automatching rules apply to new transactions as they're imported.
     </div>
   </div>`;
+}
+
+function dismissSuggestedRule(id){
+  const r=S.rules.find(x=>x.id===id);
+  if(r) r.suggested=false;
+  render();
+}
+function buildSuggestedRulesBlock(){
+  const rules=S.rules.filter(r=>r.suggested&&r.active!==false);
+  if(!rules.length) return '';
+  return `
+    <div style="margin-bottom:24px">
+      <div class="mem-section-title">Suggested rules</div>
+      <div class="mem-list">
+        ${rules.map(r=>`
+        <div class="mem-entry">
+          <div class="mem-entry-head">
+            <div class="mem-entry-left">
+              <span class="mem-src-badge learned">✨ Suggested</span>
+              <span class="mem-entity">${r.name}</span>
+            </div>
+            <span class="mem-applied">Applied ${r.applied}&times; · Last: ${r.last}</span>
+          </div>
+          <div class="mem-cond-block">
+            <div class="mem-cond-row"><span class="mem-cond-label">When</span><span class="mem-pill">${r.trigger}</span></div>
+            <div class="mem-cond-row"><span class="mem-cond-label">Then</span><span class="mem-pill">${r.action}</span></div>
+          </div>
+          <div class="mem-entry-foot">
+            <button class="btn-ctx-save" onclick="showToast('✓ Rule saved')">Turn into rule</button>
+            <button class="btn-ctx-cancel" onclick="dismissSuggestedRule(${r.id})">Dismiss</button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
 }
 
 function buildStgTransactions(){
@@ -4315,7 +5078,10 @@ function buildStgTransactions(){
   <div class="stg fade-in">
     <div class="stg-sub-back" onclick="goStgBack()">&larr; Automatching</div>
     ${prefSection}
-    ${memSection}
+    <div data-recon-target="stg-patterns">
+      ${buildSuggestedRulesBlock()}
+      ${memSection}
+    </div>
   </div>`;
 }
 
@@ -4666,7 +5432,7 @@ function buildRuleWizard(){
 
 initAttachments();
 document.addEventListener('click',()=>{
-  if(S.acctMenuOpen){S.acctMenuOpen=false;render();}
+  if(S.acctMenuOpen){S.acctMenuOpen=false;S.acctMenuFrom=null;render();}
 });
 (function initFromUrl(){
   const params=new URLSearchParams(location.search);
