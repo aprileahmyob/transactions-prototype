@@ -131,6 +131,10 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
 .scroll-ctx-tbl-wrap{margin:0 32px;background:var(--surface);border:1px solid var(--border);border-top:none;overflow:hidden;box-sizing:border-box;}
 .scroll-ctx-tbl-wrap .all-tbl thead th{position:static;background:var(--surface);padding:10px 12px;font-size:12px;}
 .review-tbl{table-layout:fixed;width:100%;}
+.review-tbl th.col-act,.review-tbl td.col-act{min-width:200px;width:22%;overflow:visible;vertical-align:middle;}
+.review-tbl td.col-act{padding:8px 10px!important;}
+.review-tbl .rev-row-actions{flex-direction:column;align-items:stretch;gap:4px;}
+.review-tbl .rev-row-actions .fx-btn,.review-tbl .rev-row-actions .btn-rev-reject{display:inline-flex;width:100%;justify-content:center;text-align:center;box-sizing:border-box;}
 .review-tbl td.agent-col{min-width:0!important;overflow:visible;}
 .scroll-ctx-anchor{height:1px;width:1px;pointer-events:none;visibility:hidden;margin:0;padding:0;}
 
@@ -707,6 +711,20 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .act-tx-link{color:var(--purple);text-decoration:underline;cursor:pointer;font-weight:500;}
 .act-tx-link:hover{color:#5a0cb5;}
 .act-empty{padding:24px;text-align:center;color:var(--muted);font-size:13px;}
+/* Rule detail aside */
+.mem-entry-clickable{cursor:pointer;transition:background .12s;}
+.mem-entry-clickable:hover{background:var(--stone20);}
+.mem-entry-clickable.is-open{background:var(--brand-subtle);}
+.rule-aside-head .rdm-rule-name{font-size:20px;margin:4px 0 2px;}
+.rule-aside-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+.aside .act-wrap-aside .act-head{display:none;}
+.aside .act-wrap-aside .act-row{grid-template-columns:1fr;gap:6px;padding:12px 14px;}
+.aside .act-wrap-aside .act-cell{padding-right:0;}
+.aside .act-wrap-aside .act-cell.act-datetime{flex-direction:row;align-items:baseline;gap:6px;}
+.aside .act-wrap-aside .act-action{font-size:12px;font-weight:600;color:var(--text);}
+.aside .act-wrap-aside .act-detail{font-size:12px;color:var(--muted);}
+.rule-aside-foot{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface);flex-shrink:0;box-shadow:0 -4px 12px rgba(0,0,0,.06);}
+.rule-aside-foot .sp{flex:1;}
 /* ─── Settings hub ─── */
 .hub{padding:0;}
 .hub-header{padding:22px 24px 0;margin-bottom:20px;}
@@ -771,6 +789,80 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .pref-sub-right{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-top:2px;}
 .pref-footer{display:flex;justify-content:flex-end;padding-top:20px;border-top:1px solid var(--border);margin-top:24px;}
 
+/* ─── AI Settings layout (Figma) ─── */
+.stg-ai-layout{display:grid;grid-template-columns:229px minmax(0,1fr);gap:54px;align-items:start;}
+.stg-ai-nav{background:#fff;border-radius:10px;padding:14px 10px;position:sticky;top:16px;}
+.stg-ai-nav-item{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border:none;border-radius:4px;background:transparent;font-family:var(--font);font-size:14px;font-weight:500;color:var(--text);cursor:pointer;text-align:left;}
+.stg-ai-nav-item:hover{background:var(--stone20);}
+.stg-ai-nav-item.act{background:var(--brand-subtle);color:var(--purple);position:relative;}
+.stg-ai-nav-item.act::before{content:'';position:absolute;left:-16px;top:0;bottom:0;width:6px;background:var(--purple);border-radius:0 4px 4px 0;}
+.stg-ai-nav-ico{width:18px;text-align:center;flex-shrink:0;font-size:14px;line-height:1;}
+.stg-ai-nav-label{flex:1;}
+.stg-ai-nav-chev{color:var(--muted);font-size:12px;}
+.stg-ai-main{min-width:0;}
+.stg-ai-crumb{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.stg-ai-back{width:34px;height:34px;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--text);cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stg-ai-back:hover{background:var(--stone20);}
+.stg-ai-crumb-link{border:none;background:none;padding:0;font-family:var(--font);font-size:20px;font-weight:600;color:var(--muted);cursor:pointer;line-height:1.2;}
+.stg-ai-crumb-link:hover{color:var(--purple);}
+.stg-ai-crumb-sep{font-size:20px;color:var(--muted);line-height:1;}
+.stg-ai-crumb-cur{font-size:20px;font-weight:700;color:var(--purple);line-height:1.2;}
+.stg-ai-section{margin-bottom:28px;}
+.stg-ai-section-hd{font-size:20px;font-weight:700;color:var(--text);margin:0 0 4px;line-height:1.2;}
+.stg-ai-section-sub{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 16px;max-width:760px;}
+.stg-ai-card{background:#fff;border-radius:10px;padding:20px;border:1px solid transparent;}
+.stg-ai-card-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.stg-ai-card-left{display:flex;gap:10px;flex:1;min-width:0;}
+.stg-ai-card-ico{width:18px;padding-top:2px;color:var(--muted);flex-shrink:0;}
+.stg-ai-card-title{font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;}
+.stg-ai-card-desc{font-size:14px;color:var(--muted);line-height:1.55;margin:0;max-width:640px;}
+.stg-ai-card-foot{margin-top:10px;font-size:14px;color:var(--muted);line-height:1.5;}
+.stg-ai-card-foot a,.stg-ai-link-btn{border:none;background:none;padding:0;color:var(--purple);text-decoration:underline;cursor:pointer;font-family:var(--font);font-size:14px;}
+.stg-ai-link-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;background:#fff;border-radius:10px;cursor:pointer;transition:background .12s,border-color .12s;border:1px solid transparent;}
+.stg-ai-link-row:hover{background:var(--stone20);}
+.stg-ai-link-row+.stg-ai-link-row{margin-top:8px;}
+.stg-ai-link-left{display:flex;gap:12px;align-items:flex-start;flex:1;min-width:0;}
+.stg-ai-link-ico{width:36px;height:36px;border-radius:8px;background:var(--stone20);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.stg-ai-link-title{font-size:14px;font-weight:600;color:var(--text);margin:0 0 3px;}
+.stg-ai-link-desc{font-size:13px;color:var(--muted);line-height:1.45;margin:0;}
+.stg-ai-link-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.stg-ai-status-pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:9999px;background:var(--success-bg);color:var(--success);}
+.stg-ai-status-pill.off{background:var(--stone20);color:var(--muted);}
+.stg-ai-link-chev{color:var(--muted);font-size:18px;line-height:1;}
+.stg-ai-page-title{font-size:20px;font-weight:700;color:var(--text);margin:0;}
+.stg-ai-page-hd{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+.stg-ai-updated-pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:9999px;background:var(--success-bg);color:var(--success);}
+.stg-ai-summary-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:16px;}
+.stg-ai-summary-sec{padding:18px 20px;border-bottom:1px solid var(--border);position:relative;}
+.stg-ai-summary-sec:last-child{border-bottom:none;}
+.stg-ai-summary-sec-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;}
+.stg-ai-summary-sec-title{font-size:14px;font-weight:600;color:var(--text);margin:0;}
+.stg-ai-summary-sec-more{border:none;background:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:4px;}
+.stg-ai-summary-sec-more:hover{background:var(--stone20);color:var(--text);}
+.stg-ai-summary-sec-text{font-size:14px;color:#45464a;line-height:1.65;margin:0;}
+.stg-mem-filter{display:flex;align-items:center;gap:8px;margin:12px 0 16px;flex-wrap:wrap;}
+.stg-mem-filter .fx-pill{min-height:32px;padding:6px 14px;font-size:14px;}
+.stg-mem-toolbar{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px;}
+.stg-mem-stack{display:flex;flex-direction:column;gap:12px;}
+.stg-mem-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:19px 23px 23px;}
+.stg-mem-card-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px;}
+.stg-mem-card-left{flex:1;min-width:0;}
+.stg-mem-flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
+.stg-mem-chip{display:inline-flex;align-items:center;gap:6px;padding:2px 7px;border-radius:7px;background:var(--stone20);font-size:20px;font-weight:600;color:var(--text);line-height:1.2;}
+.stg-mem-chip-ico{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.stg-mem-chip-ico.is-out{color:#45464a;}
+.stg-mem-chip-ico.is-in{color:var(--success);}
+.stg-mem-chip-ico.is-stop{color:var(--red);}
+.stg-mem-chip-ico.is-tax{color:var(--purple);}
+.stg-mem-chip-ico.is-split{color:var(--muted);}
+.stg-mem-flow-arrow{color:var(--muted);font-size:16px;line-height:1;padding:0 2px;}
+.stg-mem-meta{font-size:12px;color:#45464a;line-height:1.2;}
+.stg-mem-card-actions{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.stg-mem-card-desc{font-size:14px;color:var(--text);line-height:1.45;margin:0;}
+.stg-mem-card.inactive{opacity:.55;}
+.stg-mem-card.is-open{border-color:var(--purple);box-shadow:0 0 0 1px var(--brand-subtle);}
+.stg-mem-create-row{display:flex;justify-content:flex-end;margin-top:12px;}
+
 /* ─── AI memory section ─── */
 .mem-section-title{font-size:20px;font-weight:600;color:var(--text);margin-bottom:14px;letter-spacing:.01em;}
 .mem-filter-row{display:flex;align-items:center;gap:6px;margin-bottom:14px;}
@@ -822,6 +914,13 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .fbar2-sp,.fx-filterbar-sp{flex:1;}
 /* Feelix FilterBar — single-row layout */
 .fx-filterbar{display:flex;align-items:flex-end;gap:12px;margin-bottom:16px;flex-wrap:wrap;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r8);}
+/* Table shell — filter bar, pills, and table as one card */
+.tx-table-shell{background:var(--surface);border:1px solid var(--border);border-radius:var(--r8);overflow:hidden;}
+.tx-table-shell .fx-filterbar{margin-bottom:0;border:none;border-radius:0;border-bottom:1px solid var(--border);}
+.tx-table-shell .fx-pill-group{margin-bottom:0;padding:12px 16px 10px;border-bottom:1px solid var(--border);}
+.tx-table-shell .rev-toolbar{margin-bottom:0;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--surface);}
+.tx-table-shell .rev-card,.tx-table-shell>.card{border:none;border-radius:0;box-shadow:none;}
+.tx-table-shell .rev-mod-wrap{border:none;border-radius:0;}
 .fx-filterbar-field{display:flex;flex-direction:column;gap:4px;min-width:0;}
 .fx-filterbar-field.fx-filterbar-search{flex:1 1 200px;max-width:280px;}
 .fx-field-label{font-size:12px;font-weight:500;color:var(--muted);line-height:1.2;}
@@ -1127,7 +1226,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
   align-items:center;gap:12px;padding:10px 16px;
 }
 .rev-mod-head{font-size:14px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border);padding-top:14px;padding-bottom:12px;background:var(--surface);}
-.rev-mod-head .rev-mod-ai-head{display:grid;grid-template-columns:72px 88px 1fr;gap:0;font-size:14px;font-weight:600;color:var(--text);}
+.rev-mod-head .rev-mod-ai-head{display:grid;grid-template-columns:100px 88px 1fr;gap:0;font-size:14px;font-weight:600;color:var(--text);}
 .rev-mod-head .rev-mod-ai-head>div{padding-left:4px;}
 .rev-mod-head .rev-mod-amt-h{text-align:right;}
 .rev-mod-row{border-bottom:1px solid var(--border);cursor:pointer;position:relative;min-height:113px;transition:transform .08s linear,opacity .08s linear,background .12s;}
@@ -1167,7 +1266,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .rev-mod-chev{color:#ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .rev-mod-empty{padding:48px 20px;text-align:center;color:var(--muted);}
 /* AI suggestion band */
-.rev-mod-ai-band{display:grid;grid-template-columns:72px 88px 1fr;align-items:stretch;min-height:98px;border-radius:12px;border:1px solid transparent;position:relative;transition:border-color .12s,background .12s;}
+.rev-mod-ai-band{display:grid;grid-template-columns:100px 88px 1fr;align-items:stretch;min-height:98px;border-radius:12px;border:1px solid transparent;position:relative;transition:border-color .12s,background .12s;}
 .rev-mod-ai-band.has-ai{background:#f7f6f2;position:relative;overflow:visible;}
 .rev-mod-row:hover .rev-mod-ai-band.has-ai{background:#f2e8fd;border-color:#a762f4;}
 .rev-mod-row:hover .rev-mod-ai-band.has-ai::before{
@@ -1179,30 +1278,31 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .rev-mod-ai-band.has-ai .rev-mod-ai-col+.rev-mod-ai-col{border-left:1px solid #e5e5e5;}
 .rev-mod-ai-band.is-manual .rev-mod-ai-col{padding:8px 4px;min-height:98px;}
 .rev-mod-ai-band.is-manual .rev-mod-ai-col+.rev-mod-ai-col{border-left:none;}
-.rev-mod-ai-col-file{overflow:visible;}
-.rev-mod-file-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:8px;height:100%;overflow:visible;}
+.rev-mod-ai-col-file{overflow:hidden;min-width:0;}
+.rev-mod-file-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:8px;height:100%;max-width:100%;overflow:hidden;}
+.rev-mod-file-wrap--linked{flex-direction:row;align-items:center;gap:4px;flex-wrap:nowrap;}
+.rev-mod-file-add{
+  width:20px;height:20px;border:1px dashed #d4d4d4;border-radius:5px;background:#fff;color:#74767b;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0;
+}
+.rev-mod-file-add:hover{border-color:var(--lavender);color:var(--purple);background:var(--brand-subtle);}
 .rev-mod-file-thumb{
-  position:relative;width:42px;height:40px;border-radius:4px;border:1px solid var(--border);
-  overflow:visible;background:#fff;flex-shrink:0;cursor:pointer;padding:0;font-family:var(--font);
+  position:relative;width:52px;height:64px;border-radius:6px;border:none;
+  overflow:visible;background:transparent;flex-shrink:0;cursor:pointer;padding:0;font-family:var(--font);
 }
-.rev-mod-file-thumb:hover{border-color:var(--lavender);box-shadow:0 0 0 2px rgba(123,20,239,.08);}
-.rev-mod-file-thumb--linked:hover{border-color:var(--success);box-shadow:0 0 0 2px rgba(0,133,54,.12);}
-.rev-mod-file-thumb-img{display:block;width:100%;height:100%;border-radius:3px;overflow:hidden;background:#fff;}
-.rev-mod-file-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.rev-mod-file-link-ico{
-  position:absolute;right:3px;bottom:3px;width:15px;height:15px;border-radius:4px;
-  background:rgba(255,255,255,.95);color:var(--purple);display:flex;align-items:center;justify-content:center;
-  box-shadow:0 1px 3px rgba(0,0,0,.15);z-index:2;pointer-events:none;
-}
+.rev-mod-file-thumb:hover .rev-mod-file-thumb-img{box-shadow:0 0 0 2px rgba(123,20,239,.18);}
+.rev-mod-file-thumb--linked:hover .rev-mod-file-thumb-img{box-shadow:0 0 0 2px rgba(0,133,54,.2);}
+.rev-mod-file-thumb-img{display:block;width:100%;height:100%;border-radius:6px;overflow:hidden;background:transparent;box-shadow:0 1px 4px rgba(0,0,0,.14);}
+.rev-mod-file-thumb img{width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;}
 .rev-mod-file-linked-ico{
-  position:absolute;right:3px;bottom:3px;width:15px;height:15px;border-radius:4px;
-  background:var(--success-bg);color:var(--success);display:flex;align-items:center;justify-content:center;
-  box-shadow:0 1px 3px rgba(0,0,0,.12);z-index:2;pointer-events:none;border:1px solid var(--success-border);
+  position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;border-radius:50%;
+  background:var(--success);color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.18);z-index:2;pointer-events:none;border:2px solid #fff;
 }
 .rev-mod-file-badge{
-  position:absolute;top:3px;right:3px;min-width:14px;height:14px;padding:0 3px;border-radius:10px;
-  background:#232428;color:#fff;font-size:8px;font-weight:600;line-height:14px;text-align:center;
-  box-sizing:border-box;z-index:3;box-shadow:0 1px 2px rgba(0,0,0,.25);pointer-events:none;
+  position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:9999px;
+  background:var(--purple);color:#fff;font-size:10px;font-weight:700;line-height:17px;text-align:center;
+  box-sizing:border-box;z-index:3;box-shadow:0 1px 3px rgba(0,0,0,.22);pointer-events:none;border:2px solid #fff;
 }
 .rev-mod-upload{width:53px;height:81px;border:2px dashed #e5e5e5;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;color:#74767b;cursor:pointer;padding:0;flex-shrink:0;}
 .rev-mod-upload:hover{border-color:var(--lavender);color:var(--purple);background:var(--brand-subtle);}
@@ -1245,31 +1345,37 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .rev-mod-manual-field:hover{border-color:var(--lavender);background:var(--brand-subtle);box-shadow:0 0 0 2px rgba(123,20,239,.06);}
 .rev-mod-manual-field--filled{border-style:solid;border-color:#c6ead1;background:#f8fdf9;}
 .rev-mod-manual-field--filled:hover{border-color:var(--success);background:#eef9f1;}
-.rev-mod-manual-field--action{align-items:center;justify-content:center;min-height:52px;}
+.rev-mod-manual-field--action{flex-direction:row;align-items:center;justify-content:center;min-height:52px;gap:8px;}
 .rev-mod-manual-field--action .rev-mod-manual-value{font-size:14px;font-weight:600;}
+.rev-mod-manual-field--action .rev-mod-manual-ico{color:#74767b;display:flex;align-items:center;flex-shrink:0;}
 .rev-mod-manual-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;line-height:1;}
 .rev-mod-manual-value{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;}
 .rev-mod-manual-value.is-placeholder{color:#74767b;font-weight:400;}
 .rev-mod-manual-stack{display:flex;flex-direction:column;gap:6px;width:100%;}
 .rev-mod-manual-file{display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:100%;}
 .rev-mod-manual-pick{display:flex;flex-direction:column;gap:6px;width:100%;}
-.rev-mod-manual-field--tax{
-  align-items:center;justify-content:center;min-height:52px;padding:7px 6px;cursor:default;
-  border-style:dashed;
+.rev-mod-ai-col-tax .rev-mod-inline-sel{
+  height:52px;border-style:dashed;border-color:#ccc;border-radius:var(--r8);
+  background-color:#fff;background-image:none;background-repeat:no-repeat;
+  background-position:right 10px center;background-size:10px 6px;
+  font-size:14px;font-weight:400;color:#74767b;text-align:center;
+  padding:0 24px 0 9px;
 }
-.rev-mod-manual-field--tax:hover{border-color:#ccc;background:#fff;box-shadow:none;}
-.rev-mod-manual-field--tax.rev-mod-manual-field--filled{border-style:solid;}
-.rev-mod-manual-field--tax.rev-mod-manual-field--filled:hover{border-color:var(--success);background:#eef9f1;}
-.rev-mod-tax-pills{display:flex;flex-wrap:wrap;gap:4px;width:100%;justify-content:center;}
-.rev-mod-manual-field--tax .rev-mod-tax-pills{flex-wrap:nowrap;gap:3px;}
-.rev-mod-manual-field--tax .rev-mod-pill{flex:1;min-width:0;padding:6px 2px;font-size:10px;text-align:center;border-radius:6px;}
-.rev-mod-pill{
-  padding:5px 10px;border:1px solid #ccc;border-radius:var(--r99);background:#fff;
-  font-size:12px;font-weight:500;color:var(--text);cursor:pointer;font-family:var(--font);line-height:1.2;
-  transition:border-color .12s,background .12s,color .12s;
+.rev-mod-ai-col-tax .rev-mod-inline-sel:hover,
+.rev-mod-ai-col-tax .rev-mod-inline-sel:focus{
+  border-color:var(--lavender);background-color:var(--brand-subtle);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%2374767b' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+  box-shadow:0 0 0 2px rgba(123,20,239,.06);
 }
-.rev-mod-pill:hover{border-color:var(--lavender);background:var(--brand-subtle);}
-.rev-mod-pill.is-active{border-color:var(--success);background:var(--success-bg);color:#0d7d4e;font-weight:600;}
+.rev-mod-ai-col-tax .rev-mod-inline-sel.is-filled{
+  border-style:solid;border-color:#c6ead1;background-color:#f8fdf9;
+  background-image:none;font-weight:600;color:var(--text);
+}
+.rev-mod-ai-col-tax .rev-mod-inline-sel.is-filled:hover,
+.rev-mod-ai-col-tax .rev-mod-inline-sel.is-filled:focus{
+  border-color:var(--success);background-color:#eef9f1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%2374767b' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+}
 .rev-mod-inline-sel{width:100%;height:34px;padding:0 28px 0 9px;border:1px solid #ccc;border-radius:4px;font-size:14px;font-family:var(--font);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%2374767b' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center;background-size:10px 6px;color:var(--text);cursor:pointer;appearance:none;-webkit-appearance:none;}
 .rev-mod-agent-acc{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--success);}
 .rev-mod-ai-actions{display:none;position:absolute;right:6px;top:50%;transform:translateY(-50%);align-items:center;gap:6px;z-index:3;padding:4px 2px 4px 16px;}
@@ -1365,6 +1471,31 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .fx-badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:9999px;font-size:12px;font-weight:600;background:var(--purple);color:#fff;line-height:1;flex-shrink:0;}
 .fx-pill-advanced{padding-left:14px;color:var(--text);}
 .fx-pill-advanced svg{width:14px;height:14px;color:var(--muted);flex-shrink:0;}
+/* Multi-select filter dropdown pill */
+.fx-rev-filter-bar{align-items:center;padding:12px 16px 10px;}
+.fx-ms-pill-wrap{position:relative;display:inline-flex;}
+.fx-ms-pill{gap:8px;padding-right:14px;}
+.fx-ms-pill-chev{font-size:10px;color:var(--muted);line-height:1;flex-shrink:0;}
+.fx-ms-menu{
+  position:absolute;top:calc(100% + 6px);left:0;z-index:50;min-width:260px;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r8);
+  box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;
+}
+.fx-ms-opt{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r4);
+  cursor:pointer;font-size:14px;font-weight:500;color:var(--text);
+}
+.fx-ms-opt:hover{background:var(--stone20);}
+.fx-ms-opt input{width:14px;height:14px;accent-color:var(--purple);flex-shrink:0;cursor:pointer;margin:0;}
+.fx-ms-opt-label{flex:1;line-height:1.2;}
+.fx-ms-opt .fx-badge{margin-left:auto;}
+.fx-ms-adv{
+  display:flex;align-items:center;gap:8px;width:100%;margin-top:4px;padding:10px 10px 8px;
+  border:none;border-top:1px solid var(--border);background:none;font-family:var(--font);
+  font-size:13px;font-weight:500;color:var(--text);cursor:pointer;border-radius:0 0 var(--r4) var(--r4);
+}
+.fx-ms-adv:hover{background:var(--stone20);color:var(--purple);}
+.fx-ms-adv svg{color:var(--muted);flex-shrink:0;}
 /* Alert tones */
 .fx-alert{border-radius:var(--r8);padding:12px 16px;margin-bottom:16px;border:1px solid var(--border);font-size:14px;line-height:1.55;}
 .fx-alert-body{color:var(--text);}
@@ -1400,8 +1531,13 @@ td.aitd.aitd-rejected{background:#fff8f8;}
   font-size:13px;font-weight:600;color:var(--purple);cursor:pointer;font-family:var(--font);
   transition:background .12s,border-color .12s;
 }
-.recon-todo-btn:hover{background:var(--brand-subtle);border-color:var(--lavender);}
-/* Tabs — Feelix underline pattern */
+.rev-mod-row.is-focus{box-shadow:inset 3px 0 0 var(--purple);background:var(--brand-subtle);}
+.all-tbl tr.tr-focus{box-shadow:inset 3px 0 0 var(--purple);background:var(--brand-subtle);}
+.rev-focus-banner{
+  display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;
+  background:var(--info-bg);border:1px solid #B8DFEF;border-radius:var(--r8);font-size:13px;line-height:1.45;color:var(--text);
+}
+.rev-focus-banner strong{font-family:var(--font-heading);font-weight:600;}
 .tab:disabled{opacity:.45;cursor:not-allowed;color:var(--muted);}
 .fx-tab-count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 6px;border-radius:var(--r4);font-size:11px;font-weight:600;background:var(--brand-subtle);color:var(--purple);}
 .tab.act .fx-tab-count{background:var(--purple);color:#fff;}
@@ -1623,7 +1759,8 @@ const MEMORY_INIT = [
   {id:203, source:'learned', memType:'match', active:true,
    entity:'Naomi Wilson',
    conditions:[{field:'payee',op:'contains',val:'Naomi Wilson'}],
-   action:{entity:'Naomi Wilson',matchType:'invoice'}, count:3, last:'05/10/2025', note:'Matched to open invoices.'},
+   action:{entity:'Naomi Wilson',matchType:'invoice'}, count:12, last:'05/22/2026', note:'Matched to open invoices.',
+   summary:'When the payee includes "Naomi Wilson", match to open invoices from Naomi Wilson.'},
   {id:204, source:'learned', memType:'category', active:true,
    entity:'Officeworks',
    conditions:[{field:'payee',op:'contains',val:'Officeworks'}],
@@ -1632,7 +1769,8 @@ const MEMORY_INIT = [
   {id:1, source:'rule', memType:'category', active:true,
    entity:'Bunnings',
    conditions:[{field:'payee',op:'contains',val:'Bunnings'}],
-   action:{cat:'Materials',tax:'GST'}, count:7, last:'08/10/2025', note:''},
+   action:{cat:'Materials',tax:'GST'}, count:12, last:'05/22/2026', note:'',
+   summary:'When the payee includes "Bunnings", code as Materials with GST.'},
   {id:8, source:'rule', memType:'match', active:true,
    entity:'Voltex Electrical',
    conditions:[{field:'payee',op:'contains',val:'Voltex'}],
@@ -1645,32 +1783,61 @@ const MEMORY_INIT = [
   {id:301, source:'rejected', memType:'category', active:true,
    entity:'Woolworths Metro',
    conditions:[{field:'payee',op:'contains',val:'Woolworths Metro'},{field:'txRef',op:'is',val:'TXN-00232'}],
-   action:{cat:'Staff meals',tax:''}, count:1, last:'02/10/2025', note:'Coded as "Grocery supplies" instead.'},
+   action:{cat:'Staff meals',tax:''}, count:12, last:'05/22/2026', note:'Coded as "Grocery supplies" instead.',
+   summary:'Never suggest category "Staff meals" for Woolworths Metro transactions.'},
   {id:302, source:'rejected', memType:'match', active:true,
    entity:'Transfer – Business Savings',
    conditions:[{field:'payee',op:'contains',val:'Transfer'}],
-   action:{entity:'BILL-085 · Telstra Internet'}, count:1, last:'30/09/2025', note:'Was an internal transfer, not a bill payment.'},
+   action:{entity:'BILL-085 · Telstra Internet'}, count:12, last:'05/22/2026', note:'Was an internal transfer, not a bill payment.',
+   summary:'Never match Transfer – Business Savings to BILL-085 · Telstra Internet.'},
+  {id:303, source:'rule', memType:'split', active:true,
+   entity:'Officeworks',
+   conditions:[{field:'payee',op:'contains',val:'Officeworks'}],
+   action:{cat:'Office supplies + Materials',tax:'GST'}, count:12, last:'05/22/2026', note:'',
+   summary:'When Officeworks receipts contain multiple line items, split across Office supplies and Materials.'},
+  {id:304, source:'rule', memType:'tax', active:true,
+   entity:'AGL Energy',
+   conditions:[{field:'payee',op:'contains',val:'AGL Energy'}],
+   action:{cat:'Power & gas',tax:'GST'}, count:12, last:'05/22/2026', note:'',
+   summary:'When the payee includes "AGL Energy", assign GST tax code to Power & gas expenses.'},
 ];
 
 // Business context — AI's prose understanding of the business
 const BUSINESS_CONTEXT_INIT = {
-  lastUpdated: '2 hours ago',
+  lastUpdated: 'just now',
   sections: [
-    { id:'overview', title:'Business overview',
-      text:'This business operates in trade and professional services, processing around 40–60 transactions per month. MYOB has identified consistent patterns across recurring suppliers, regular utility payments, and monthly software subscriptions.' },
-    { id:'suppliers', title:'Supplier patterns',
-      text:'AGL Energy transactions are coded to Power & gas (GST). Officeworks purchases go to Office supplies. Bunnings is consistently coded to Materials (GST) based on a saved rule. Canva Pro is coded to Design software. Naomi Wilson invoices are matched to open invoices automatically. Energy Australia transactions are treated the same as AGL Energy.' },
-    { id:'tax', title:'Tax preferences',
-      text:'Most transactions use GST. N-T is applied to internal transfers and owner drawings. Fresh food and basic groceries from supermarkets are flagged for manual review as they may qualify for GST-free coding.' },
-    { id:'matching', title:'Matching preferences',
-      text:'Open invoices from Naomi Wilson are prioritised for automatic matching. Regular bill payments from Voltex Electrical are matched to open bills. MYOB will suggest a match when confidence is high but won\'t auto-apply for new or unfamiliar suppliers.' },
-    { id:'exclusions', title:'What AI won\'t touch',
-      text:'Transfers between the business savings account and main operating account are never auto-matched. Woolworths Metro transactions are flagged for manual review as coding varies. The transaction labelled "Business Savings" is excluded from bill matching.' },
+    { id:'company', title:'Company profile',
+      text:'Eco Electrical Co is an electrical contracting business based in Western Sydney, with 12 field electricians and 3 office staff. Key contacts for approvals are owner Emma Ellis and office manager Lila Martinez.' },
+    { id:'industry', title:'Industry context',
+      text:'The business operates in residential and light commercial electrical work — switchboard upgrades, fit-outs, and maintenance contracts. Revenue comes from invoiced jobs and progress payments; materials are purchased from trade suppliers like Bunnings and Middendorp.' },
+    { id:'employees', title:'Employee information',
+      text:'Field staff include licensed electricians and apprentices; office staff handle invoicing and scheduling. Most staff are full-time; payroll runs fortnightly. Job costing uses project codes like ECO-0231 and ECO-0234.' },
+    { id:'financial', title:'Financial preferences',
+      text:'Bank transactions are reconciled daily. Materials and trade supplies are coded to Materials (GST); subcontractor payments match open bills. Invoices over $2,500 require owner review before acceptance.' },
+    { id:'goals', title:'Business goals and working style',
+      text:'The business prioritises accurate job costing and BAS compliance. AI assists with receipt matching and GST coding; Emma prefers to review unfamiliar suppliers manually before rules are saved.' },
   ]
 };
 
 // Activity history per memory/rule entry — keyed by memory id
 const RULE_ACTIVITY = {
+  2: [ // Bunnings suggested rule
+    {date:'05/10/2025',time:'10:42am',userType:'user',user:'Lila Martinez',action:'Accepted AI suggestion',detail:'05/10/25 Bunnings Job ECO-0231 · $247.20',txRef:'TXN-00236'},
+    {date:'05/10/2025',time:'10:40am',userType:'system',user:'Smart Banking',action:'Suggested category from pattern',detail:'Materials · GST',txRef:'TXN-00236'},
+    {date:'04/10/2025',time:'3:18pm',userType:'user',user:'Lila Martinez',action:'Accepted AI suggestion',detail:'04/10/25 Bunnings receipt in · $247.20',txRef:'TXN-00230'},
+    {date:'01/10/2025',time:'11:00am',userType:'system',user:'Smart Banking',action:'Pattern surfaced as suggested rule',detail:'Description contains "Bunnings"',txRef:null},
+  ],
+  5: [ // Naomi Wilson suggested rule
+    {date:'06/10/2025',time:'2:05pm',userType:'user',user:'Lila Martinez',action:'Accepted AI suggestion',detail:'Match to INV-1234 · Naomi Wilson · $5,200',txRef:'TXN-00235'},
+    {date:'05/10/2025',time:'3:40pm',userType:'user',user:'Lila Martinez',action:'Accepted AI suggestion',detail:'Match to open invoice INV-1234',txRef:'TXN-00235'},
+    {date:'05/10/2025',time:'3:38pm',userType:'system',user:'Smart Banking',action:'Pattern detected from accepted matches',detail:'Naomi Wilson → Open invoice',txRef:'TXN-00235'},
+    {date:'28/09/2025',time:'9:30am',userType:'system',user:'Smart Banking',action:'Pattern surfaced as suggested rule',detail:'Description contains "Naomi Wilson"',txRef:null},
+  ],
+  10: [ // SafeWork suggested rule
+    {date:'29/09/2025',time:'4:12pm',userType:'user',user:'Lila Martinez',action:'Approved auto-match',detail:'SafeWork NSW Bill #086 · $445.00',txRef:'TXN-00244'},
+    {date:'08/09/2025',time:'11:05am',userType:'system',user:'Smart Banking',action:'Auto-matched to bill',detail:'BILL-086 · SafeWork supplies',txRef:'TXN-00244'},
+    {date:'01/09/2025',time:'2:00pm',userType:'system',user:'Smart Banking',action:'Pattern surfaced as suggested rule',detail:'Description contains "SafeWork"',txRef:null},
+  ],
   1: [ // Bunnings rule
     {date:'10/10/2025',time:'2:14pm',userType:'system',user:'Smart Banking',action:'Auto-matched to bank transaction',detail:'10/10/25 BUNNINGS #4021 $89.95',txRef:'TXN-00233'},
     {date:'08/10/2025',time:'11:30am',userType:'user',user:'Lila Martinez',action:'Approved auto-match',detail:'08/10/25 BUNNINGS WAREHOUSE $234.50',txRef:'TXN-00219'},
@@ -1781,11 +1948,15 @@ const S = {
   acctMenuFrom:null,   // 'page' | 'scroll'
   filterStatus:'all', filterSource:'all',
   asideId:null, asideTab:'matches', asideFrom:'all',
+  asideRule:null,         // null | {source:'suggested'|'memory', id:number}
   editingCard:null,       // {txId, field}
   reviewView:'table',      // 'table' | 'modern'
   reviewSel: new Set(),   // selected tx ids in table view
-  revFilter: 'all',  // all | ready | newcontext | receipt | match | gst | blocked
-  preBasMode: false,
+  revFilter: 'all',  // legacy single-filter key for deep links
+  revFilters: null,  // Set of active filter keys; null → derive from revFilter
+  revFilterMenuOpen: false,
+  reconReceiptFocus: false, // true when navigated from receipt to-do Review
+  preBasMode: false, // legacy; use S.tab==='prebas'
   asideSearch:'',         // search query in Match tab
   attachExpanded:false,   // attachment panel open state
   previewFile:null,       // {name, txId} for preview overlay
@@ -1810,7 +1981,8 @@ const S = {
   attachPreview: null,    // null | {txId, attId} — hover preview
   attachModal: null,      // null | {txId, attId} — full modal
   hubSection: null,       // null | settings hub sub-section key
-  stgSection:null,        // null=overview | 'all' | 'attachments' | 'taxcodes' | 'bizcxt'
+  memoryEnabled: true,
+  stgSection:null,        // null=AI overview | 'all'/'automatch' | 'memory'/'bizcxt' | 'attachments' | 'taxcodes'
   stgTab:'rules',         // 'rules' | 'clearlist' | 'context'
   stgFilter:{type:'all', entity:'all', clType:'all', ctxType:'all'},
   context: CONTEXT_INIT.map(e=>({...e})),
@@ -1901,17 +2073,149 @@ function txReadyScore(tx){
   return ready/active.length;
 }
 function txIsBlocked(tx){return txDimensions(tx).some(d=>dimStatus(tx,d)==='blocked')||tx.status==='awaiting';}
+function txHasReceiptMatchSuggestions(tx){
+  if(txReviewDone(tx)) return false;
+  const hasAttach=tx.attach>0||dimStatus(tx,'receipt')==='pending'||dimStatus(tx,'receipt')==='changed';
+  if(!hasAttach) return false;
+  return ['cat','match','tax','file'].some(f=>{const a=tx.ai[f];return a&&a.val&&a.st==='idle';})
+    ||(tx.attach>0&&ATTACH_DATA[tx.id]);
+}
+function reconReceiptReviewList(inbox=reviewInboxList()){
+  return inbox.filter(txHasReceiptMatchSuggestions);
+}
 function filterReviewList(list,filter){
   if(filter==='all') return list;
   if(filter==='ready') return list.filter(txIsReadyForBulk);
   if(filter==='newcontext') return list.filter(txHasChanged);
   if(filter==='receipt') return list.filter(t=>dimStatus(t,'receipt')==='pending'||dimStatus(t,'receipt')==='changed');
+  if(filter==='receiptmatch') return list.filter(txHasReceiptMatchSuggestions);
   if(filter==='match') return list.filter(t=>dimStatus(t,'match')==='pending');
   if(filter==='gst') return list.filter(t=>dimStatus(t,'gst')==='pending'||dimStatus(t,'gst')==='changed');
   if(filter==='blocked') return list.filter(txIsBlocked);
   return list;
 }
 function filterCount(filter){return filterReviewList(reviewInboxList(),filter).length;}
+function getRevFilters(){
+  if(!S.revFilters){
+    S.revFilters=new Set([S.revFilter||'all']);
+  }
+  return S.revFilters;
+}
+function syncRevFilterLegacy(){
+  const f=getRevFilters();
+  if(f.size===1) S.revFilter=[...f][0];
+  else if(f.has('all')||!f.size) S.revFilter='all';
+  else S.revFilter='multi';
+}
+function filterReviewListMulti(list,filters){
+  const fs=filters instanceof Set?filters:new Set([filters]);
+  if(fs.has('all')||!fs.size) return list;
+  const ids=new Set();
+  fs.forEach(f=>filterReviewList(list,f).forEach(t=>ids.add(t.id)));
+  return list.filter(t=>ids.has(t.id));
+}
+function filterReviewInbox(list){
+  return filterReviewListMulti(list,getRevFilters());
+}
+function revFilterIsReceiptMatchFocus(){
+  const f=getRevFilters();
+  return f.has('receiptmatch')&&!f.has('all');
+}
+function revFilterDefs(inbox){
+  return [
+    {v:'all',l:'All',ct:inbox.length},
+    {v:'ready',l:'Ready',ct:filterCount('ready')},
+    {v:'newcontext',l:'AI updated',ct:filterCount('newcontext')},
+    {v:'receiptmatch',l:'Receipt matches',ct:filterCount('receiptmatch')},
+    {v:'receipt',l:'Receipt',ct:filterCount('receipt')},
+    {v:'match',l:'Match',ct:filterCount('match')},
+    {v:'gst',l:'GST',ct:filterCount('gst')},
+    {v:'blocked',l:'Blocked',ct:filterCount('blocked')},
+  ];
+}
+function revFilterPillLabel(defs){
+  const f=getRevFilters();
+  if(f.has('all')||!f.size) return 'All';
+  const active=[...f];
+  if(active.length===1){
+    const d=defs.find(x=>x.v===active[0]);
+    return d?d.l:'Filtered';
+  }
+  if(active.length===2){
+    const a=defs.find(x=>x.v===active[0])?.l||active[0];
+    const b=defs.find(x=>x.v===active[1])?.l||active[1];
+    return `${a}, ${b}`;
+  }
+  return `${active.length} filters`;
+}
+function revFilterIsChecked(v){
+  const f=getRevFilters();
+  return f.has('all')?v==='all':f.has(v);
+}
+function toggleRevFilter(v){
+  if(!S.revFilters) S.revFilters=new Set([S.revFilter||'all']);
+  if(v==='all'){
+    S.revFilters=new Set(['all']);
+  }else{
+    S.revFilters.delete('all');
+    if(S.revFilters.has(v)) S.revFilters.delete(v);
+    else S.revFilters.add(v);
+    if(!S.revFilters.size) S.revFilters.add('all');
+  }
+  syncRevFilterLegacy();
+  if(!revFilterIsReceiptMatchFocus()) S.reconReceiptFocus=false;
+  S.reviewSel=new Set();
+  render();
+}
+function toggleRevFilterMenu(ev){
+  if(ev) ev.stopPropagation();
+  S.revFilterMenuOpen=!S.revFilterMenuOpen;
+  render();
+}
+function closeRevFilterMenu(){
+  if(S.revFilterMenuOpen){
+    S.revFilterMenuOpen=false;
+    render();
+  }
+}
+function buildRevFilterDropdown(inbox){
+  const defs=revFilterDefs(inbox);
+  const f=getRevFilters();
+  const label=revFilterPillLabel(defs);
+  const filtered=filterReviewInbox(inbox);
+  const isAll=f.has('all')||!f.size;
+  const badgeCount=isAll?inbox.length:filtered.length;
+  return `
+  <div class="fx-pill-group fx-rev-filter-bar" role="group" aria-label="Review filters" data-recon-target="review-list">
+    <div class="fx-ms-pill-wrap">
+      <button type="button" class="fx-ms-pill fx-pill${!isAll?' fx-pill-checked':''}" onclick="toggleRevFilterMenu(event)" aria-expanded="${S.revFilterMenuOpen?'true':'false'}" aria-haspopup="listbox">
+        <span class="fx-pill-label">${label}</span>
+        <span class="fx-badge">${badgeCount}</span>
+        <span class="fx-ms-pill-chev" aria-hidden="true">▾</span>
+      </button>
+      ${S.revFilterMenuOpen?`
+      <div class="fx-ms-menu" role="listbox" aria-multiselectable="true" onclick="event.stopPropagation()">
+        ${defs.map(d=>`
+        <label class="fx-ms-opt" role="option" aria-selected="${revFilterIsChecked(d.v)}">
+          <input type="checkbox" ${revFilterIsChecked(d.v)?'checked':''} onchange="toggleRevFilter('${d.v}')">
+          <span class="fx-ms-opt-label">${d.l}</span>
+          <span class="fx-badge">${d.ct}</span>
+        </label>`).join('')}
+        <button type="button" class="fx-ms-adv" onclick="closeRevFilterMenu();goPreBas()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><line x1="1" y1="3.5" x2="12" y2="3.5"/><line x1="3" y1="6.5" x2="10" y2="6.5"/><line x1="5" y1="9.5" x2="8" y2="9.5"/></svg>
+          Advanced…
+        </button>
+      </div>`:''}
+    </div>
+  </div>`;
+}
+if(!window._revFilterMenuBound){
+  window._revFilterMenuBound=true;
+  document.addEventListener('click',(e)=>{
+    if(e.target.closest('.fx-ms-pill-wrap')) return;
+    closeRevFilterMenu();
+  });
+}
 function sortReviewList(list){
   return [...list].sort((a,b)=>{
     const da=txReviewDone(a)?1:0, db=txReviewDone(b)?1:0;
@@ -1935,11 +2239,18 @@ function buildReadinessStrip(tx){
     return `<span class="fx-label fx-label-boxed fx-label-${tone[s]||'neutral'}" title="${labels[d]}">${labels[d]}</span>`;
   }).join('')}</div>`;
 }
-function setRevFilter(f){S.revFilter=f;S.reviewSel=new Set();render();}
+function setRevFilter(f){
+  S.revFilters=new Set([f]);
+  S.revFilter=f;
+  if(f!=='receiptmatch') S.reconReceiptFocus=false;
+  S.reviewSel=new Set();
+  S.revFilterMenuOpen=false;
+  render();
+}
 function setReviewView(v){S.reviewView=v;render();}
 function goActivity(){S.page='activity';S.tab='all';closeAside();render();}
-function goPreBas(){S.page='prebas';S.preBasMode=true;S.revFilter='gst';closeAside();render();}
-function goTransactions(){S.page='main';S.preBasMode=false;render();}
+function goPreBas(){S.page='main';S.tab='prebas';S.revFilters=new Set(['gst']);S.revFilter='gst';S.reconReceiptFocus=false;S.reviewSel=new Set();S.revFilterMenuOpen=false;closeAside();render();}
+function goTransactions(){S.page='main';S.tab='all';closeAside();render();}
 
 
 /* ═══════════════════════════════════════════════
@@ -1947,7 +2258,11 @@ function goTransactions(){S.page='main';S.preBasMode=false;render();}
 ═══════════════════════════════════════════════ */
 function goSettings(){S.page='settings';S.stgSection=null;S.ruleWiz=null;S.asideId=null;S.hubSection=null;closeAside();render();}
 function goStgSection(sec){S.stgSection=sec;render();}
-function goStgBack(){S.stgSection=null;render();}
+function goStgBack(){
+  if(S.stgSection) S.stgSection=null;
+  else goHub();
+  render();
+}
 function goMain(){S.page='main';render();}
 
 /* ── Rule wizard ── */
@@ -2447,7 +2762,7 @@ function acceptAllReadyInAside(txId){
 }
 function acceptAndNext(txId){
   acceptAllReadyInAside(txId);
-  const list=sortReviewList(filterReviewList(reviewInboxList(),S.revFilter));
+  const list=sortReviewList(filterReviewInbox(reviewInboxList()));
   const idx=list.findIndex(t=>t.id===txId);
   const next=list.slice(idx+1).find(t=>t.status!=='coded'&&t.status!=='accepted')||list.find(t=>t.status!=='coded'&&t.status!=='accepted');
   if(next&&next.id!==txId) openAside(next.id,S.asideFrom||'review','matches');
@@ -2460,6 +2775,7 @@ function savePartialAside(txId){
 }
 
 function openAside(id,from='all',tab='matches'){
+  S.asideRule=null;
   S.asideId=id;S.asideFrom=from;S.asideTab=tab;
   S.asideSearch='';
   // Pre-populate AI-suggested match shortlist if not already set
@@ -2480,6 +2796,7 @@ function openAside(id,from='all',tab='matches'){
 }
 function closeAside(){
   S.asideId=null;
+  S.asideRule=null;
   document.getElementById('aside').classList.remove('open');
   document.getElementById('aside-bd').classList.remove('show');
   document.getElementById('content').classList.remove('aside-open');
@@ -2578,8 +2895,8 @@ function saveEditMemory(id){
   if(eNote) m.note=eNote.value.trim();
   S.editingMem=null;render();
 }
-function viewMemory(){S.stgSection='bizcxt';goSettings();}
-function viewAIMemory(){S.stgSection='all';S.memFilter='all';goSettings();}
+function viewMemory(){S.stgSection='memory';goSettings();}
+function viewAIMemory(){S.stgSection='automatch';S.memFilter='all';goSettings();}
 function deleteRule(id){S.rules=S.rules.filter(r=>r.id!==id);render();}
 function toggleRule(id){const r=S.rules.find(r=>r.id===id);if(r)r.active=!r.active;render();}
 
@@ -2587,23 +2904,14 @@ function toggleRule(id){const r=S.rules.find(r=>r.id===id);if(r)r.active=!r.acti
    RENDER
 ═══════════════════════════════════════════════ */
 function render(){
-  const stgTitles={transactions:'Automatch transactions',attachments:'Attachments',taxcodes:'Tax codes',bizcxt:'Business context'};
-  const titles={main:'Banking',settings:S.stgSection?stgTitles[S.stgSection]:'Automatching',hub:'Settings',activity:'Activity',prebas:'Pre-BAS review'};
+  const stgTitles={automatch:'Transaction automatching',all:'Transaction automatching',transactions:'Transaction automatching',memory:'Memory',bizcxt:'Memory',attachments:'Attachments',taxcodes:'BAS'};
+  const titles={main:'Banking',settings:S.stgSection?stgTitles[S.stgSection]:'AI',hub:'Settings',activity:'Activity'};
   document.getElementById('tb-title').textContent=titles[S.page]||'Banking';
   if(S.page==='hub') document.getElementById('content').innerHTML=buildHub();
   else if(S.page==='settings') document.getElementById('content').innerHTML=buildSettings();
   else if(S.page==='activity') document.getElementById('content').innerHTML=buildActivityPage();
-  else if(S.page==='prebas') document.getElementById('content').innerHTML=buildPreBasPage();
   else document.getElementById('content').innerHTML=buildMain();
-  // Inject rule detail modal if open
-  let existing=document.getElementById('rdm-root');
-  if(existing) existing.remove();
-  if(S.ruleDetail){
-    const div=document.createElement('div');
-    div.id='rdm-root';
-    div.innerHTML=buildRuleDetailModal();
-    document.body.appendChild(div);
-  }
+  syncAsideOpen();
   let attExisting=document.getElementById('att-modal-root');
   if(attExisting) attExisting.remove();
   if(S.attachModal){
@@ -2618,16 +2926,23 @@ function render(){
 
 function scrollCtxTaskLabel(){
   if(S.tab==='all') return {primary:'All transactions',detail:''};
+  if(S.tab==='prebas') return {primary:'Pre-BAS review',detail:''};
   const filterLabels={
     all:{primary:'Review inbox',detail:''},
     ready:{primary:'Review',detail:'Ready to accept'},
     newcontext:{primary:'Review',detail:'AI updated'},
-    receipt:{primary:'Review',detail:'Receipts'},
+    receipt:{primary:'Review',detail:'Receipt'},
+    receiptmatch:{primary:'Review',detail:'Receipt matches'},
     match:{primary:'Review',detail:'Matches'},
     gst:{primary:'Review',detail:'GST'},
     blocked:{primary:'Review',detail:'Blocked'},
+    multi:{primary:'Review',detail:'Filtered'},
   };
-  return filterLabels[S.revFilter]||filterLabels.all;
+  const f=getRevFilters();
+  if(f.has('all')||!f.size) return filterLabels.all;
+  if(f.size===1) return filterLabels[[...f][0]]||filterLabels.all;
+  const parts=[...f].map(k=>filterLabels[k]?.detail||k);
+  return {primary:'Review',detail:parts.join(', ')};
 }
 function buildRevModHeadHtml(){
   return `
@@ -2653,7 +2968,8 @@ function groupReviewByDate(list){
 function buildModernReviewRow(tx,sel){
   const isDone=txReviewDone(tx);
   const exitActive=S.rowExit?.txId===tx.id;
-  const rowCls=['rev-mod-row',isDone?'is-done':'',revExitRowCls(tx.id,txHasChanged(tx),true)].filter(Boolean).join(' ');
+  const isFocus=revFilterIsReceiptMatchFocus()&&!isDone;
+  const rowCls=['rev-mod-row',isDone?'is-done':'',isFocus?'is-focus':'',revExitRowCls(tx.id,txHasChanged(tx),true)].filter(Boolean).join(' ');
   const exitStyle=revExitStyle(tx.id);
   const amtCls=tx.amount<0?'amt-neg':'amt-pos';
   const doneBadge=isDone?`<span class="rev-mod-done-badge"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>Accepted</span>`:'';
@@ -2679,13 +2995,13 @@ function buildModernReviewRow(tx,sel){
 function reviewTableColgroup(){
   return `<colgroup>
     <col style="width:4%">
+    <col style="width:8%">
+    <col style="width:22%">
     <col style="width:9%">
-    <col style="width:24%">
-    <col style="width:10%">
+    <col style="width:12%">
+    <col style="width:8%">
     <col style="width:13%">
-    <col style="width:9%">
-    <col style="width:15%">
-    <col style="width:16%">
+    <col style="width:24%">
   </colgroup>`;
 }
 function buildReviewTableHeadRow({sticky=false,checkbox=false,sortIco='',filtered=[],sel=new Set()}={}){
@@ -2839,7 +3155,7 @@ function buildMain(){
     <div class="scroll-ctx-anchor" data-scroll-ctx-anchor aria-hidden="true"></div>
     ${buildPageHeader()}
     ${buildTabs()}
-    ${S.tab==='all' ? buildAllTab() : buildReviewTab()}
+    ${S.tab==='all'?buildAllTab():S.tab==='prebas'?buildPreBasTab():buildReviewTab()}
   `;
 }
 
@@ -2875,14 +3191,21 @@ function buildPageHeader(){
 }
 
 /* ── tabs ────────────────────────────────────── */
+function preBasCount(){
+  const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
+  return preBasList().filter(bankOk).length;
+}
 function buildTabs(){
   const rc=reviewCount();
   const reviewLabel=rc?`Review <span class="fx-tab-count">${rc}</span>`:'Review';
+  const pbc=preBasCount();
+  const preBasLabel=pbc?`Pre-BAS <span class="fx-tab-count">${pbc}</span>`:'Pre-BAS';
   return `
   <div class="tabs-wrap" style="margin-bottom:20px">
     <div class="tabs" role="tablist">
       <button type="button" role="tab" class="tab${S.tab==='all'?' act':''}" aria-selected="${S.tab==='all'}" onclick="setTab('all')">All</button>
       <button type="button" role="tab" class="tab${S.tab==='review'?' act':''}" aria-selected="${S.tab==='review'}" onclick="setTab('review')">${reviewLabel}</button>
+      <button type="button" role="tab" class="tab${S.tab==='prebas'?' act':''}" aria-selected="${S.tab==='prebas'}" onclick="setTab('prebas')">${preBasLabel}</button>
       <button type="button" role="tab" class="tab" aria-selected="false" disabled>Reconciled</button>
     </div>
   </div>`;
@@ -2894,10 +3217,7 @@ function buildTabs(){
 function reconTodoCounts(){
   const inbox=reviewInboxList();
   const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
-  const receiptIds=new Set();
-  filterReviewList(inbox,'receipt').filter(bankOk).forEach(t=>receiptIds.add(t.id));
-  filterReviewList(inbox,'newcontext').filter(bankOk).forEach(t=>receiptIds.add(t.id));
-  const receipts=receiptIds.size;
+  const receipts=reconReceiptReviewList(inbox).filter(bankOk).length;
   const bas=preBasList().filter(bankOk).length;
   const suggestedRules=S.rules.filter(r=>r.suggested&&r.active!==false).length;
   const learnedPatterns=S.memory.filter(m=>m.source==='learned'&&m.active).length;
@@ -2913,14 +3233,22 @@ function reconTodoScrollTo(target){
     scrollRoot.scrollTo({top:Math.max(0,top),behavior:'smooth'});
   }));
 }
+function reconTodoScrollToFirstRow(){
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const scrollRoot=document.querySelector('.main');
+    const row=document.querySelector('.rev-mod-row.is-focus');
+    if(!row||!scrollRoot) return;
+    const top=row.getBoundingClientRect().top-scrollRoot.getBoundingClientRect().top+scrollRoot.scrollTop-80;
+    scrollRoot.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  }));
+}
 function reconTodoReview(kind){
   if(kind==='receipts'){
-    S.page='main';S.preBasMode=false;S.tab='review';S.revFilter='receipt';S.reviewSel=new Set();closeAside();render();
+    S.page='main';S.tab='review';S.revFilters=new Set(['receiptmatch']);S.revFilter='receiptmatch';S.reviewView='modern';S.reconReceiptFocus=true;S.reviewSel=new Set();S.revFilterMenuOpen=false;closeAside();render();
     reconTodoScrollTo('review-list');
-    const first=filterReviewList(reviewInboxList(),'receipt')[0];
-    if(first) openAside(first.id,'review','matches');
+    reconTodoScrollToFirstRow();
   }else if(kind==='bas'){
-    S.page='prebas';S.preBasMode=true;S.revFilter='gst';closeAside();render();
+    goPreBas();
     reconTodoScrollTo('prebas-list');
   }else if(kind==='patterns'){
     S.memFilter='all';
@@ -2949,7 +3277,7 @@ function buildReconTodo(){
     cards.push(buildReconTodoCard({
       icoCls:'recon-todo-ico--receipt',
       icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h10a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V5a2 2 0 0 1 2-2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>',
-      title:`${receipts} new receipt${receipts!==1?'s':''} matched to your bank feed`,
+      title:`${receipts} new receipt${receipts!==1?'s':''} matched to your transactions in the bank feed`,
       sub:'We\'ve derived enough from these matches to suggest records or categories.',
       action:'receipts',
     }));
@@ -3058,9 +3386,10 @@ function buildAllTab(){
   return `
   <div class="fade-in">
     ${summaryBanner}
-    ${buildFilterBar()}
-    <div class="card" style="padding:0;overflow:hidden">
-      <table class="all-tbl">
+    <div class="tx-table-shell">
+      ${buildFilterBar()}
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="all-tbl">
         <thead>
           <tr>
             <th style="width:36px;padding:8px 12px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple)"></th>
@@ -3099,30 +3428,6 @@ function buildAllTab(){
         </tbody>
       </table>
     </div>
-  </div>`;
-}
-
-function buildBalanceBar(){
-  const active=BANKS.find(b=>b.id===S.bankFilter);
-  return `
-  <div class="bal">
-    <div class="bal-top">
-      <span class="bal-label">${active.id==='all'?'Combined balance':'Balance'}</span>
-      <span class="bal-val">$${active.bal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}</span>
-      <span class="bal-sep">|</span>
-      <span class="bal-label">MYOB balance</span>
-      <span class="bal-val">$${(active.bal-0.20).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}</span>
-      <span class="bal-diff">($0.20)</span>
-      <span style="width:14px;height:14px;border-radius:50%;border:1.5px solid var(--red);color:var(--red);display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;cursor:help;" title="Difference">i</span>
-    </div>
-    <div class="bal-accounts">
-      ${BANKS.map(b=>`
-        <button class="acct-chip${S.bankFilter===b.id?' sel':''}" onclick="setBankFilter('${b.id}')">
-          <span class="acct-dot" style="background:${b.dot}"></span>
-          ${b.label}
-          <span style="font-size:10px;color:inherit;opacity:.7">$${b.bal.toLocaleString('en-AU',{minimumFractionDigits:2})}</span>
-        </button>
-      `).join('')}
     </div>
   </div>`;
 }
@@ -3222,9 +3527,9 @@ function buildReviewRowActions(tx, exitActive){
   const hasSuggestions=['cat','match','tax','file'].some(f=>{const a=tx.ai[f];return a&&a.val&&a.st==='idle';})||(tx.attach>0&&ATTACH_DATA[tx.id]);
   return `
   <div class="rev-row-actions" onclick="event.stopPropagation()">
-    <button class="fx-btn fx-btn-success fx-btn-sm" ${hasSuggestions&&!exitActive?'':'disabled'} onclick="event.stopPropagation();acceptAllTx(${tx.id})" title="Accept all AI suggestions">Accept all</button>
-    <button class="fx-btn fx-btn-neutral-ghost fx-btn-sm" ${exitActive?'disabled':''} onclick="openAside(${tx.id},'review','matches')">Review</button>
-    <button class="btn-rev-reject" ${exitActive?'disabled':''} onclick="rejectAllSuggestions(${tx.id})" title="Clear AI suggestions">Reject</button>
+    <button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${hasSuggestions&&!exitActive?'':'disabled'} onclick="event.stopPropagation();acceptAllTx(${tx.id})" title="Accept all AI suggestions">Accept all</button>
+    <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" ${exitActive?'disabled':''} onclick="event.stopPropagation();openAside(${tx.id},'review','matches')">Review</button>
+    <button type="button" class="btn-rev-reject" ${exitActive?'disabled':''} onclick="event.stopPropagation();rejectAllSuggestions(${tx.id})" title="Clear AI suggestions">Reject</button>
   </div>`;
 }
 function revModConfHtml(conf,why){
@@ -3303,30 +3608,43 @@ function revModManualField(label,placeholder,onclick,selected){
     <span class="rev-mod-manual-value${selected?'':' is-placeholder'}">${val}</span>
   </button>`;
 }
-function revModFileThumbBtn(txId,previewImg,badge='',linked=false){
-  const title=linked?'View linked receipt':'Review & link receipt';
+function revModFileCount(tx){
+  return Math.max(tx.attach||0, ATTACH_DATA[tx.id]?.length||0);
+}
+function revModFileThumbBtn(txId,previewImg,fileCount=0,linked=false){
+  const title=linked?'View linked receipt':'View receipt';
+  const badge=fileCount>=1?`<span class="rev-mod-file-badge" aria-label="${fileCount} file${fileCount!==1?'s':''} attached">${fileCount}</span>`:'';
   const corner=linked
-    ?`<span class="rev-mod-file-linked-ico" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></span>`
-    :`<span class="rev-mod-file-link-ico" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.2 7.8l-3-3a1.8 1.8 0 012.6-2.6l3 3"/><path d="M7.8 6.2l3 3a1.8 1.8 0 01-2.6 2.6l-3-3"/></svg></span>`;
+    ?`<span class="rev-mod-file-linked-ico" aria-hidden="true" title="Linked to transaction"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="2,6 5,9 10,3"/></svg></span>`
+    :'';
   return `<button type="button" class="rev-mod-file-thumb${linked?' rev-mod-file-thumb--linked':''}" onclick="event.stopPropagation();openAttachModal(${txId},0)" title="${title}" aria-label="${title}"><span class="rev-mod-file-thumb-img"><img src="${previewImg}" alt="Receipt preview"></span>${badge}${corner}</button>`;
+}
+function revModFileAddBtn(txId){
+  return `<button type="button" class="rev-mod-file-add" onclick="event.stopPropagation();openInlineAttach(${txId})" title="Upload receipt" aria-label="Upload receipt"><svg width="12" height="12" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12V4"/><path d="M6 7l3-3 3 3"/><path d="M3 14h12"/></svg></button>`;
 }
 function revModFileManual(tx){
   const previewImg='assets/receipt-officeworks.png';
-  if(tx.attach>0){
-    return revModFileThumbBtn(tx.id,previewImg);
+  const fileCount=revModFileCount(tx);
+  if(fileCount>0){
+    return `<div class="rev-mod-file-wrap rev-mod-file-wrap--linked">
+      ${revModFileThumbBtn(tx.id,previewImg,fileCount)}
+      ${revModFileAddBtn(tx.id)}
+    </div>`;
   }
   return `<button type="button" class="rev-mod-upload" onclick="event.stopPropagation();openInlineAttach(${tx.id})" title="Find or upload receipt" aria-label="Find or upload receipt"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12V4"/><path d="M6 7l3-3 3 3"/><path d="M3 14h12"/></svg></button>`;
 }
 function revModTaxManual(tx){
   const f=tx.ai.tax, sel=f?.val||'';
-  const pillLabels={GST:'GST',CAP:'CAP','N-T':'N-T'};
-  const pills=Object.keys(pillLabels).map(v=>`<button type="button" class="rev-mod-pill${sel===v?' is-active':''}" onclick="event.stopPropagation();setInlineTax(${tx.id},'${v}')">${pillLabels[v]}</button>`).join('');
-  return `<div class="rev-mod-manual-field rev-mod-manual-field--tax${sel?' rev-mod-manual-field--filled':''}" onclick="event.stopPropagation()">
-    <div class="rev-mod-tax-pills">${pills}</div>
-  </div>`;
+  return `<select class="rev-mod-inline-sel${sel?' is-filled':' is-empty'}" onclick="event.stopPropagation()" onchange="setInlineTax(${tx.id},this.value)" aria-label="Select tax code">
+    <option value="" disabled${!sel?' selected':''}>Tax</option>
+    <option value="GST"${sel==='GST'?' selected':''}>GST</option>
+    <option value="N-T"${sel==='N-T'?' selected':''}>N-T</option>
+    <option value="CAP"${sel==='CAP'?' selected':''}>CAP</option>
+  </select>`;
 }
 function revModMatchManual(tx){
   return `<button type="button" class="rev-mod-manual-field rev-mod-manual-field--action" onclick="event.stopPropagation();openAside(${tx.id},'review','matches')">
+    <span class="rev-mod-manual-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="4.5"/><line x1="9.5" y1="9.5" x2="13" y2="13"/></svg></span>
     <span class="rev-mod-manual-value is-placeholder">Find a match</span>
   </button>`;
 }
@@ -3335,18 +3653,17 @@ function revModCombo(label,onclick,wide){
 }
 function revModFileCell(tx){
   const f=tx.ai.file, att=ATTACH_DATA[tx.id]?.[0], previewImg='assets/receipt-officeworks.png';
+  const fileCount=revModFileCount(tx);
   if(f&&f.st==='accepted'){
-    const badge=tx.attach>1?`<span class="rev-mod-file-badge">${tx.attach}</span>`:'';
-    return `<div class="rev-mod-file-wrap">
-      ${revModFileThumbBtn(tx.id,previewImg,badge,true)}
-      <div class="rev-mod-agent-acc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>Linked</div>
+    return `<div class="rev-mod-file-wrap rev-mod-file-wrap--linked">
+      ${revModFileThumbBtn(tx.id,previewImg,fileCount,true)}
+      ${revModFileAddBtn(tx.id)}
     </div>`;
   }
   if(revModFileSuggest(tx)){
     const conf=f?.conf||att?.confidence||88;
-    const badge=tx.attach>1?`<span class="rev-mod-file-badge">${tx.attach}</span>`:'';
     return `<div class="rev-mod-file-wrap">
-      ${revModFileThumbBtn(tx.id,previewImg,badge)}
+      ${revModFileThumbBtn(tx.id,previewImg,fileCount)}
       ${revModConfHtml(conf,getWhyFile(tx))}
     </div>`;
   }
@@ -3425,17 +3742,8 @@ function buildModernReviewList(filtered, sel){
 }
 function buildReviewTab(){
   const inbox=sortReviewList(reviewInboxList());
-  const filtered=sortReviewList(filterReviewList(inbox,S.revFilter));
+  const filtered=sortReviewList(filterReviewInbox(inbox));
   const readyCount=filterCount('ready');
-  const filters=[
-    {v:'all',l:'All',ct:inbox.length},
-    {v:'ready',l:'Ready',ct:filterCount('ready')},
-    {v:'newcontext',l:'AI updated',ct:filterCount('newcontext')},
-    {v:'receipt',l:'Receipt',ct:filterCount('receipt')},
-    {v:'match',l:'Match',ct:filterCount('match')},
-    {v:'gst',l:'GST',ct:filterCount('gst')},
-    {v:'blocked',l:'Blocked',ct:filterCount('blocked')},
-  ];
   const sel=S.reviewSel;
   const sortIco=`<span class="sort-ico">↕</span>`;
   const bulkBar=sel.size>0?`
@@ -3448,7 +3756,8 @@ function buildReviewTab(){
     const isCtx=txHasChanged(tx);
     const isDone=txReviewDone(tx);
     const exitActive=S.rowExit?.txId===tx.id;
-    const rowCls=[revExitRowCls(tx.id,isCtx,false),isDone?'tr-done':''].filter(Boolean).join(' ');
+    const isFocus=revFilterIsReceiptMatchFocus()&&!isDone;
+    const rowCls=[revExitRowCls(tx.id,isCtx,false),isDone?'tr-done':'',isFocus?'tr-focus':''].filter(Boolean).join(' ');
     const exitStyle=revExitStyle(tx.id);
     return `
     <tr class="${rowCls}" data-exit-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'review','matches')`}" style="cursor:pointer;${exitStyle}">
@@ -3471,7 +3780,7 @@ function buildReviewTab(){
       ${revAttachCell(tx)}
       ${revTaxCell(tx)}
       ${revCodingCell(tx)}
-      <td>${buildReviewRowActions(tx, exitActive)}</td>
+      <td class="col-act" onclick="event.stopPropagation()">${buildReviewRowActions(tx, exitActive)}</td>
     </tr>`;
   }).join(''):`
     <tr><td colspan="8" style="text-align:center;padding:48px;color:var(--muted)">
@@ -3484,36 +3793,38 @@ function buildReviewTab(){
   <div class="fade-in">
     ${buildReconTodo()}
     ${bulkBar}
-    ${buildFilterBar()}
-    <div class="fx-pill-group" role="group" aria-label="Review filters" data-recon-target="review-list">
-      ${filters.map(f=>`<button type="button" class="fx-pill${S.revFilter===f.v?' fx-pill-checked':''}" onclick="setRevFilter('${f.v}')" aria-pressed="${S.revFilter===f.v}"><span class="fx-pill-label">${f.l}</span><span class="fx-badge">${f.ct}</span></button>`).join('')}
-      <button type="button" class="fx-pill fx-pill-advanced" onclick="goPreBas()" title="Advanced filters">
-        <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><line x1="1" y1="3.5" x2="12" y2="3.5"/><line x1="3" y1="6.5" x2="10" y2="6.5"/><line x1="5" y1="9.5" x2="8" y2="9.5"/></svg>
-        <span class="fx-pill-label">Advanced…</span>
-      </button>
-    </div>
-    <div class="rev-toolbar">
-      <div class="rev-view-toggle" role="group" aria-label="Review layout">
-        <button type="button" class="rev-view-btn${S.reviewView==='table'?' act':''}" onclick="setReviewView('table')" aria-pressed="${S.reviewView==='table'}">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1" y="2" width="12" height="2" rx=".5"/><rect x="1" y="6" width="12" height="2" rx=".5"/><rect x="1" y="10" width="12" height="2" rx=".5"/></svg>
-          Table
-        </button>
-        <button type="button" class="rev-view-btn${S.reviewView==='modern'?' act':''}" onclick="setReviewView('modern')" aria-pressed="${S.reviewView==='modern'}">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="1.5" width="4" height="5" rx="1"/><rect x="1.5" y="8.5" width="11" height="1.5" rx=".5"/><rect x="1.5" y="11" width="8" height="1.5" rx=".5"/></svg>
-          Modern
-        </button>
+    ${revFilterIsReceiptMatchFocus()&&filtered.length?`
+    <div class="rev-focus-banner" role="status">
+      <span aria-hidden="true">📎</span>
+      <div><strong>${filtered.length} transaction${filtered.length!==1?'s':''} with receipt attachments</strong>
+      AI has suggested coding for each — accept, reject, or review row by row. Hover a row for quick actions.</div>
+    </div>`:''}
+    <div class="tx-table-shell">
+      ${buildFilterBar()}
+      ${buildRevFilterDropdown(inbox)}
+      <div class="rev-toolbar">
+        <div class="rev-view-toggle" role="group" aria-label="Review layout">
+          <button type="button" class="rev-view-btn${S.reviewView==='table'?' act':''}" onclick="setReviewView('table')" aria-pressed="${S.reviewView==='table'}">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1" y="2" width="12" height="2" rx=".5"/><rect x="1" y="6" width="12" height="2" rx=".5"/><rect x="1" y="10" width="12" height="2" rx=".5"/></svg>
+            Table
+          </button>
+          <button type="button" class="rev-view-btn${S.reviewView==='modern'?' act':''}" onclick="setReviewView('modern')" aria-pressed="${S.reviewView==='modern'}">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="1.5" width="4" height="5" rx="1"/><rect x="1.5" y="8.5" width="11" height="1.5" rx=".5"/><rect x="1.5" y="11" width="8" height="1.5" rx=".5"/></svg>
+            Modern
+          </button>
+        </div>
       </div>
+      ${S.reviewView==='modern'?buildModernReviewList(filtered,sel):`
+      <div class="card rev-card" style="padding:0;overflow:visible">
+        <table class="all-tbl review-tbl">
+          ${reviewTableColgroup()}
+          <thead>
+            ${buildReviewTableHeadRow({checkbox:true,sortIco,filtered,sel})}
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`}
     </div>
-    ${S.reviewView==='modern'?buildModernReviewList(filtered,sel):`
-    <div class="card rev-card" style="padding:0;overflow:visible">
-      <table class="all-tbl review-tbl">
-        ${reviewTableColgroup()}
-        <thead>
-          ${buildReviewTableHeadRow({checkbox:true,sortIco,filtered,sel})}
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`}
     ${readyCount?`
     <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:8px">
       <button class="btn-bulk-ok" onclick="bulkAcceptReadyOnly()">✓ Accept all ready (${readyCount})</button>
@@ -3825,7 +4136,30 @@ function buildPreviewOverlay(){
 }
 
 function openPreview(name, txId){ S.previewFile={name,txId}; renderAside(); }
-function renderAside(){ document.getElementById('aside-inner').innerHTML=buildAsideContent(); }
+function renderAside(){
+  const inner=document.getElementById('aside-inner');
+  if(!inner) return;
+  inner.innerHTML=S.asideRule?buildRuleAsideContent():buildAsideContent();
+}
+function openRuleAside(id,source='suggested'){
+  S.asideRule={source,id};
+  S.asideId=null;
+  S.ruleDetail=null;
+  renderAside();
+  document.getElementById('aside').classList.add('open');
+  document.getElementById('aside-bd').classList.add('show');
+  document.getElementById('content').classList.add('aside-open');
+  syncScrollCtxAside(true);
+}
+function syncAsideOpen(){
+  if(!S.asideRule&&!S.asideId) return;
+  document.getElementById('aside')?.classList.add('open');
+  document.getElementById('aside-bd')?.classList.add('show');
+  document.getElementById('content')?.classList.add('aside-open');
+  syncScrollCtxAside(true);
+  if(S.asideRule) renderAside();
+  else if(S.asideId) renderAside();
+}
 
 /* ── SPLIT LINE HANDLERS ──────────────────────── */
 function initSplitLines(txId){
@@ -4485,44 +4819,24 @@ function buildAttachModal(){
   </div>`;
 }
 
-/* ── Rule detail modal ── */
-function openRuleDetail(id){S.ruleDetail=id;render();}
-function closeRuleDetail(){S.ruleDetail=null;render();}
+/* ── Rule detail aside ── */
+function openRuleDetail(id){openRuleAside(id,'memory');}
+function closeRuleDetail(){closeAside();}
 function goToTransaction(txRef){
+  closeAside();
   S.ruleDetail=null;
   S.page='main';
   S.tab='all';
-  const tx=TRANSACTIONS.find(t=>t.ref===txRef);
-  if(tx){S.asideId=tx.id;S.asideTab='matches';S.asideFrom='all';}
   render();
-  if(tx){openAside(tx.id,'all');}
+  const tx=TX.find(t=>t.ref===txRef);
+  if(tx) openAside(tx.id,'all');
 }
-
-function buildRuleDetailModal(){
-  const id=S.ruleDetail;
-  const m=S.memory.find(m=>m.id===id); if(!m) return '';
-  const srcLabel={rule:'🔧 Created',learned:'✓ Learned',rejected:'🚫 Excluded'};
-  const srcCls={rule:'rule',learned:'learned',rejected:'rejected'};
-  const activity=(RULE_ACTIVITY[id]||[]);
-
-  const condPills=m.conditions.map((c,i)=>{
-    const fl={payee:'Payee',desc:'Description',amount:'Amount',account:'Account'}[c.field]||c.field;
-    const ol={contains:'contains',is:'is',starts:'starts with'}[c.op]||c.op;
-    return (i>0?`<span class="mem-pill-op">AND</span>`:'')+`<span class="mem-pill">${fl}: "${c.val}"</span>`;
-  }).join('');
-
-  let thenPills='';
-  if(m.source==='rejected'){
-    thenPills=m.memType==='category'?`<span class="mem-pill rejected-val">Category: ${m.action.cat}</span>`:`<span class="mem-pill rejected-val">Match: ${m.action.entity||'?'}</span>`;
-  } else if(m.memType==='category'){
-    thenPills=`<span class="mem-pill">Category: ${m.action.cat}</span>`;
-    if(m.action.tax) thenPills+=`<span class="mem-pill-op">·</span><span class="mem-pill">Tax: ${m.action.tax}</span>`;
-  } else {
-    thenPills=`<span class="mem-pill">Match: Open ${m.action.matchType||'record'}</span>`;
-    if(m.action.entity) thenPills+=`<span class="mem-pill-op">from</span><span class="mem-pill">${m.action.entity}</span>`;
-  }
-
-  const actRows=activity.length?activity.map(a=>`
+function ruleTypeLabel(type){
+  return {category:'Category rule',invoice:'Invoice match',bill:'Bill match'}[type]||'Rule';
+}
+function buildRuleActivityRows(activity){
+  if(!activity.length) return `<div class="act-empty">No activity yet — this pattern hasn't been applied to a transaction.</div>`;
+  return activity.map(a=>`
     <div class="act-row">
       <div class="act-cell act-datetime">
         <div class="act-date">${a.date}</div>
@@ -4534,52 +4848,90 @@ function buildRuleDetailModal(){
           <span>${a.user}</span>
         </div>
       </div>
-      <div class="act-cell">${a.action}</div>
-      <div class="act-cell">${a.txRef?`<span class="act-tx-link" onclick="goToTransaction('${a.txRef}')" title="View transaction">${a.detail}</span>`:a.detail}</div>
-    </div>`).join(''):`<div class="act-empty">No activity yet — this pattern hasn't been applied to a transaction.</div>`;
+      <div class="act-cell act-action">${a.action}</div>
+      <div class="act-cell act-detail">${a.txRef?`<span class="act-tx-link" onclick="goToTransaction('${a.txRef}')" title="View transaction">${a.detail}</span>`:a.detail}</div>
+    </div>`).join('');
+}
+function buildRuleAsideContent(){
+  if(!S.asideRule) return '';
+  const {source,id}=S.asideRule;
 
-  return `
-  <div class="rdm-overlay" onclick="if(event.target===this)closeRuleDetail()">
-    <div class="rdm">
-      <div class="rdm-head">
-        <div class="rdm-head-left">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-            <span class="mem-src-badge ${srcCls[m.source]}">${srcLabel[m.source]}</span>
-            <span style="font-size:13px;color:var(--muted)">${m.count>0?`Applied ${m.count}× · Last: ${m.last}`:'Not yet applied'}</span>
-          </div>
-          <div class="rdm-rule-name">${m.entity}</div>
-        </div>
-        <button class="rdm-close" onclick="closeRuleDetail()">×</button>
+  if(source==='suggested'){
+    const r=S.rules.find(x=>x.id===id);
+    if(!r) return '';
+    const activity=RULE_ACTIVITY[id]||[];
+    return `
+    <div class="aside-head rule-aside-head">
+      <button class="aside-close" onclick="closeAside()">✕</button>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+        <span class="mem-src-badge learned">✨ Suggested</span>
+        <span style="font-size:12px;color:var(--muted)">Applied ${r.applied}&times; &middot; Last: ${r.last}</span>
       </div>
-      <div class="rdm-body">
-        <div class="rdm-section">
-          <div class="rdm-section-title">Rule logic</div>
-          <div class="rdm-cond-grid">
-            <div class="rdm-cond-row"><span class="rdm-cond-lbl">When</span>${condPills}</div>
-            <div class="rdm-cond-row"><span class="rdm-cond-lbl">Then</span>${thenPills}</div>
-          </div>
-          ${m.note?`<div style="margin-top:10px;font-size:12px;color:var(--muted);font-style:italic;padding-left:50px">${m.note}</div>`:''}
-        </div>
-        <div class="rdm-section">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <div class="rdm-section-title" style="margin-bottom:0">Activity history <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px">${activity.length} events</span></div>
-          </div>
-          <div class="act-wrap">
-            <div class="act-head">
-              <span>Date &amp; time</span>
-              <span>User</span>
-              <span>Action</span>
-              <span>Detail</span>
-            </div>
-            ${actRows}
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;justify-content:flex-end;padding-top:4px">
-          <button class="btn-re" onclick="startEditMemory(${m.id});closeRuleDetail()">Edit rule</button>
-          <button class="btn-rd" onclick="if(confirm('Delete this rule?')){deleteMemory(${m.id});closeRuleDetail();}">Delete</button>
-        </div>
+      <div class="rdm-rule-name">${r.name}</div>
+      <div class="rule-aside-meta">${ruleTypeLabel(r.type)} &middot; ${r.entity}</div>
+    </div>
+    <div class="aside-body">
+      <div class="aside-section">Rule logic</div>
+      <div class="mem-cond-block" style="margin-bottom:20px">
+        <div class="mem-cond-row"><span class="mem-cond-label">When</span><span class="mem-pill">${r.trigger}</span></div>
+        <div class="mem-cond-row"><span class="mem-cond-label">Then</span><span class="mem-pill">${r.action}</span></div>
+      </div>
+      <div class="aside-section">Activity history <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px">${activity.length} events</span></div>
+      <div class="act-wrap act-wrap-aside">
+        ${buildRuleActivityRows(activity)}
       </div>
     </div>
+    <div class="rule-aside-foot">
+      <button class="btn-ctx-save" onclick="turnIntoRule(${r.id})">Turn into rule</button>
+      <span class="sp"></span>
+      <button class="btn-ctx-cancel" onclick="dismissSuggestedRule(${r.id});closeAside()">Dismiss</button>
+    </div>`;
+  }
+
+  const m=S.memory.find(x=>x.id===id);
+  if(!m) return '';
+  const srcLabel={rule:'🔧 Created',learned:'✓ Learned',rejected:'🚫 Excluded'};
+  const srcCls={rule:'rule',learned:'learned',rejected:'rejected'};
+  const activity=RULE_ACTIVITY[id]||[];
+  const condPills=m.conditions.map((c,i)=>{
+    const fl={payee:'Payee',desc:'Description',amount:'Amount',account:'Account'}[c.field]||c.field;
+    return (i>0?`<span class="mem-pill-op">AND</span>`:'')+`<span class="mem-pill">${fl}: "${c.val}"</span>`;
+  }).join('');
+  let thenPills='';
+  if(m.source==='rejected'){
+    thenPills=m.memType==='category'?`<span class="mem-pill rejected-val">Category: ${m.action.cat}</span>`:`<span class="mem-pill rejected-val">Match: ${m.action.entity||'?'}</span>`;
+  }else if(m.memType==='category'){
+    thenPills=`<span class="mem-pill">Category: ${m.action.cat}</span>`;
+    if(m.action.tax) thenPills+=`<span class="mem-pill-op">&middot;</span><span class="mem-pill">Tax: ${m.action.tax}</span>`;
+  }else{
+    thenPills=`<span class="mem-pill">Match: Open ${m.action.matchType||'record'}</span>`;
+    if(m.action.entity) thenPills+=`<span class="mem-pill-op">from</span><span class="mem-pill">${m.action.entity}</span>`;
+  }
+  return `
+  <div class="aside-head rule-aside-head">
+    <button class="aside-close" onclick="closeAside()">✕</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+      <span class="mem-src-badge ${srcCls[m.source]}">${srcLabel[m.source]}</span>
+      <span style="font-size:12px;color:var(--muted)">${m.count>0?`Applied ${m.count}&times; &middot; Last: ${m.last}`:'Not yet applied'}</span>
+    </div>
+    <div class="rdm-rule-name">${m.entity}</div>
+  </div>
+  <div class="aside-body">
+    <div class="aside-section">Rule logic</div>
+    <div class="mem-cond-block" style="margin-bottom:20px">
+      <div class="mem-cond-row"><span class="mem-cond-label">When</span>${condPills}</div>
+      <div class="mem-cond-row"><span class="mem-cond-label">Then</span>${thenPills}</div>
+    </div>
+    ${m.note?`<div style="margin:-12px 0 16px;font-size:12px;color:var(--muted);font-style:italic">${m.note}</div>`:''}
+    <div class="aside-section">Activity history <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px">${activity.length} events</span></div>
+    <div class="act-wrap act-wrap-aside">
+      ${buildRuleActivityRows(activity)}
+    </div>
+  </div>
+  <div class="rule-aside-foot">
+    <button class="btn-re" onclick="startEditMemory(${m.id});closeAside()">Edit rule</button>
+    <span class="sp"></span>
+    <button class="btn-rd" onclick="if(confirm('Delete this rule?')){deleteMemory(${m.id});closeAside();}">Delete</button>
   </div>`;
 }
 
@@ -4588,7 +4940,7 @@ function goHub(){S.page='hub';S.stgSection=null;S.ruleWiz=null;S.asideId=null;cl
 function buildHub(){
   const hubSec=S.hubSection;
   if(hubSec==='banking'){S.page='settings';S.stgSection=null;S.hubSection=null;return buildSettings();}
-  if(hubSec==='bizcxt'){S.page='settings';S.stgSection='bizcxt';S.hubSection=null;return buildSettings();}
+  if(hubSec==='bizcxt'){S.page='settings';S.stgSection='memory';S.hubSection=null;return buildSettings();}
   if(hubSec&&hubSec!=='banking'&&hubSec!=='bizcxt'){
     return `<div class="stg fade-in"><div class="stg-back" onclick="S.hubSection=null;render()">← Settings</div>
     <div class="hub-placeholder"><div class="hub-placeholder-icon">🚧</div><div style="font-size:16px;font-weight:600;margin-bottom:6px">Coming soon</div><div style="font-size:13px">This settings area is a placeholder in the prototype.</div></div></div>`;
@@ -4666,11 +5018,11 @@ function submitBizCtxUpdate(){
 
   // Route to appropriate section by keyword
   const lower=raw.toLowerCase();
-  let targetId='overview';
-  if(/never|don.t|exclude|ignore|skip|won.t/i.test(raw)) targetId='exclusions';
-  else if(/tax|gst|n-t|bas|fre|free|exempt/i.test(raw)) targetId='tax';
-  else if(/match|invoice|bill|record|supplier|payee|code|category/i.test(raw)) targetId='suppliers';
-  else if(/prefer|priorit|manual|auto|suggest/i.test(raw)) targetId='matching';
+  let targetId='company';
+  if(/never|don.t|exclude|ignore|skip|won.t/i.test(raw)) targetId='goals';
+  else if(/tax|gst|n-t|bas|fre|free|exempt/i.test(raw)) targetId='financial';
+  else if(/match|invoice|bill|record|supplier|payee|code|category/i.test(raw)) targetId='industry';
+  else if(/prefer|priorit|manual|auto|suggest|employee|staff|payroll/i.test(raw)) targetId='employees';
 
   // Show thinking state then apply
   const thinking=document.getElementById('biz-thinking');
@@ -4690,53 +5042,29 @@ function submitBizCtxUpdate(){
   render(); // re-render to show thinking state
 }
 
-function buildStgBizContext(){
+function buildStgMemorySummary(){
   const ctx=S.bizCtx;
-  const isThinking=false; // driven by timeout, not state
-  return `
-  <div class="stg fade-in">
-    <div class="stg-sub-back" onclick="goStgBack()">← Settings</div>
-    <div class="biz-ctx-page">
-      <div class="biz-ctx-header">
-        <div class="biz-ctx-title">Business context</div>
-        <div class="biz-ctx-updated">Updated ${ctx.lastUpdated}</div>
-      </div>
-      <div class="biz-ctx-intro">
-        This is MYOB's understanding of your business — built from your transaction history, accepted suggestions, and saved rules. It guides how AI matches and codes transactions. Edit any section or add instructions below.
-      </div>
-      <div id="biz-thinking" style="display:none" class="biz-ctx-thinking">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        Updating business context…
-      </div>
-      <div class="biz-ctx-sections">
-        ${ctx.sections.map(sec=>{
-          const isEditing=S.bizCtxEditing===sec.id;
-          return `
-          <div class="biz-ctx-section">
-            <div class="biz-ctx-sec-title">${sec.title}</div>
-            ${isEditing?`
-              <textarea id="biz-ta-${sec.id}" class="biz-ctx-edit-area">${sec.text}</textarea>
-              <div class="biz-ctx-edit-btns">
-                <button class="btn-ctx-cancel" onclick="cancelEditSection()">Cancel</button>
-                <button class="btn-ctx-save" onclick="saveSection('${sec.id}')">Save</button>
-              </div>
-            `:`
-              <div class="biz-ctx-sec-text">${sec.text}</div>
-              <button class="biz-ctx-edit-btn" onclick="startEditSection('${sec.id}')">Edit</button>
-            `}
-          </div>`;
-        }).join('')}
-      </div>
-      <div class="biz-ctx-nl-bar">
-        <input id="biz-nl-inp" class="biz-ctx-nl-inp" type="text" placeholder="Add or update…"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();submitBizCtxUpdate();}">
-        <button class="biz-ctx-nl-send" onclick="submitBizCtxUpdate()">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12L22 2L12 22L10 14L2 12Z"/></svg>
-        </button>
-      </div>
-      <div class="biz-ctx-nl-hint">Type an instruction — e.g. "Never auto-match transfers from savings account" or "Code all Coles purchases to Groceries"</div>
+  const content=`
+    <div class="stg-ai-page-hd">
+      <h1 class="stg-ai-page-title">Memory summary</h1>
+      <span class="stg-ai-updated-pill">Updated ${ctx.lastUpdated}</span>
     </div>
-  </div>`;
+    <p class="stg-ai-section-sub" style="margin-bottom:0">A personalised overview of the business information, preferences, and context your AI uses to provide more relevant, accurate, and tailored assistance.</p>
+    <div class="stg-ai-summary-card">
+      ${ctx.sections.map(sec=>`
+      <section class="stg-ai-summary-sec">
+        <div class="stg-ai-summary-sec-hd">
+          <h2 class="stg-ai-summary-sec-title">${sec.title}</h2>
+          <button type="button" class="stg-ai-summary-sec-more" aria-label="More options for ${sec.title}">⋯</button>
+        </div>
+        <p class="stg-ai-summary-sec-text">${sec.text}</p>
+      </section>`).join('')}
+    </div>`;
+  return buildStgAiShell([
+    {label:'Settings',onclick:'goHub()'},
+    {label:'AI',onclick:"S.stgSection=null;render()"},
+    {label:'Memory'},
+  ],content);
 }
 
 
@@ -4771,25 +5099,19 @@ function buildActivityPage(){
   </div>`;
 }
 
-function buildPreBasPage(){
-  const list=preBasList();
+function buildPreBasTab(){
+  const list=preBasList().filter(t=>S.bankFilter==='all'||t.bank===S.bankFilter);
   const unconfirmed=list.filter(t=>dimStatus(t,'gst')==='pending').length;
   const changed=list.filter(t=>dimStatus(t,'gst')==='changed').length;
   return `
   <div class="fade-in">
-    <div class="ph" style="margin-bottom:16px">
-      <div class="ph-l"><h1 class="ph-title">Pre-BAS review</h1></div>
-      <div class="ph-r">
-        <button class="fx-btn fx-btn-success" type="button" onclick="goTransactions();setTab('review');setRevFilter('gst')">Review in inbox</button>
-        <button class="fx-btn fx-btn-neutral-ghost" type="button" onclick="goTransactions()" title="Back">Back</button>
-      </div>
-    </div>
     <div class="fx-alert fx-alert-warning">
       <div class="fx-alert-body"><strong>Q2 BAS lodgement — 28 Oct 2025</strong>
       ${unconfirmed} tax code${unconfirmed!==1?'s':''} unconfirmed · ${changed} updated after receipts · Confirm before lodgement to avoid amendments.</div>
     </div>
-    ${buildFilterBar()}
-    <div class="card" style="padding:0;overflow:hidden" data-recon-target="prebas-list">
+    <div class="tx-table-shell">
+      ${buildFilterBar()}
+      <div class="card" style="padding:0;overflow:hidden" data-recon-target="prebas-list">
       <table class="all-tbl">
         <thead>
           <tr>
@@ -4800,95 +5122,242 @@ function buildPreBasPage(){
           ${list.length?list.map(tx=>{
             const gs=dimStatus(tx,'gst');
             return `
-          <tr onclick="goTransactions();setTab('review');openAside(${tx.id},'review','categorise')" style="cursor:pointer">
+          <tr onclick="setTab('review');openAside(${tx.id},'review','categorise')" style="cursor:pointer">
             <td style="color:var(--muted);font-size:12px">${tx.date}</td>
             <td><div style="font-weight:500">${tx.desc}</div><div style="font-size:11px;color:var(--muted)">${tx.ref}</div></td>
             <td class="r"><span class="${tx.amount<0?'amt-neg':'amt-pos'}">${fmt(tx.amount)}</span></td>
             <td>${tx.ai.tax.val||'—'}</td>
             <td>${tx.ai.tax.val||'—'} <span style="font-size:10px;color:var(--muted)">${tx.ai.tax.conf||0}%</span></td>
             <td><span class="dim-badge ${dimBadgeClass(gs)}">${dimBadgeLabel(gs)}</span></td>
-            <td><button class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="event.stopPropagation();goTransactions();setTab('review');openAside(${tx.id},'review','categorise')">Review</button></td>
+            <td><button class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="event.stopPropagation();setTab('review');openAside(${tx.id},'review','categorise')">Review</button></td>
           </tr>`;}).join(''):`<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">All GST codes confirmed ✓</td></tr>`}
         </tbody>
       </table>
+      </div>
     </div>
-    <div style="display:flex;justify-content:flex-end;margin-top:12px">
-      <button class="btn-bulk-ok" onclick="goTransactions();setTab('review');setRevFilter('gst')">Open GST filter in review inbox</button>
+    <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:8px">
+      <button class="btn-bulk-ok" onclick="setTab('review');setRevFilter('gst')">Open GST filter in review inbox</button>
     </div>
   </div>`;
 }
-function buildSettings(){
-  if(!S.stgSection) return buildStgOverview();
-  if(S.stgSection==='all'||S.stgSection==='transactions') return buildStgTransactions();
-  if(S.stgSection==='attachments') return buildStgAttachments();
-  if(S.stgSection==='taxcodes') return buildStgTaxCodes();
-  if(S.stgSection==='bizcxt') return buildStgBizContext();
-  return buildStgOverview();
+function buildStgAiNav(){
+  const items=[
+    {label:'General',ico:'⚙',chev:false},
+    {label:'Your profile',ico:'👤',chev:true},
+    {label:'Payroll',ico:'💰',chev:true},
+    {label:'Sales',ico:'🧾',chev:true},
+    {label:'Purchases',ico:'🛒',chev:true},
+    {label:'AI',ico:'✦',chev:false,act:true},
+    {label:'Reports',ico:'📊',chev:false},
+    {label:'Users and permissions',ico:'👥',chev:false},
+    {label:'Data and security',ico:'🔒',chev:false},
+  ];
+  return items.map(it=>`
+    <button type="button" class="stg-ai-nav-item${it.act?' act':''}" ${it.act?'aria-current="page"':''}>
+      <span class="stg-ai-nav-ico" aria-hidden="true">${it.ico}</span>
+      <span class="stg-ai-nav-label">${it.label}</span>
+      ${it.chev?'<span class="stg-ai-nav-chev" aria-hidden="true">›</span>':''}
+    </button>`).join('');
 }
-
-function buildStgOverview(){
+function buildStgBreadcrumb(parts){
+  return `<div class="stg-ai-crumb">
+    <button type="button" class="stg-ai-back" onclick="goStgBack()" aria-label="Back">←</button>
+    ${parts.map((p,i)=>{
+      const isLast=i===parts.length-1;
+      if(isLast) return `<span class="stg-ai-crumb-cur">${p.label}</span>`;
+      return `<button type="button" class="stg-ai-crumb-link" onclick="${p.onclick}">${p.label}</button><span class="stg-ai-crumb-sep">/</span>`;
+    }).join('')}
+  </div>`;
+}
+function buildStgAiShell(breadcrumbParts,content){
+  return `<div class="stg-ai fade-in">
+    <div class="stg-ai-layout">
+      <nav class="stg-ai-nav" aria-label="Settings">${buildStgAiNav()}</nav>
+      <div class="stg-ai-main">
+        ${buildStgBreadcrumb(breadcrumbParts)}
+        ${content}
+      </div>
+    </div>
+  </div>`;
+}
+function memCardSummary(m){
+  if(m.summary) return m.summary;
+  const val=m.conditions[0]?.val||m.entity;
+  if(m.source==='rejected'){
+    if(m.memType==='category') return `Never suggest category "${m.action.cat}" for ${m.entity}.`;
+    return `Never match ${m.entity} to ${m.action.entity||'records'}.`;
+  }
+  if(m.memType==='category') return `When the payee includes "${val}", code as ${m.action.cat}${m.action.tax?' with '+m.action.tax:''}.`;
+  if(m.memType==='match') return `When the payee includes "${val}", match to open ${m.action.matchType||'record'}.`;
+  if(m.memType==='split') return `When the payee includes "${val}", split across ${m.action.cat||'categories'}.`;
+  if(m.memType==='tax') return `When the payee includes "${val}", assign ${m.action.tax||'GST'} tax code.`;
+  return m.note||'';
+}
+function memCardFlow(m){
+  if(m.source==='rejected'){
+    const target=m.memType==='category'?m.action.cat:(m.action.entity||'Excluded');
+    return {from:{ico:'out',label:m.entity},kind:'stop',to:{ico:'stop',label:target}};
+  }
+  if(m.memType==='match'){
+    const label=m.action.entity||`Open ${m.action.matchType||'record'}`;
+    return {from:{ico:'in',label:m.entity},kind:'arrow',to:{ico:'match',label}};
+  }
+  if(m.memType==='split'){
+    return {from:{ico:'out',label:m.entity},kind:'split',to:{ico:'split',label:m.action.cat||'Split lines'}};
+  }
+  if(m.memType==='tax'){
+    return {from:{ico:'tax',label:m.entity},kind:'split',to:{ico:'tax',label:`${m.action.tax||'GST'} · ${m.action.cat||'Tax code'}`}};
+  }
+  return {from:{ico:'out',label:m.entity},kind:'arrow',to:{ico:'cat',label:m.action.cat||'Category'}};
+}
+function memChipIco(type){
+  const map={
+    out:'<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7.5 2v7"/><path d="M4.5 6l3-3 3 3"/><path d="M2 12h11"/></svg>',
+    in:'<svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7.5 13V6"/><path d="M4.5 9l3 3 3-3"/><path d="M2 3h11"/></svg>',
+    cat:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="4" height="4" rx=".5"/><rect x="8" y="2" width="4" height="4" rx=".5"/><rect x="2" y="8" width="4" height="4" rx=".5"/><rect x="8" y="8" width="4" height="4" rx=".5"/></svg>',
+    match:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="4" height="4" rx=".5"/><rect x="8" y="2" width="4" height="4" rx=".5"/><rect x="2" y="8" width="4" height="4" rx=".5"/><rect x="8" y="8" width="4" height="4" rx=".5"/></svg>',
+    stop:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5.5"/><line x1="4.5" y1="4.5" x2="9.5" y2="9.5"/></svg>',
+    split:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h8"/><path d="M3 10h8"/><path d="M7 4v6"/><path d="M5 6l2-2 2 2"/><path d="M5 8l2 2 2-2"/></svg>',
+    tax:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><line x1="4.5" y1="7" x2="9.5" y2="7"/></svg>',
+  };
+  return map[type]||map.cat;
+}
+function buildMemRuleCard(m){
+  const flow=memCardFlow(m);
+  const mid=flow.kind==='stop'?`<span class="stg-mem-flow-arrow" aria-hidden="true">→</span>`
+    :flow.kind==='split'?`<span class="stg-mem-chip-ico is-split" aria-hidden="true">${memChipIco('split')}</span>`
+    :`<span class="stg-mem-flow-arrow" aria-hidden="true">→</span>`;
+  const isEditing=S.editingMem===m.id;
+  const actionLabel=m.memType==='category'?m.action.cat||'?':m.action.entity||m.action.matchType||'?';
+  return `
+  <div class="stg-mem-card${m.active?'':' inactive'}${S.asideRule?.source==='memory'&&S.asideRule.id===m.id?' is-open':''}" onclick="openRuleAside(${m.id},'memory')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openRuleAside(${m.id},'memory')}">
+    <div class="stg-mem-card-hd">
+      <div class="stg-mem-card-left">
+        <div class="stg-mem-flow">
+          <span class="stg-mem-chip"><span class="stg-mem-chip-ico is-${flow.from.ico}">${memChipIco(flow.from.ico)}</span>${flow.from.label}</span>
+          ${mid}
+          <span class="stg-mem-chip"><span class="stg-mem-chip-ico is-${flow.to.ico}">${memChipIco(flow.to.ico)}</span>${flow.to.label}</span>
+        </div>
+        <div class="stg-mem-meta">${m.count>0?`Applied ${m.count}× · Last: ${m.last}`:'Not yet applied'}</div>
+      </div>
+      <div class="stg-mem-card-actions" onclick="event.stopPropagation()">
+        <span class="pref-tog-label ${m.active?'on':''}">${m.active?'On':'Off'}</span>
+        <label class="tog-lg" title="${m.active?'Active':'Paused'}">
+          <input type="checkbox" ${m.active?'checked':''} onchange="toggleMemory(${m.id})">
+          <span class="tog-s"></span>
+        </label>
+        <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" style="color:var(--red);border:none;background:transparent" onclick="deleteMemory(${m.id})">Delete</button>
+        <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="startEditMemory(${m.id})">${isEditing?'Editing…':'Edit'}</button>
+      </div>
+    </div>
+    <p class="stg-mem-card-desc">${memCardSummary(m)}</p>
+    ${isEditing?`
+    <div class="mem-edit-form" onclick="event.stopPropagation()">
+      <div class="mem-edit-row"><span class="mem-edit-label">Entity</span><input id="mem-ent-${m.id}" class="mem-edit-inp" type="text" value="${m.entity}"></div>
+      <div class="mem-edit-row"><span class="mem-edit-label">${m.memType==='category'?'Category':'Match to'}</span><input id="mem-val-${m.id}" class="mem-edit-inp" type="text" value="${actionLabel}"></div>
+      <div class="mem-edit-row"><span class="mem-edit-label">Note</span><input id="mem-note-${m.id}" class="mem-edit-inp" type="text" value="${m.note||''}" placeholder="Optional note"></div>
+      <div class="mem-edit-btns">
+        <button class="btn-ctx-cancel" onclick="cancelEditMemory()">Cancel</button>
+        <button class="btn-ctx-save" onclick="saveEditMemory(${m.id})">Save</button>
+      </div>
+    </div>`:''}
+  </div>`;
+}
+function buildStgAiOverview(){
   const txOn=S.automatch;
   const atOn=S.atToggles?S.atToggles.auto:true;
   const tcOn=S.tcToggles?S.tcToggles.auto:true;
-  const ruleCount=S.rules.length;
-  const items=[
-    {sec:'all', icon:'⚡', iconCls:'purple',
-     title:'Automatch transactions',
-     desc:'Match bank transactions to MYOB records, invoices, bills or categories automatically.',
-     pill:txOn?'On':'Off', pillCls:txOn?'on':'off', extra:`${S.rules.length} rules · ${S.context.length} context`},
-    {sec:'attachments', icon:'📎', iconCls:'blue',
-     title:'Attachments',
-     desc:'Automatically detect and extract data from receipts and invoices attached to transactions.',
-     pill:atOn?'On':'Off', pillCls:atOn?'on':'off'},
-    {sec:'taxcodes', icon:'🧾', iconCls:'green',
-     title:'Tax codes',
-     desc:'Suggest and auto-assign tax codes based on transaction patterns and supplier history.',
-     pill:tcOn?'On':'Off', pillCls:tcOn?'on':'off'},
-    {sec:'bizcxt', icon:'🧠', iconCls:'purple',
-     title:'Business context',
-     desc:'How MYOB understands your business — supplier patterns, tax preferences, and what AI will or won\'t auto-match.',
-     pill:`${S.bizCtx.sections.length} sections`, pillCls:'', extra:`Updated ${S.bizCtx.lastUpdated}`},
-  ];
-  return `
-  <div class="stg fade-in">
-    <div class="stg-back" onclick="goHub()">← Settings</div>
-    <div class="stg-title">Smart Banking</div>
-    <div class="stg-overview-intro">Choose an area to configure how MYOB automatically processes your bank transactions.</div>
-    <div class="stg-overview-list">
-      ${items.map(it=>`
-      <div class="stg-ov-item" onclick="goStgSection('${it.sec}')">
-        <div class="stg-ov-icon ${it.iconCls}">${it.icon}</div>
-        <div class="stg-ov-body">
-          <div class="stg-ov-title">${it.title}</div>
-          <div class="stg-ov-desc">${it.desc}</div>
+  const memOn=S.memoryEnabled!==false;
+  const content=`
+    <section class="stg-ai-section">
+      <h2 class="stg-ai-section-hd">Personal intelligence</h2>
+      <p class="stg-ai-section-sub">Get more helpful responses and recommendations based on info about you and your world</p>
+      <div class="stg-ai-card">
+        <div class="stg-ai-card-row">
+          <div class="stg-ai-card-left">
+            <div class="stg-ai-card-ico" aria-hidden="true">🕐</div>
+            <div>
+              <h3 class="stg-ai-card-title">Memory</h3>
+              <p class="stg-ai-card-desc">MYOB's AI learns from your activity to understand more about your business.</p>
+            </div>
+          </div>
+          <div class="pref-sub-right">
+            <span class="pref-tog-label ${memOn?'on':''}">${memOn?'On':'Off'}</span>
+            <label class="tog-lg"><input type="checkbox" ${memOn?'checked':''} onchange="S.memoryEnabled=this.checked;render()"><span class="tog-s"></span></label>
+          </div>
         </div>
-        <div class="stg-ov-right">
-          ${it.extra?`<span style="font-size:11px;color:var(--muted)">${it.extra}</span>`:''}
-          <span class="stg-ov-pill ${it.pillCls}">${it.pill}</span>
-          <span class="stg-ov-chev">›</span>
+        <div class="stg-ai-card-foot">Manage and delete stored context and activity anytime. <button type="button" class="stg-ai-link-btn" onclick="goStgSection('memory')">View memory summary</button> · <button type="button" class="stg-ai-link-btn">Learn more</button></div>
+      </div>
+    </section>
+    <section class="stg-ai-section">
+      <h2 class="stg-ai-section-hd">Transaction auto matching</h2>
+      <p class="stg-ai-section-sub">Keep cash flowing and BAS on track with AI-powered transaction automatching, informed by your business context, industry, and past matches.</p>
+      <div class="stg-ai-link-row" onclick="goStgSection('automatch')">
+        <div class="stg-ai-link-left">
+          <div class="stg-ai-link-ico">🏦</div>
+          <div>
+            <div class="stg-ai-link-title">Categories and MYOB records</div>
+            <p class="stg-ai-link-desc">Match bank transaction to MYOB records, invoices, bills or categories automatically.</p>
+          </div>
         </div>
-      </div>`).join('')}
-    </div>
-    <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.6">
-      Changes to automatching rules apply to new transactions as they're imported.
-    </div>
-  </div>`;
+        <div class="stg-ai-link-right"><span class="stg-ai-status-pill${txOn?'':' off'}">${txOn?'On':'Off'}</span><span class="stg-ai-link-chev">›</span></div>
+      </div>
+      <div class="stg-ai-link-row" onclick="goStgSection('attachments')">
+        <div class="stg-ai-link-left">
+          <div class="stg-ai-link-ico">📎</div>
+          <div>
+            <div class="stg-ai-link-title">Attachments</div>
+            <p class="stg-ai-link-desc">Automatically detect and extract data from receipts and invoices attached to transactions.</p>
+          </div>
+        </div>
+        <div class="stg-ai-link-right"><span class="stg-ai-status-pill${atOn?'':' off'}">${atOn?'On':'Off'}</span><span class="stg-ai-link-chev">›</span></div>
+      </div>
+      <div class="stg-ai-link-row" onclick="goStgSection('taxcodes')">
+        <div class="stg-ai-link-left">
+          <div class="stg-ai-link-ico">🧾</div>
+          <div>
+            <div class="stg-ai-link-title">BAS</div>
+            <p class="stg-ai-link-desc">Suggests and auto-assigns tax codes based on transaction patterns and supplier history</p>
+          </div>
+        </div>
+        <div class="stg-ai-link-right"><span class="stg-ai-status-pill${tcOn?'':' off'}">${tcOn?'On':'Off'}</span><span class="stg-ai-link-chev">›</span></div>
+      </div>
+    </section>`;
+  return buildStgAiShell([{label:'Settings',onclick:'goHub()'},{label:'AI'}],content);
+}
+function buildSettings(){
+  if(!S.stgSection) return buildStgAiOverview();
+  if(S.stgSection==='all'||S.stgSection==='transactions'||S.stgSection==='automatch') return buildStgTransactions();
+  if(S.stgSection==='memory'||S.stgSection==='bizcxt') return buildStgMemorySummary();
+  if(S.stgSection==='attachments') return buildStgAttachments();
+  if(S.stgSection==='taxcodes') return buildStgTaxCodes();
+  return buildStgAiOverview();
 }
 
 function dismissSuggestedRule(id){
   const r=S.rules.find(x=>x.id===id);
   if(r) r.suggested=false;
-  render();
+  if(S.asideRule?.source==='suggested'&&S.asideRule.id===id) closeAside();
+  else render();
+}
+function turnIntoRule(id){
+  const r=S.rules.find(x=>x.id===id);
+  if(r) r.suggested=false;
+  showToast('✓ Rule saved');
+  if(S.asideRule?.source==='suggested'&&S.asideRule.id===id) closeAside();
+  else render();
 }
 function buildSuggestedRulesBlock(){
   const rules=S.rules.filter(r=>r.suggested&&r.active!==false);
   if(!rules.length) return '';
   return `
     <div style="margin-bottom:24px">
-      <div class="mem-section-title">Suggested rules</div>
-      <div class="mem-list">
-        ${rules.map(r=>`
-        <div class="mem-entry">
+      <h2 class="stg-ai-page-title" style="font-size:16px;margin-bottom:12px">Suggested rules</h2>
+      <div class="stg-mem-stack">
+        ${rules.map(r=>{
+          const isOpen=S.asideRule?.source==='suggested'&&S.asideRule.id===r.id;
+          return `
+        <div class="mem-entry mem-entry-clickable${isOpen?' is-open':''}" onclick="openRuleAside(${r.id},'suggested')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openRuleAside(${r.id},'suggested')}">
           <div class="mem-entry-head">
             <div class="mem-entry-left">
               <span class="mem-src-badge learned">✨ Suggested</span>
@@ -4901,10 +5370,10 @@ function buildSuggestedRulesBlock(){
             <div class="mem-cond-row"><span class="mem-cond-label">Then</span><span class="mem-pill">${r.action}</span></div>
           </div>
           <div class="mem-entry-foot">
-            <button class="btn-ctx-save" onclick="showToast('✓ Rule saved')">Turn into rule</button>
-            <button class="btn-ctx-cancel" onclick="dismissSuggestedRule(${r.id})">Dismiss</button>
+            <button class="btn-ctx-save" onclick="event.stopPropagation();turnIntoRule(${r.id})">Turn into rule</button>
+            <button class="btn-ctx-cancel" onclick="event.stopPropagation();dismissSuggestedRule(${r.id})">Dismiss</button>
           </div>
-        </div>`).join('')}
+        </div>`;}).join('')}
       </div>
     </div>`;
 }
@@ -4931,7 +5400,6 @@ function buildStgTransactions(){
 
   const prefSection=`
   <div style="margin-bottom:28px">
-    <div class="stg-title" style="margin-bottom:14px">Preferences</div>
     <div class="pref-section">
       <div class="pref-master">
         <div class="pref-master-left">
@@ -4979,110 +5447,36 @@ function buildStgTransactions(){
   const f=S.memFilter;
   const filtered=S.memory.filter(m=>f==='all'||m.source===f);
 
-  const srcLabel={rule:'🔧 Created',learned:'✓ Learned',rejected:'🚫 Excluded'};
-  const srcCls={rule:'rule',learned:'learned',rejected:'rejected'};
-
-  function condPills(m){
-    const when=m.conditions.map((c,i)=>{
-      const fl={payee:'Payee',desc:'Description',amount:'Amount',account:'Account',txRef:'Tx ref'}[c.field]||c.field;
-      return (i>0?`<span class="mem-pill-op">AND</span>`:'')+`<span class="mem-pill">${fl}: &quot;${c.val}&quot;</span>`;
-    }).join('');
-    let then='';
-    if(m.source==='rejected'){
-      if(m.memType==='category') then=`<span class="mem-pill rejected-val">Category: ${m.action.cat}</span>`;
-      else then=`<span class="mem-pill rejected-val">Match: ${m.action.entity||'?'}</span>`;
-    } else {
-      if(m.memType==='category'){
-        then=`<span class="mem-pill">Category: ${m.action.cat}</span>`;
-        if(m.action.tax) then+=`<span class="mem-pill-op">&middot;</span><span class="mem-pill">Tax: ${m.action.tax}</span>`;
-      } else {
-        const mt=m.action.matchType||'record';
-        then=`<span class="mem-pill">Match: Open ${mt}</span>`;
-        if(m.action.entity) then+=`<span class="mem-pill-op">from</span><span class="mem-pill">${m.action.entity}</span>`;
-      }
-    }
-    return {when,then};
-  }
-
-  const actionSummary=m=>{
-    if(m.source==='rejected') return `Do not suggest ${m.memType==='category'?`&quot;${m.action.cat||'?'}&quot;`:m.action.entity||'?'}`;
-    if(m.memType==='category') return m.action.cat||'?';
-    return `Match: ${m.action.matchType||'record'}`;
-  };
-
   const memSection=`
-  <div>
-    <div class="mem-section-title">AI memory</div>
-    <div class="mem-filter-row">
+  <div style="margin-top:28px" data-recon-target="stg-patterns">
+    <h2 class="stg-ai-page-title" style="margin-bottom:12px">Memory</h2>
+    <div class="stg-mem-filter fx-pill-group" role="group" aria-label="Memory filters">
       ${[{v:'all',l:'All',ct:S.memory.length},{v:'rule',l:'Created',ct:S.memory.filter(m=>m.source==='rule').length},{v:'learned',l:'Learned',ct:S.memory.filter(m=>m.source==='learned').length},{v:'rejected',l:'Excluded',ct:S.memory.filter(m=>m.source==='rejected').length}].map(p=>`
-      <button class="mem-fc ${f===p.v?'act':''}" onclick="S.memFilter='${p.v}';render()">${p.l} <span style="opacity:.7">${p.ct}</span></button>`).join('')}
+      <button type="button" class="fx-pill${f===p.v?' fx-pill-checked':''}" onclick="S.memFilter='${p.v}';render()">
+        <span class="fx-pill-label">${p.l}</span>
+        <span class="fx-badge">${p.ct}</span>
+      </button>`).join('')}
     </div>
-    ${filtered.length===0?`<div class="mem-list"><div class="mem-empty"><div class="mem-empty-icon">🧠</div><div style="font-size:14px;font-weight:600;margin-bottom:4px">No memory entries</div><div style="font-size:12px">As you create rules and accept suggestions, they'll appear here.</div></div></div>`:`
-    <div class="mem-list">
-      ${filtered.map(m=>{
-        const {when,then}=condPills(m);
-        const isEditing=S.editingMem===m.id;
-        const actionLabel=m.memType==='category'?m.action.cat||'?':m.action.entity||m.action.matchType||'?';
-        return `
-        <div class="mem-entry ${m.active?'':' inactive'}">
-          <div class="mem-entry-head">
-            <div class="mem-entry-left">
-              <span class="mem-src-badge ${srcCls[m.source]}">${srcLabel[m.source]}</span>
-              <span class="mem-entity" style="cursor:pointer;text-decoration:underline;text-decoration-color:var(--border)" onclick="openRuleDetail(${m.id})">${m.entity}</span>
-              <span style="color:var(--muted);font-size:13px">&rarr;</span>
-              <span class="mem-action-summary">${actionSummary(m)}</span>
-            </div>
-            <span class="mem-applied">${m.count>0?`Applied ${m.count}&times; &middot; Last: ${m.last}`:'Not yet applied'}</span>
-          </div>
-          <div class="mem-cond-block">
-            <div class="mem-cond-row"><span class="mem-cond-label">When</span>${when}</div>
-            <div class="mem-cond-row"><span class="mem-cond-label">Then</span>${then}</div>
-            ${m.note?`<div style="font-size:11px;color:var(--muted);font-style:italic;margin-top:2px;padding-left:50px">${m.note}</div>`:''}
-          </div>
-          ${isEditing?`
-          <div class="mem-edit-form">
-            <div class="mem-edit-row">
-              <span class="mem-edit-label">Entity</span>
-              <input id="mem-ent-${m.id}" class="mem-edit-inp" type="text" value="${m.entity}">
-            </div>
-            <div class="mem-edit-row">
-              <span class="mem-edit-label">${m.memType==='category'?'Category':'Match to'}</span>
-              <input id="mem-val-${m.id}" class="mem-edit-inp" type="text" value="${actionLabel}">
-            </div>
-            <div class="mem-edit-row">
-              <span class="mem-edit-label">Note</span>
-              <input id="mem-note-${m.id}" class="mem-edit-inp" type="text" value="${m.note||''}" placeholder="Optional note">
-            </div>
-            <div class="mem-edit-btns">
-              <button class="btn-ctx-cancel" onclick="cancelEditMemory()">Cancel</button>
-              <button class="btn-ctx-save" onclick="saveEditMemory(${m.id})">Save</button>
-            </div>
-          </div>`:''}
-          <div class="mem-entry-foot">
-            <label class="tog" title="${m.active?'Active':'Paused'}">
-              <input type="checkbox" ${m.active?'checked':''} onchange="toggleMemory(${m.id})">
-              <span class="tog-s"></span>
-            </label>
-            <button class="btn-re" onclick="startEditMemory(${m.id})">${isEditing?'Editing…':'Edit'}</button>
-            <button class="btn-rd" onclick="deleteMemory(${m.id})">Delete</button>
-          </div>
-        </div>`;
-      }).join('')}
+    <div class="stg-mem-toolbar">${buildFilterBar()}</div>
+    ${buildSuggestedRulesBlock()}
+    ${filtered.length===0?`<div class="stg-mem-card"><div class="mem-empty"><div class="mem-empty-icon">🧠</div><div style="font-size:14px;font-weight:600;margin-bottom:4px">No memory entries</div><div style="font-size:12px">As you create rules and accept suggestions, they'll appear here.</div></div></div>`:`
+    <div class="stg-mem-stack">
+      ${filtered.map(m=>buildMemRuleCard(m)).join('')}
     </div>`}
-    <div style="margin-top:12px;text-align:right">
+    <div class="stg-mem-create-row">
       <button class="btn-add-rule" style="width:auto;padding:6px 16px" onclick="startCreateRule()">+ Create rule</button>
     </div>
   </div>`;
 
-  return `
-  <div class="stg fade-in">
-    <div class="stg-sub-back" onclick="goStgBack()">&larr; Automatching</div>
+  const inner=`
+    <h1 class="stg-ai-page-title" style="margin-bottom:16px">Preferences</h1>
     ${prefSection}
-    <div data-recon-target="stg-patterns">
-      ${buildSuggestedRulesBlock()}
-      ${memSection}
-    </div>
-  </div>`;
+    ${memSection}`;
+  return buildStgAiShell([
+    {label:'Settings',onclick:'goHub()'},
+    {label:'AI',onclick:"S.stgSection=null;render()"},
+    {label:'Transaction automatching'},
+  ],inner);
 }
 
 /* ─── Attachments sub-page ─────────────────────────────── */
@@ -5097,10 +5491,8 @@ function buildStgAttachments(){
     {key:'multiLine', label:'Auto-split multi-line receipts',
      desc:'When multiple items are detected, pre-populate split lines in the Code tab for review.'},
   ];
-  return `
-  <div class="stg fade-in">
-    <div class="stg-sub-back" onclick="goStgBack()">← Automatching</div>
-    <div class="stg-title">Attachments</div>
+  const inner=`
+    <h1 class="stg-ai-page-title" style="margin-bottom:16px">Attachments</h1>
     <div class="am-block">
       <div class="am-master-row">
         <div class="am-master-left">
@@ -5150,8 +5542,12 @@ function buildStgAttachments(){
     </div>
     <div class="stg-footer">
       <button class="btn-save-stg" onclick="showToast('✓ Attachment settings saved')">Save settings</button>
-    </div>
-  </div>`;
+    </div>`;
+  return buildStgAiShell([
+    {label:'Settings',onclick:'goHub()'},
+    {label:'AI',onclick:"S.stgSection=null;render()"},
+    {label:'Attachments'},
+  ],inner);
 }
 
 /* ─── Tax codes sub-page ───────────────────────────────── */
@@ -5163,10 +5559,8 @@ function buildStgTaxCodes(){
     {key:'basExcluded',label:'BAS excluded',    desc:'Wages, drawings and private expenses excluded from BAS lodgement.', badge:'N-T'},
     {key:'capGains',   label:'Capital gains',   desc:'Asset sales, investments and depreciable items.', badge:'CAP'},
   ];
-  return `
-  <div class="stg fade-in">
-    <div class="stg-sub-back" onclick="goStgBack()">← Automatching</div>
-    <div class="stg-title">Tax codes</div>
+  const inner=`
+    <h1 class="stg-ai-page-title" style="margin-bottom:16px">BAS</h1>
     <div class="am-block">
       <div class="am-master-row">
         <div class="am-master-left">
@@ -5246,8 +5640,12 @@ function buildStgTaxCodes(){
     </div>
     <div class="stg-footer">
       <button class="btn-save-stg" onclick="showToast('✓ Tax code settings saved')">Save settings</button>
-    </div>
-  </div>`;
+    </div>`;
+  return buildStgAiShell([
+    {label:'Settings',onclick:'goHub()'},
+    {label:'AI',onclick:"S.stgSection=null;render()"},
+    {label:'BAS'},
+  ],inner);
 }
 
 /* ─── Rule wizard ──────────────────────────────────────── */
@@ -5418,16 +5816,17 @@ function buildRuleWizard(){
         : `<button class="btn-wiz-next" ${canNext?'':'disabled'} onclick="wizNext()">Next →</button>`}
   </div>`;
 
-  return `
-  <div class="stg fade-in">
+  return buildStgAiShell([
+    {label:'Settings',onclick:'goHub()'},
+    {label:'AI',onclick:"S.stgSection=null;render()"},
+    {label:'Transaction automatching',onclick:'S.ruleWiz=null;render()'},
+    {label:'Create rule'},
+  ],`
     <div class="rwiz">
-      <div class="stg-sub-back" onclick="wizBack()">${w.step===1?'← Automatching':''}</div>
-      <div class="stg-title" style="margin-bottom:22px">Create rule</div>
       <div class="rwiz-steps">${stepBar}</div>
       ${body}
       ${footer}
-    </div>
-  </div>`;
+    </div>`);
 }
 
 initAttachments();
@@ -5437,6 +5836,13 @@ document.addEventListener('click',()=>{
 (function initFromUrl(){
   const params=new URLSearchParams(location.search);
   if(params.get('tab')==='review'||location.hash==='#review') S.tab='review';
+  if(params.get('tab')==='prebas'||location.hash==='#prebas') S.tab='prebas';
+  if(params.get('page')==='settings'||location.hash==='#settings'){
+    S.page='settings';
+    S.stgSection=null;
+    const sec=params.get('section');
+    if(sec) S.stgSection=sec;
+  }
   const bank=params.get('bank');
   if(bank&&BANKS.some(b=>b.id===bank)) S.bankFilter=bank;
 })();
