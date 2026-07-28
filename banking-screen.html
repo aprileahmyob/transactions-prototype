@@ -1236,6 +1236,8 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .rev-mod-row.is-done{background:var(--success-bg);box-shadow:inset 3px 0 0 var(--success);}
 .rev-mod-row.is-done:hover{background:#e8f6ec;}
 .rev-mod-row.is-done .rev-mod-desc{color:var(--muted);}
+.rev-mod-match-sug.is-matched{background:var(--success-bg);border:1px solid var(--success-border);border-radius:8px;padding:8px 10px;}
+.rev-mod-match-sug.is-matched .rev-mod-match-cat,.rev-mod-match-sug.is-matched .rev-mod-match-sub{color:var(--success);}
 .rev-mod-row.is-done .rev-mod-chev{opacity:.35;}
 .rev-mod-done-badge{
   display:inline-flex;align-items:center;gap:3px;margin-left:8px;padding:2px 7px;border-radius:var(--r99);
@@ -2085,14 +2087,23 @@ function reconReceiptReviewList(inbox=reviewInboxList()){
 }
 function filterReviewList(list,filter){
   if(filter==='all') return list;
-  if(filter==='ready') return list.filter(txIsReadyForBulk);
-  if(filter==='newcontext') return list.filter(txHasChanged);
-  if(filter==='receipt') return list.filter(t=>dimStatus(t,'receipt')==='pending'||dimStatus(t,'receipt')==='changed');
-  if(filter==='receiptmatch') return list.filter(txHasReceiptMatchSuggestions);
-  if(filter==='match') return list.filter(t=>dimStatus(t,'match')==='pending');
-  if(filter==='gst') return list.filter(t=>dimStatus(t,'gst')==='pending'||dimStatus(t,'gst')==='changed');
-  if(filter==='blocked') return list.filter(txIsBlocked);
-  return list;
+  let filtered;
+  if(filter==='ready') filtered=list.filter(txIsReadyForBulk);
+  else if(filter==='newcontext') filtered=list.filter(txHasChanged);
+  else if(filter==='receipt') filtered=list.filter(t=>dimStatus(t,'receipt')==='pending'||dimStatus(t,'receipt')==='changed');
+  else if(filter==='receiptmatch') filtered=list.filter(txHasReceiptMatchSuggestions);
+  else if(filter==='match') filtered=list.filter(t=>dimStatus(t,'match')==='pending');
+  else if(filter==='gst') filtered=list.filter(t=>dimStatus(t,'gst')==='pending'||dimStatus(t,'gst')==='changed');
+  else if(filter==='blocked') filtered=list.filter(txIsBlocked);
+  else filtered=list;
+  const seen=new Set(filtered.map(t=>t.id));
+  list.forEach(t=>{
+    if(txReviewDone(t)&&!seen.has(t.id)){
+      filtered.push(t);
+      seen.add(t.id);
+    }
+  });
+  return filtered;
 }
 function filterCount(filter){return filterReviewList(reviewInboxList(),filter).length;}
 function getRevFilters(){
@@ -2563,7 +2574,9 @@ function applyAcceptAll(txId){
     if(f.val) f.st='accepted';
   });
   if(txHasChanged(tx)) S.dismissedCtx.add(txId);
-  tx.status='coded';
+  const matched=!!(tx.ai.match?.val&&tx.ai.match.st==='accepted');
+  tx.status=matched?'accepted':'coded';
+  if(matched) tx.source='both';
   markTxReviewDone(txId);
   return anyNew;
 }
@@ -2748,17 +2761,11 @@ function acceptAllReadyTx(txId){
 }
 function acceptAllReadyInAside(txId){
   const tx=ftx(txId); if(!tx) return;
-  ['cat','match','tax','file'].forEach(f=>{
-    const field=tx.ai[f]; if(!field) return;
-    if(field.val&&field.st==='idle') field.st='accepted';
-    if(f==='file'&&tx.attach>0&&field.st==='idle'){field.val=field.val||'receipt.pdf';field.st='accepted';}
-  });
-  if(txHasChanged(tx)) S.dismissedCtx.add(txId);
-  const allDone=Object.entries(tx.ai).every(([k,f])=>!f.val||f.st==='accepted'||k==='job');
-  if(allDone){tx.status='coded';markTxReviewDone(txId);}
+  const hadContext=applyAcceptAll(txId);
   showToast('✓ All ready dimensions accepted',2500);
   renderAside();
   render();
+  if(hadContext) showContextToast();
 }
 function acceptAndNext(txId){
   acceptAllReadyInAside(txId);
@@ -2857,15 +2864,18 @@ function saveAC(txId,field){
 }
 function cancelAC(){S.editingCard=null;render();}
 function undoAC(txId,field){ftx(txId).ai[field].st='idle';render();}
-function acceptAllTx(txId){
+function acceptAllTx(txId, ev){
+  if(ev){ev.stopPropagation();ev.preventDefault();}
   if(S.rowExit) return;
+  const tx=ftx(txId); if(!tx) return;
   const snapshot=snapshotTx(txId);
   const hadContext=applyAcceptAll(txId);
+  if(S.asideId===txId) renderAside();
   render();
   showSuccessToast({
     title:'Transaction accepted',
-    message:`${ftx(txId)?.ref||'Transaction'} coded — no further action needed`,
-    undo:()=>{restoreTx(snapshot);render();},
+    message:`${tx.ref||'Transaction'} matched — row stays in your list below`,
+    undo:()=>{restoreTx(snapshot);if(S.asideId===txId) renderAside();render();},
   });
   if(hadContext) showContextToast();
 }
@@ -3527,7 +3537,7 @@ function buildReviewRowActions(tx, exitActive){
   const hasSuggestions=['cat','match','tax','file'].some(f=>{const a=tx.ai[f];return a&&a.val&&a.st==='idle';})||(tx.attach>0&&ATTACH_DATA[tx.id]);
   return `
   <div class="rev-row-actions" onclick="event.stopPropagation()">
-    <button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${hasSuggestions&&!exitActive?'':'disabled'} onclick="event.stopPropagation();acceptAllTx(${tx.id})" title="Accept all AI suggestions">Accept all</button>
+    <button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${hasSuggestions&&!exitActive?'':'disabled'} onclick="event.stopPropagation();acceptAllTx(${tx.id},event)" title="Accept all AI suggestions">Accept all</button>
     <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" ${exitActive?'disabled':''} onclick="event.stopPropagation();openAside(${tx.id},'review','matches')">Review</button>
     <button type="button" class="btn-rev-reject" ${exitActive?'disabled':''} onclick="event.stopPropagation();rejectAllSuggestions(${tx.id})" title="Clear AI suggestions">Reject</button>
   </div>`;
@@ -3686,9 +3696,10 @@ function revModTaxCell(tx){
 }
 function revModMatchCell(tx){
   const cat=tx.ai.cat, match=tx.ai.match;
+  const isDone=txReviewDone(tx);
   if((cat&&cat.st==='accepted')||(match&&match.st==='accepted')){
-    return `<div class="rev-mod-match-sug">
-      ${cat&&cat.st==='accepted'?`<div class="rev-mod-match-cat">${cat.val}</div>`:''}
+    return `<div class="rev-mod-match-sug${isDone?' is-matched':''}">
+      ${cat&&cat.st==='accepted'?`<div class="rev-mod-match-cat">${isDone?'<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><polyline points="2,6 5,9 10,3"/></svg>':''}${cat.val}</div>`:''}
       ${match&&match.st==='accepted'?`<div class="rev-mod-match-sub">${match.val}</div>`:''}
     </div>`;
   }
@@ -3708,11 +3719,12 @@ function buildRevModAiBand(tx,exitActive){
   const hasAi=revModHasAnyAi(tx);
   const manual=revModIsFullManual(tx);
   const hasSuggestions=['cat','match','tax','file'].some(f=>{const a=tx.ai[f];return a&&a.val&&a.st==='idle';})||(tx.attach>0&&ATTACH_DATA[tx.id]);
+  const canAccept=hasSuggestions||hasAi;
   const actions=hasAi&&!exitActive&&!isDone?`
     <div class="rev-mod-ai-actions" onclick="event.stopPropagation()">
-      <button type="button" class="rev-mod-act-review" onclick="openAside(${tx.id},'review','matches')">Review</button>
-      <button type="button" class="rev-mod-act-accept" ${hasSuggestions?'':'disabled'} onclick="acceptAllTx(${tx.id})"><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg><span>Accept</span></button>
-      <button type="button" class="rev-mod-act-reject" onclick="rejectAllSuggestions(${tx.id})"><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg><span>Reject</span></button>
+      <button type="button" class="rev-mod-act-review" onclick="event.stopPropagation();openAside(${tx.id},'review','matches')">Review</button>
+      <button type="button" class="rev-mod-act-accept" ${canAccept?'':'disabled'} onclick="event.stopPropagation();acceptAllTx(${tx.id},event)"><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg><span>Accept</span></button>
+      <button type="button" class="rev-mod-act-reject" onclick="event.stopPropagation();rejectAllSuggestions(${tx.id})"><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg><span>Reject</span></button>
     </div>`:'';
   return `
   <div class="rev-mod-ai-band${hasAi&&!isDone?' has-ai':''}${manual&&!isDone?' is-manual':''}${isDone?' is-done':''}">
