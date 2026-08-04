@@ -822,9 +822,14 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .ai-split-banner{background:var(--mauve);border:1px solid var(--lavender);border-radius:var(--r8);padding:10px 12px;margin-bottom:12px;}
 .ai-split-banner-head{font-size:13px;font-weight:700;color:var(--purple);margin-bottom:3px;}
 .ai-split-banner-body{font-size:13px;color:var(--muted);line-height:1.4;margin-bottom:8px;}
-.ai-split-btns{display:flex;gap:6px;}
-.btn-asp-acc{padding:4px 11px;background:var(--purple);color:#fff;border:none;border-radius:var(--r4);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);}
-.btn-asp-dis{padding:4px 10px;background:#fff;color:var(--muted);border:1px solid var(--border);border-radius:var(--r4);font-size:13px;cursor:pointer;font-family:var(--font);}
+.ai-create-explainer{background:var(--mauve);border:1px solid var(--lavender);border-radius:var(--r8);padding:12px 14px;margin:0 0 12px;}
+.ai-create-explainer-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);margin-bottom:8px;}
+.ai-create-explainer-body{font-size:13px;color:var(--text);line-height:1.55;}
+.ai-create-explainer-body p{margin:0 0 10px;}
+.ai-create-explainer-body p:last-child{margin-bottom:0;}
+.ai-create-explainer-label{font-weight:600;color:var(--text);}
+.ai-create-explainer-check{color:var(--muted);}
+.ai-create-explainer-check .ai-create-explainer-label{color:var(--text);}
 /* attachment panel — pinned bottom of aside */
 .attach-panel{border-top:1px solid var(--border);background:#fff;flex-shrink:0;}
 .attach-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;cursor:pointer;user-select:none;}
@@ -2425,8 +2430,8 @@ function initAttachments(){
       const names=['receipt.jpg','invoice.pdf','tax-invoice.jpg','eftpos-receipt.jpg','delivery-docket.pdf'];
       const vendors=['Officeworks Underwood','AGL Energy','Bunnings Warehouse','Canva Pro Pty Ltd','Woolworths Metro'];
       const vendor=vendors[tx.id%vendors.length];
-      const extractedCat=tx.ai.cat.val||'Office supplies';
-      const extractedTax=tx.ai.tax.val||'GST';
+      const extractedCat=tx.ai.cat?.val||tx.ai.cat?.rejectedVal||'Office supplies';
+      const extractedTax=tx.ai.tax?.val||tx.ai.tax?.rejectedVal||'GST';
       const amt=Math.abs(tx.amount);
       const gst=+(amt/11).toFixed(2);
       entries.push({
@@ -2481,10 +2486,32 @@ const AI_SPLITS = {
 };
 
 const AI_ASIDE_HINTS={
-  26:{tab:'create',recordType:'spend',codePrefill:{cat:'Office supplies',tax:'GST',job:'ECO-0231'}},
+  26:{
+    tab:'create',recordType:'spend',codePrefill:{cat:'Office supplies',tax:'GST',job:'ECO-0231'},
+    explainer:{
+      kind:'difference',
+      body:'You previously declined our suggestions for category and tax on this transaction, but the uploaded receipt from Officeworks is a tax invoice for stationery and print supplies. We have suggested Office supplies with GST because the receipt shows a standard taxable supply — the category matches the line items on the receipt, and the tax invoice includes GST at roughly 1/11 of the total payment.',
+      check:'Review the receipt items and confirm the category, tax code, and job are correct for this purchase before saving.',
+    },
+  },
   10:{tab:'create',recordType:'spend',codePrefill:{cat:'Office supplies',tax:'GST'}},
   18:{tab:'create',recordType:'spend',codePrefill:{cat:'Equipment hire',tax:'GST',job:'APEX-2025'}},
-  21:{tab:'create',recordType:'transfer'},
+  21:{
+    tab:'create',recordType:'transfer',
+    explainer:{
+      kind:'difference',
+      body:'The suggested tax code is N-T (not reportable on BAS) because this appears to be a transfer between accounts, while a purchase tax code such as GST would apply if this payment includes taxable business supplies.',
+      check:'Review your bank statement to confirm whether this is a transfer between your own accounts, or a payment for business purchases that include GST.',
+    },
+  },
+  9:{
+    tab:'create',recordType:'spend',codePrefill:{cat:'Staff meals',tax:'GST'},
+    explainer:{
+      kind:'flagged',
+      body:'This transaction at Uber Eats has been flagged because food delivery purchases can include personal meals alongside crew catering. We have suggested Staff meals based on the description and your past coding for site mobilisation days.',
+      check:'Review the order details and confirm whether this purchase is a business expense related to your operations.',
+    },
+  },
 };
 
 /* ═══════════════════════════════════════════════
@@ -2518,7 +2545,6 @@ const S = {
   splitLineOpts:{},       // {'txId:lineId': true} — optional fields expanded in split view
   txNotes:{},             // {txId: note text}
   recordTypes:{},         // {txId: 'spend'|'receive'|'transfer'|...}
-  aiSplitPending:{},      // {txId: true} — AI split shown but not yet accepted
   matchSel:{},            // {txId: {ref: name}} — shortlisted records per tx
   automatch: true,        // master automatch toggle
   amToggles:{             // sub-feature toggles
@@ -2720,6 +2746,10 @@ function srcBadge(src){
   if(src==='bank') return `<span class="src src-bank">⬡ Bank feed</span>`;
   if(src==='myob') return `<span class="src src-myob">m MYOB record</span>`;
   return `<span class="src src-both">✓ Matched</span>`;
+}
+function asideSrcBadge(tx){
+  if(asideTabNorm(S.asideTab)==='create') return srcBadge('bank');
+  return srcBadge(tx.source);
 }
 const SRC_ASSETS={
   bankAnz:'assets/source-icons/bank-anz.png',
@@ -4284,7 +4314,7 @@ function buildTxPaneHead(tx){
     <div class="tx-pane-head-main">
       <div class="tx-pane-head-copy">
         <div class="tx-pane-head-line1">
-          ${srcBadge(tx.source)}
+          ${asideSrcBadge(tx)}
           <span class="tx-pane-amt ${amtCls}">${fmt(tx.amount)}</span>
           <span class="tx-pane-desc" title="${tx.desc.replace(/"/g,'&quot;')}">${tx.desc}</span>
         </div>
@@ -4361,8 +4391,11 @@ function buildPaneStickyFooter(tx,fromReview){
     const recType=getRecordType(tx.id);
     const ready=remOk&&!!recType;
     return `<div class="pane-sticky-foot"><div class="pane-foot-row">
-      <div class="pane-foot-meta"><span class="mf-count">${ready?'Ready to save':!recType?'Select a record type': 'Allocate remaining amount'}</span></div>
-      <div class="pane-foot-actions"><button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${ready?'':'disabled style="opacity:.5"'} onclick="saveNewRecord(${tx.id})">Save</button></div>
+      <div class="pane-foot-meta"><span class="mf-count">${ready?'Ready to save':!recType?'Select a record type':'Allocate remaining amount'}</span></div>
+      <div class="pane-foot-actions">
+        <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="closeAside()">Cancel</button>
+        <button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${ready?'':'disabled style="opacity:.5"'} onclick="saveNewRecord(${tx.id})">Save</button>
+      </div>
     </div></div>`;
   }
   if(fromReview) return `<div class="pane-sticky-foot">${buildReviewFooterContent(tx)}</div>`;
@@ -4408,7 +4441,7 @@ function buildAsideHeadClassic(tx){
     <button class="aside-close" onclick="closeAside()">✕</button>
     <div class="aside-head-body">
       <div class="aside-head-copy">
-        <div>${srcBadge(tx.source)}</div>
+        <div>${asideSrcBadge(tx)}</div>
         <div class="aside-amt ${amtCls}">${fmt(tx.amount)}</div>
         <div class="aside-desc">${tx.desc}</div>
         <div class="aside-meta">${tx.date} · ${tx.ref} · ${BANKS.find(b=>b.id===tx.bank)?.label}</div>
@@ -6355,6 +6388,140 @@ function saveNewRecord(txId){
   commitLedger(txId);
 }
 
+function getAiCreateExplainerCopy(tx){
+  const hint=getAiAsideHint(tx);
+  if(hint.tab!=='create') return null;
+  if(hint.explainer) return hint.explainer;
+
+  const pre=hint.codePrefill||{};
+  const att=ATTACH_DATA[tx.id]?.[0];
+  const aiSplit=AI_SPLITS[tx.id];
+  const vendor=att?.vendor||tx.desc.split(/[–\-]/)[0]?.trim()||'this supplier';
+  const sugTax=pre.tax||tx.ai.tax?.val||att?.extractedTax;
+  const sugCat=pre.cat||tx.ai.cat?.val||att?.extractedCat;
+  const sugJob=pre.job||tx.ai.job?.val;
+  const rejectedTax=tx.ai.tax?.rejectedVal;
+  const rejectedCat=tx.ai.cat?.rejectedVal;
+  const recType=getRecordType(tx.id)||hint.recordType;
+  const receiptDetail=tx.desc.includes('–')?tx.desc.split('–').slice(1).join('–').trim():tx.desc;
+  const hasReceipt=!!(att||tx.attach>0);
+
+  if(aiSplit&&aiSplit.lines.length>1){
+    const items=aiSplit.lines.map(l=>l.desc).join(', ');
+    return {
+      kind:'difference',
+      body:`The uploaded receipt lists several separate items (${items}) rather than a single purchase total. We have split this into ${aiSplit.lines.length} lines so each item can carry its own category and amount, based on how the receipt breaks down the sale.`,
+      check:'Review each line against the receipt and adjust categories, tax codes, or amounts before saving.',
+    };
+  }
+
+  if(recType==='transfer'||/transfer/i.test(tx.desc)){
+    return {
+      kind:'difference',
+      body:`The suggested tax code is ${sugTax||'N-T'} (not reportable on BAS) because this appears to be a transfer between accounts, while a purchase tax code such as GST would apply if this payment includes taxable business supplies. The record type is set to Transfer to reflect money moving between your own accounts.`,
+      check:'Review your bank statement to confirm whether this is a transfer between your own accounts, or a payment for business purchases that include GST.',
+    };
+  }
+
+  if(rejectedTax&&sugTax&&rejectedTax!==sugTax){
+    const gstNote=sugTax==='GST'&&att?.extractedGst
+      ? ` The receipt shows GST of $${att.extractedGst.toFixed(2)}, which is roughly 1/11 of the payment — consistent with a standard taxable supply in Australia.`
+      : sugTax==='GST'
+      ? ' For Australian GST, a tax invoice typically includes GST at about 1/11 of the total amount paid.'
+      : '';
+    const catNote=rejectedCat&&sugCat&&rejectedCat!==sugCat
+      ? ` We have also suggested category "${sugCat}" instead of "${rejectedCat}" because the receipt line items point to that type of expense.`
+      : sugCat&&!rejectedCat
+      ? ` Category "${sugCat}" matches the items listed on the receipt.`
+      : '';
+    return {
+      kind:'difference',
+      body:`You previously had ${rejectedTax} on this transaction, but the uploaded receipt from ${vendor} is a tax invoice. We have suggested ${sugTax} instead.${gstNote}${catNote}`,
+      check:'Review the receipt and confirm the correct tax code and category before saving.',
+    };
+  }
+
+  if(rejectedCat&&sugCat&&rejectedCat!==sugCat){
+    return {
+      kind:'difference',
+      body:`You previously declined "${rejectedCat}" as the category, but the receipt from ${vendor} (${receiptDetail.toLowerCase()}) still points to "${sugCat}" — this is consistent with how you usually code similar purchases from this supplier.`,
+      check:'Review the items on the receipt and confirm the category is correct for this purchase.',
+    };
+  }
+
+  if(tx.ctxOld?.tax&&sugTax&&tx.ctxOld.tax!==sugTax){
+    return {
+      kind:'difference',
+      body:`The suggested tax code is ${sugTax} because the linked receipt indicates this purchase is ${sugTax==='N-T'?'not subject to GST and not reportable on BAS':'a taxable supply'}, while the transaction was previously coded as ${tx.ctxOld.tax}.`,
+      check:'Review the receipt and confirm whether GST applies to this purchase.',
+    };
+  }
+
+  if(tx.ctxOld?.cat&&sugCat&&tx.ctxOld.cat!==sugCat){
+    return {
+      kind:'difference',
+      body:`The suggested category is "${sugCat}" because the linked receipt shows items that fit this account, while the transaction was previously coded as "${tx.ctxOld.cat}".`,
+      check:'Review the receipt line items and confirm the category reflects what was actually purchased.',
+    };
+  }
+
+  if(hasReceipt){
+    const detailParts=[];
+    if(sugCat) detailParts.push(`category "${sugCat}" from the receipt line items`);
+    if(sugTax){
+      detailParts.push(sugTax==='GST'&&att?.extractedGst
+        ? `tax code ${sugTax} (the invoice shows GST of $${att.extractedGst.toFixed(2)})`
+        : `tax code ${sugTax}`);
+    }
+    if(sugJob) detailParts.push(`job ${sugJob} from your recent coding on similar site purchases`);
+    const recLabel=recType&&RECORD_TYPE_LABELS[recType]?`a ${RECORD_TYPE_LABELS[recType].toLowerCase()} record`:'a new record';
+    const filled=detailParts.length?detailParts.join(', '):'the fields below from the receipt totals';
+    return {
+      kind:'difference',
+      body:`No open MYOB record matches this bank transaction, so we have set up ${recLabel} from your uploaded receipt from ${vendor}. We have suggested ${filled}.`,
+      check:'Review the pre-filled values against the receipt and edit anything that does not look right before saving.',
+    };
+  }
+
+  const histParts=[];
+  if(sugCat) histParts.push(`category "${sugCat}"`);
+  if(sugTax) histParts.push(`tax code ${sugTax}`);
+  if(sugJob) histParts.push(`job ${sugJob}`);
+  return {
+    kind:'difference',
+    body:`No matching MYOB record was found for this transaction. We have pre-filled ${histParts.join(', ')} based on the transaction description and how you have coded similar payments from ${vendor} before.`,
+    check:'Confirm the record type, category, and tax code are correct before saving.',
+  };
+}
+function aiExplainerLabel(kind){
+  return kind==='flagged'?'What was flagged:':'What is the difference:';
+}
+function shouldShowAiCreateExplainer(tx){
+  const hint=getAiAsideHint(tx);
+  if(hint.tab!=='create') return false;
+  const pre=hint.codePrefill||{};
+  if(pre.cat||pre.tax||pre.job) return true;
+  if(AI_SPLITS[tx.id]) return true;
+  if(ATTACH_DATA[tx.id]?.length) return true;
+  if(AI_ASIDE_HINTS[tx.id]) return true;
+  if(tx.ai.cat?.val||tx.ai.tax?.val||tx.ai.job?.val) return true;
+  return false;
+}
+function buildAiCreateExplainer(tx){
+  if(!shouldShowAiCreateExplainer(tx)) return '';
+  const copy=getAiCreateExplainerCopy(tx);
+  if(!copy?.body) return '';
+  const kind=copy.kind||'difference';
+  return `
+  <div class="ai-create-explainer">
+    <div class="ai-create-explainer-head">AI explanation</div>
+    <div class="ai-create-explainer-body">
+      <p><span class="ai-create-explainer-label">${aiExplainerLabel(kind)}</span> ${copy.body}</p>
+      ${copy.check?`<p class="ai-create-explainer-check"><span class="ai-create-explainer-label">What to check:</span> ${copy.check}</p>`:''}
+    </div>
+  </div>`;
+}
+
 function getAiAsideHint(tx){
   if(!tx) return {tab:null};
   if(AI_ASIDE_HINTS[tx.id]) return {...AI_ASIDE_HINTS[tx.id]};
@@ -6489,27 +6656,14 @@ function buildSplitLinesTable(tx,lines){
   </table>`;
 }
 function initSplitLines(txId){
-  if(S.splitLines[txId]) return; // already initialised
+  if(S.splitLines[txId]) return;
   const tx=ftx(txId);
   const aiSplit=AI_SPLITS[txId];
   if(aiSplit){
-    S.aiSplitPending[txId]=true;
-    S.splitLines[txId]=[{...defaultSplitLine(tx)}];
-  } else {
+    S.splitLines[txId]=aiSplit.lines.map(l=>({job:'',discount:'',...l}));
+  }else{
     S.splitLines[txId]=[{...defaultSplitLine(tx)}];
   }
-}
-
-function acceptAiSplit(txId){
-  const aiSplit=AI_SPLITS[txId]; if(!aiSplit) return;
-  S.splitLines[txId]=aiSplit.lines.map(l=>({job:'',discount:'',...l}));
-  S.aiSplitPending[txId]=false;
-  render();
-}
-
-function dismissAiSplit(txId){
-  S.aiSplitPending[txId]=false;
-  render();
 }
 
 function addSplitLine(txId){
@@ -6683,7 +6837,10 @@ function buildCreateFooter(tx){
   const ready=remOk&&!!recType;
   return `<div class="match-footer"><div class="pane-foot-row">
     <div class="pane-foot-meta"><span class="mf-count">${ready?'Ready to save':!recType?'Select a record type':'Allocate remaining amount'}</span></div>
-    <div class="pane-foot-actions"><button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${ready?'':'disabled style="opacity:.5"'} onclick="saveNewRecord(${tx.id})">Save</button></div>
+    <div class="pane-foot-actions">
+      <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="closeAside()">Cancel</button>
+      <button type="button" class="fx-btn fx-btn-success fx-btn-sm" ${ready?'':'disabled style="opacity:.5"'} onclick="saveNewRecord(${tx.id})">Save</button>
+    </div>
   </div></div>`;
 }
 function buildAsideContent(){
@@ -6845,22 +7002,8 @@ function buildAsideLineItems(tx,compact){
   const used=lines.reduce((s,l)=>s+Math.abs(parseFloat(l.amount)||0),0);
   const rem=(total-used).toFixed(2);
   const remOk=Math.abs(parseFloat(rem))<0.01;
-  const aiSplit=AI_SPLITS[tx.id];
-  const showAiBanner=aiSplit&&S.aiSplitPending[tx.id];
-  const hint=getAiAsideHint(tx);
-  const aiNote=hint.codePrefill?`<div class="ai-split-banner" style="margin-bottom:10px;padding:8px 10px"><div class="ai-split-banner-head">✦ AI coding suggestion</div><div class="ai-split-banner-body">Suggested values are highlighted in purple — adjust before saving.</div></div>`:'';
 
   return `
-  ${showAiBanner?`
-  <div class="ai-split-banner">
-    <div class="ai-split-banner-head">✦ AI detected multiple items in this receipt</div>
-    <div class="ai-split-banner-body">We've split this transaction into ${aiSplit.lines.length} lines based on the receipt. Review and adjust before saving.</div>
-    <div class="ai-split-btns">
-      <button class="btn-asp-acc" onclick="acceptAiSplit(${tx.id})">Use AI split</button>
-      <button class="btn-asp-dis" onclick="dismissAiSplit(${tx.id})">Code as single line</button>
-    </div>
-  </div>`:''}
-  ${aiNote}
   <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:8px 0">
     Line items <span style="font-weight:400;font-size:12px">(total: ${fmt(tx.amount)})</span>
   </div>
@@ -6878,10 +7021,7 @@ function buildAsideCreate(tx,compact){
   ensureRecordType(tx.id);
   const recType=getRecordType(tx.id);
   const opts=recordTypeOptions(tx);
-  const hint=getAiAsideHint(tx);
-  const aiNote=hint.tab==='create'&&hint.recordType?`<div class="ai-split-banner" style="margin-bottom:10px;padding:8px 10px"><div class="ai-split-banner-head">✦ AI suggestion</div><div class="ai-split-banner-body">Record type pre-selected — review line items and save.</div></div>`:'';
   return `
-  ${aiNote}
   <div class="frm-row create-record-type-row">
     <label class="frm-label" for="rec-type-${tx.id}">Record type</label>
     <select id="rec-type-${tx.id}" class="frm-sel${recordTypeSelectAiClass(tx)}" onchange="setRecordType(${tx.id},this.value);renderAside()">
@@ -6889,6 +7029,7 @@ function buildAsideCreate(tx,compact){
       ${opts.map(k=>`<option value="${k}"${recType===k?' selected':''}>${RECORD_TYPE_LABELS[k]}</option>`).join('')}
     </select>
   </div>
+  ${buildAiCreateExplainer(tx)}
   ${buildAsideLineItems(tx,compact)}`;
 }
 
