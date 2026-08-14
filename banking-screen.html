@@ -1675,12 +1675,55 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 /* transaction pane — Gmail-style reading pane (All + Review tabs) */
 .tx-pane-wrap{display:flex;min-height:520px;max-height:calc(100vh - 200px);border:1px solid var(--border);border-radius:var(--r8);overflow:hidden;background:var(--surface);}
 .tx-pane-wrap.tx-layout-vertical{flex-direction:row;}
-.tx-pane-wrap.tx-layout-horizontal{flex-direction:column;}
+.tx-pane-wrap.tx-layout-horizontal{
+  flex-direction:column;border:none;border-radius:0;background:transparent;
+  overflow:visible;max-height:none;min-height:0;height:auto;gap:0;
+}
 .tx-pane-wrap.tx-layout-none-full{min-height:560px;}
 .tx-pane-wrap.tx-layout-none-full .tx-pane-detail{flex:1;max-width:100%;}
 .tx-pane-list{flex:0 0 var(--tx-pane-list-pct,38%);max-width:var(--tx-pane-list-pct,38%);min-width:200px;display:flex;flex-direction:column;background:var(--surface);}
 .tx-layout-vertical .tx-pane-list{border-right:1px solid var(--border);}
-.tx-layout-horizontal .tx-pane-list{flex:0 0 var(--tx-pane-list-pct-v,42%);max-width:100%;min-height:140px;border-bottom:1px solid var(--border);}
+/* horizontal — Outlook-style: rounded list card + flowing detail below */
+.tx-pane-top-card{
+  display:flex;flex-direction:column;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r8);
+  overflow:hidden;min-height:140px;
+}
+.tx-layout-horizontal:not(.has-detail) .tx-pane-top-card{
+  height:auto;max-height:75vh;min-height:360px;
+}
+.tx-layout-horizontal.has-detail .tx-pane-top-card{
+  height:var(--tx-pane-top-h,42vh);max-height:75vh;flex-shrink:0;
+}
+.tx-pane-top-card .tx-pane-list-hd{border-radius:var(--r8) var(--r8) 0 0;}
+.tx-pane-top-card .rev-mod-wrap,.tx-pane-top-card .rev-card{border:none;border-radius:0;box-shadow:none;}
+.tx-pane-top-card .all-tbl-v2-wrap{border:none;border-radius:0;}
+.tx-pane-bottom{
+  flex-shrink:0;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r8);
+  margin-top:10px;
+}
+.tx-table-shell.tx-pane-mode:has(.tx-layout-horizontal){overflow:visible;min-height:0;border:none;background:transparent;}
+.tx-layout-horizontal .tx-pane-bottom .tx-pane-detail-inner{
+  height:auto;overflow:visible;display:block;
+}
+.tx-layout-horizontal .tx-pane-bottom .tx-pane-detail-inner .aside-body{
+  flex:none;overflow:visible;min-height:0;
+}
+.tx-layout-horizontal .tx-pane-bottom .match-footer,
+.tx-layout-horizontal .tx-pane-bottom .aside-review-footer,
+.tx-layout-horizontal .tx-pane-bottom .pane-sticky-foot{
+  box-shadow:none;
+}
+.tx-layout-horizontal .tx-pane-bottom .pane-detail-shell{
+  height:auto;overflow:visible;
+}
+.tx-layout-horizontal .tx-pane-bottom .pane-detail-body{
+  flex:none;overflow:visible;min-height:0;
+}
+.tx-pane-row.sel,.rev-mod-row.sel{background:#d3e3fd;}
+.rev-mod-row.sel{box-shadow:inset 3px 0 0 var(--purple);}
+.all-tbl-v2 tbody tr.sel,.review-tbl tbody tr.sel{background:#d3e3fd;}
 .tx-pane-list-hd{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;flex-wrap:wrap;}
 .tx-pane-list-title{font-size:13px;color:var(--muted);flex:1;min-width:60px;}
 .tx-pane-list-nav{display:inline-flex;align-items:center;gap:2px;}
@@ -1690,7 +1733,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .tx-pane-list-scroll{flex:1;overflow-y:auto;min-height:0;}
 .tx-pane-resizer{flex-shrink:0;transition:background .12s;position:relative;z-index:2;background:var(--border);}
 .tx-layout-vertical .tx-pane-resizer{width:5px;cursor:col-resize;}
-.tx-layout-horizontal .tx-pane-resizer{width:100%;height:5px;cursor:row-resize;}
+.tx-layout-horizontal .tx-pane-resizer{width:100%;height:8px;cursor:row-resize;margin:6px 0;border-radius:9999px;background:var(--stone20);border:1px solid var(--border);}
 .tx-pane-resizer:hover,.tx-pane-dragging .tx-pane-resizer{background:var(--lavender);}
 .tx-pane-detail{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:var(--surface);}
 .tx-pane-detail-inner{display:flex;flex-direction:column;height:100%;overflow:hidden;}
@@ -4082,10 +4125,17 @@ function acceptAllReadyInAside(txId){
 function isTxDetailOpen(){return S.page==='main'&&(S.tab==='all'||S.tab==='review')&&!!S.asideId&&!S.asideRule;}
 function isPaneDetailLayout(){return isTxDetailOpen()&&useTxPaneForMain();}
 function isReadingPaneLayout(){return S.txLayout==='vertical'||S.txLayout==='horizontal';}
+function isHorizontalSplitLayout(){return useTxPaneForMain()&&S.txLayout==='horizontal';}
+function shouldShowTxPaneSplit(){
+  if(!useTxPaneForMain()) return false;
+  if(shouldShowFullDetail()) return true;
+  if(S.txLayout==='horizontal') return true;
+  return S.txLayout==='vertical'&&!!S.asideId;
+}
 function isTxFullScreenDetail(){return S.txLayout==='none'&&!!S.asideId;}
 function isTxPaneOpen(){return isTxDetailOpen();}
 function useTxPaneForMain(){return S.page==='main'&&(S.tab==='all'||S.tab==='review');}
-function shouldShowReadingPane(){return useTxPaneForMain()&&isReadingPaneLayout()&&!!S.asideId;}
+function shouldShowReadingPane(){return useTxPaneForMain()&&S.txLayout==='vertical'&&!!S.asideId;}
 function shouldShowFullList(){return useTxPaneForMain()&&!S.asideId;}
 function shouldShowFullDetail(){return useTxPaneForMain()&&S.txLayout==='none'&&!!S.asideId;}
 function getReviewFilteredList(){
@@ -4118,7 +4168,7 @@ function setTxLayout(mode){
   if(!['none','vertical','horizontal'].includes(mode)) return;
   S.txLayout=mode;
   S.layoutSplitMenuOpen=false;
-  if(useTxPaneForMain()&&(mode==='vertical'||mode==='horizontal')&&!S.asideId){
+  if(useTxPaneForMain()&&mode==='vertical'&&!S.asideId){
     const list=getTxNavList();
     if(list.length){
       openAside(list[0].id,S.tab==='review'?'review':'all',S.asideTab||'matches');
@@ -4126,6 +4176,24 @@ function setTxLayout(mode){
     }
     showToast('No transactions to show in split view',2200);
   }
+  if(useTxPaneForMain()&&mode==='horizontal'&&!S.asideId){
+    const list=getTxNavList();
+    if(list.length){
+      openAside(list[0].id,S.tab==='review'?'review':'all',S.asideTab||'matches');
+      return;
+    }
+    showToast('No transactions to show in split view',2200);
+  }
+  render();
+}
+function selectTxPaneRow(id,from,tab,ev){
+  if(ev) ev.stopPropagation();
+  openAside(id,from,tab);
+}
+function handleTxPaneListClickOff(ev){
+  if(S.txLayout!=='horizontal'||!S.asideId) return;
+  if(ev.target.closest('[data-tx-pane-id],button,input,select,textarea,a,label,thead,.rev-mod-head,.rev-mod-date-hd,.tx-pane-list-hd')) return;
+  S.asideId=null;
   render();
 }
 function buildTxPaneListToolbar(count){
@@ -4150,13 +4218,18 @@ function startTxPaneResize(e){
   const startX=e.clientX, startY=e.clientY;
   const startRatio=horizontal?S.txPaneRatioH:S.txPaneRatio;
   const rect=wrap.getBoundingClientRect();
-  const cssVar=horizontal?'--tx-pane-list-pct-v':'--tx-pane-list-pct';
   function onMove(ev){
     const delta=horizontal?(ev.clientY-startY):(ev.clientX-startX);
-    const size=horizontal?rect.height:rect.width;
-    const next=Math.min(0.72,Math.max(0.22,startRatio+delta/size));
-    if(horizontal) S.txPaneRatioH=next; else S.txPaneRatio=next;
-    wrap.style.setProperty(cssVar,(next*100).toFixed(1)+'%');
+    if(horizontal){
+      const next=Math.min(0.75,Math.max(0.18,startRatio+delta/window.innerHeight));
+      S.txPaneRatioH=next;
+      wrap.style.setProperty('--tx-pane-top-h',(next*100).toFixed(1)+'vh');
+    }else{
+      const size=rect.width;
+      const next=Math.min(0.72,Math.max(0.22,startRatio+delta/size));
+      S.txPaneRatio=next;
+      wrap.style.setProperty('--tx-pane-list-pct',(next*100).toFixed(1)+'%');
+    }
   }
   function onUp(){
     document.removeEventListener('mousemove',onMove);
@@ -4206,7 +4279,7 @@ function buildTxPaneRowItem(tx,sel,{from}={}){
   const openFrom=from||(S.tab==='review'?'review':'all');
   const snippet=tx.desc;
   return `
-  <div class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'${openFrom}','${S.asideTab||'matches'}')`}">
+  <div class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`selectTxPaneRow(${tx.id},'${openFrom}','${S.asideTab||'matches'}',event)`}">
     <div class="tx-pane-row-main">
       <div class="tx-pane-row-top">
         <span class="tx-pane-row-party">${revModPartyName(tx)}</span>
@@ -4234,7 +4307,7 @@ function buildTxPaneRow(tx,sel,{from,showCheckbox=true}={}){
         onclick="event.stopPropagation();toggleRevSel(${tx.id})">
     </td>`:'';
   return `
-  <tr class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'${openFrom}','${S.asideTab||'matches'}')`}">
+  <tr class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`selectTxPaneRow(${tx.id},'${openFrom}','${S.asideTab||'matches'}',event)`}">
     ${chk}
     <td style="color:var(--muted);white-space:nowrap;font-size:13px">${tx.date}</td>
     <td>
@@ -4258,6 +4331,13 @@ function buildTxPaneDetail(){
     <div class="tx-pane-detail-inner" id="tx-pane-detail-inner">${buildAsideContent()}</div>
   </div>`;
 }
+function buildTxPaneBottom(){
+  if(!S.asideId) return '';
+  return `
+  <div class="tx-pane-bottom" id="tx-pane-bottom">
+    <div class="tx-pane-detail-inner" id="tx-pane-detail-inner">${buildAsideContent()}</div>
+  </div>`;
+}
 function buildTxPaneShell({listHtml,count,title='transactions'}){
   if(shouldShowFullDetail()){
     return `
@@ -4266,8 +4346,23 @@ function buildTxPaneShell({listHtml,count,title='transactions'}){
     </div>`;
   }
   const layout=S.txLayout;
+  const horiz=layout==='horizontal';
+  const hasDetail=!!S.asideId;
   const pctV=(S.txPaneRatio*100).toFixed(1);
   const pctH=(S.txPaneRatioH*100).toFixed(1);
+  if(horiz){
+    const topH=(pctH*100).toFixed(1);
+    return `
+    <div class="tx-pane-wrap tx-layout-horizontal${hasDetail?' has-detail':''}" id="tx-pane-wrap" style="${hasDetail?`--tx-pane-top-h:${topH}vh`:''}">
+      <div class="tx-pane-top-card" id="tx-pane-top">
+        ${buildTxPaneListToolbar(count)}
+        <div class="tx-pane-list-scroll" onclick="handleTxPaneListClickOff(event)">${listHtml}</div>
+      </div>
+      ${hasDetail?`
+      <div class="tx-pane-resizer" onmousedown="startTxPaneResize(event)" ondblclick="setTxLayout('none')" title="Drag to resize list height · double-click for no split"></div>
+      ${buildTxPaneBottom()}`:''}
+    </div>`;
+  }
   return `
   <div class="tx-pane-wrap tx-layout-${layout}" id="tx-pane-wrap" style="--tx-pane-list-pct:${pctV}%;--tx-pane-list-pct-v:${pctH}%">
     <div class="tx-pane-list">
@@ -4466,6 +4561,11 @@ function savePartialAside(txId){
 }
 
 function openAside(id,from='all',tab='matches'){
+  if(S.txLayout==='horizontal'&&S.asideId===id){
+    S.asideId=null;
+    render();
+    return;
+  }
   S.asideRule=null;
   S.asideId=id;S.asideFrom=from;S.asideTab=tab;
   S.asideSearch='';
@@ -4708,13 +4808,13 @@ function buildModernReviewRow(tx,sel){
   const isDone=txReviewDone(tx);
   const exitActive=S.rowExit?.txId===tx.id;
   const isFocus=revFilterIsReceiptMatchFocus()&&!isDone;
-  const rowCls=['rev-mod-row',isDone?'is-done':'',isFocus?'is-focus':'',revExitRowCls(tx.id,txHasChanged(tx),true)].filter(Boolean).join(' ');
+  const rowCls=['rev-mod-row',S.asideId===tx.id?'sel':'',isDone?'is-done':'',isFocus?'is-focus':'',revExitRowCls(tx.id,txHasChanged(tx),true)].filter(Boolean).join(' ');
   const exitStyle=revExitStyle(tx.id);
   const amtCls=tx.amount<0?'amt-neg':'amt-pos';
   const doneBadge=isDone?`<span class="rev-mod-done-badge"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>Accepted</span>`:'';
   const srcCol=showReviewSourceCol()?`<div class="rev-mod-src-col">${srcIcon(tx.source,{bankId:tx.bank})}</div>`:'';
   return `
-    <div class="${rowCls}" data-exit-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`openAside(${tx.id},'review','matches')`}" style="${exitStyle}">
+    <div class="${rowCls}" data-tx-pane-id="${tx.id}" data-exit-id="${tx.id}" onclick="${exitActive?'event.stopPropagation()':`selectTxPaneRow(${tx.id},'review','matches',event)`}" style="${exitStyle}">
       <div onclick="event.stopPropagation()">
         <input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple);cursor:pointer" ${sel.has(tx.id)?'checked':''} ${exitActive||isDone?'disabled':''}
           onclick="event.stopPropagation();toggleRevSel(${tx.id})">
@@ -5534,9 +5634,10 @@ function buildAllTxCell(tx){
 }
 function buildAllTableRow(tx){
   const amtCls=tx.amount<0?'amt-neg':'amt-pos';
-  const rowCls=[tx.source==='myob'?'tr-myob':'',txIsFullyComplete(tx)?'tr-done':''].filter(Boolean).join(' ');
+  const selected=S.asideId===tx.id;
+  const rowCls=[tx.source==='myob'?'tr-myob':'',txIsFullyComplete(tx)?'tr-done':'',selected?'sel':''].filter(Boolean).join(' ');
   return `
-  <tr class="${rowCls}" onclick="openAside(${tx.id},'all','matches')">
+  <tr class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="selectTxPaneRow(${tx.id},'all','matches',event)">
     <td class="col-chk" data-col="chk" onclick="event.stopPropagation()"><input type="checkbox"></td>
     <td class="col-date" data-col="date">${tx.date}</td>
     <td class="col-tx" data-col="tx">${buildAllTxCell(tx)}</td>
@@ -5548,9 +5649,38 @@ function buildAllTableRow(tx){
     <td class="col-left c" data-col="left">${buildAllWhatsLeftCell(tx)}</td>
   </tr>`;
 }
+function buildAllTableBodyRows(list){
+  if(!list.length){
+    return `<tr><td colspan="9" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`;
+  }
+  return list.map(tx=>buildAllTableRow(tx)).join('');
+}
+function buildAllTablePaneHtml(list){
+  const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
+  return `
+    <div class="all-tbl-v2-wrap">
+      <table class="all-tbl-v2">
+        ${buildTableColgroup('all',allCols)}
+        <thead data-scroll-table-head>
+          <tr>
+            ${thResize('all','chk','<input type="checkbox">','col-chk')}
+            ${thResize('all','date',`Date${colSortIndicator('all','date')}`,'col-date')}
+            ${thResize('all','tx',`Transaction${colSortIndicator('all','tx')}`,'col-tx')}
+            ${thResize('all','amt',`Amount ($)${colSortIndicator('all','amt')}`,'col-amt r')}
+            ${thResize('all','gst',`GST${colSortIndicator('all','gst')}`,'col-gst r')}
+            ${thResize('all','job',`Job${colSortIndicator('all','job')}`,'col-job')}
+            ${thResize('all','att','File','col-att r')}
+            ${thResize('all','match',`Match${colSortIndicator('all','match')}`,'col-match')}
+            ${thResize('all','left',`What's left${colSortIndicator('all','left')}`,'col-left r')}
+          </tr>
+        </thead>
+        <tbody>${buildAllTableBodyRows(list)}</tbody>
+      </table>
+    </div>`;
+}
 function buildAllTab(){
   const list=tableFilteredTx();
-  const paneOpen=shouldShowReadingPane()||shouldShowFullDetail();
+  const paneOpen=shouldShowTxPaneSplit();
   const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
   const fullTable=`
     <div class="all-tbl-v2-wrap">
@@ -5573,7 +5703,7 @@ function buildAllTab(){
       </table>
     </div>`;
   const listPanel=paneOpen?buildTxPaneShell({
-    listHtml:buildTxPaneListTable(list,null,{from:'all'}),
+    listHtml:isHorizontalSplitLayout()?buildAllTablePaneHtml(list):buildTxPaneListTable(list,null,{from:'all'}),
     count:list.length,
   }):fullTable;
   return `
@@ -5917,6 +6047,68 @@ function buildModernReviewList(filtered, sel){
     ${body}
   </div>`;
 }
+function buildReviewTableRowHtml(tx,sel){
+  const isCtx=txHasChanged(tx);
+  const isDone=txReviewDone(tx);
+  const exitActive=S.rowExit?.txId===tx.id;
+  const rejectActive=S.rowReject?.txId===tx.id;
+  const rowLocked=exitActive||rejectActive;
+  const isFocus=revFilterIsReceiptMatchFocus()&&!isDone;
+  const selected=S.asideId===tx.id;
+  const rowCls=[revExitRowCls(tx.id,isCtx,false),revRejectRowCls(tx.id),isDone?'tr-done':'',isFocus?'tr-focus':'',selected?'sel':''].filter(Boolean).join(' ');
+  const exitStyle=`${revExitStyle(tx.id)}${revRejectStyle(tx.id)}`;
+  const colSpan=showReviewSourceCol()?8:7;
+  return `
+    <tr class="${rowCls}" data-tx-pane-id="${tx.id}" data-exit-id="${tx.id}" onclick="${rowLocked?'event.stopPropagation()':`selectTxPaneRow(${tx.id},'review','matches',event)`}" style="cursor:pointer;${exitStyle}">
+      <td class="col-chk" data-col="chk" style="padding:8px 12px" onclick="event.stopPropagation()">
+        <input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple);cursor:pointer" ${sel.has(tx.id)?'checked':''} ${rowLocked?'disabled':''}
+          onclick="event.stopPropagation();toggleRevSel(${tx.id})">
+      </td>
+      ${showReviewSourceCol()?`<td class="col-src" data-col="src" style="text-align:center;padding:8px 10px">${srcIcon(tx.source,{bankId:tx.bank})}</td>`:''}
+      <td class="col-date" data-col="date" style="color:var(--muted);font-size:14px;white-space:nowrap">${tx.date}</td>
+      <td class="col-tx" data-col="tx" style="position:relative">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <div class="tx-icon${tx.amount>0?' green':''}">${tx.desc.charAt(0).toUpperCase()}</div>
+          <div style="min-width:0">
+            <div class="tx-ref">${tx.ref||tx.desc}</div>
+            <div class="tx-bank">${tx.desc}</div>
+          </div>
+        </div>
+        ${buildReviewExitOverlay(tx.id)}
+      </td>
+      <td class="col-amt r" data-col="amt" style="text-align:right"><span class="${tx.amount<0?'amt-neg':'amt-pos'}">${fmt(tx.amount)}</span></td>
+      ${revAttachCell(tx)}
+      ${buildReviewAssessmentCells(tx,rowLocked)}
+    </tr>`;
+}
+function buildReviewTableBodyWithAccordion(filtered,sel){
+  if(!filtered.length){
+    return `<tr><td colspan="${showReviewSourceCol()?8:7}" style="text-align:center;padding:48px;color:var(--muted)">
+      <div style="font-size:28px;margin-bottom:8px">✓</div>
+      <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">All done here</div>
+      <div style="font-size:14px">No transactions match this filter.</div>
+    </td></tr>`;
+  }
+  return filtered.map(tx=>buildReviewTableRowHtml(tx,sel)).join('');
+}
+function buildReviewTableWithAccordion(filtered,sel){
+  return `
+      <div class="card rev-card" style="padding:0;overflow:visible">
+        <div class="rev-tbl-scroll">
+        <table class="all-tbl review-tbl">
+          ${reviewTableColgroup()}
+          <thead>
+            ${buildReviewTableHeadRow({checkbox:true,filtered,sel})}
+          </thead>
+          <tbody>${buildReviewTableBodyWithAccordion(filtered,sel)}</tbody>
+        </table>
+        </div>
+      </div>`;
+}
+function buildHorizontalReviewListHtml(filtered,sel){
+  if(S.reviewView==='modern') return buildModernReviewList(filtered,sel);
+  return buildReviewTableWithAccordion(filtered,sel);
+}
 function buildReviewTab(){
   const inbox=reviewInboxList();
   const filtered=sortTableList(filterReviewInbox(inbox).filter(t=>!txReviewDone(t)),'review');
@@ -5966,9 +6158,9 @@ function buildReviewTab(){
       <div style="font-size:14px">No transactions match this filter.</div>
     </td></tr>`;
 
-  const paneOpen=shouldShowReadingPane()||shouldShowFullDetail();
+  const paneOpen=shouldShowTxPaneSplit();
   const listPanel=paneOpen?buildTxPaneShell({
-    listHtml:buildTxPaneListTable(filtered,sel,{from:'review'}),
+    listHtml:isHorizontalSplitLayout()?buildHorizontalReviewListHtml(filtered,sel):buildTxPaneListTable(filtered,sel,{from:'review'}),
     count:filtered.length,
   }):`
       <div class="rev-toolbar">
@@ -6314,7 +6506,7 @@ function buildPreviewOverlay(){
 
 function openPreview(name, txId){ S.previewFile={name,txId}; renderAside(); }
 function renderAside(){
-  if(useTxPaneForMain()&&(isTxDetailOpen()||isReadingPaneLayout())){
+  if(useTxPaneForMain()&&isTxDetailOpen()){
     const splitInner=document.getElementById('tx-pane-detail-inner');
     if(splitInner) splitInner.innerHTML=buildAsideContent();
     return;
