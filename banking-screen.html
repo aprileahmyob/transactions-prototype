@@ -712,6 +712,19 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .aside-head-receipt-label{font-size:11px;font-weight:600;color:var(--muted);line-height:1;max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aside-head-receipt:hover .aside-head-receipt-label{color:var(--purple);}
 .aside-head-att-badge{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:var(--purple);color:#fff;font-size:10px;font-weight:700;line-height:16px;text-align:center;}
+.aside-head-att-chip{
+  flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:4px 8px;
+  border:none;border-radius:var(--r4);background:var(--stone20);cursor:pointer;
+  font-family:var(--font);color:var(--muted);line-height:1;position:relative;
+}
+.aside-head-att-chip:hover{background:var(--brand-subtle);color:var(--purple);}
+.aside-head-att-chip svg{flex-shrink:0;display:block;}
+.aside-head-att-chip-count{
+  min-width:18px;height:18px;padding:0 5px;border-radius:99px;
+  background:var(--purple);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center;
+}
+.aside-head-att-chip--empty{padding:4px 6px;background:#fff;border:1px dashed var(--border);}
+.aside-head-att-chip--empty:hover{border-color:var(--lavender);}
 .aside-amt{font-size:26px;font-weight:700;line-height:1;margin:5px 0 2px;}
 .aside-desc{font-size:16px;font-weight:600;margin-bottom:2px;}
 .aside-meta{font-size:13px;color:var(--muted);}
@@ -1693,7 +1706,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
   height:auto;max-height:75vh;min-height:360px;
 }
 .tx-layout-horizontal.has-detail .tx-pane-top-card{
-  height:var(--tx-pane-top-h,42vh);max-height:75vh;flex-shrink:0;
+  height:var(--tx-pane-top-h,50vh);max-height:75vh;flex-shrink:0;
 }
 .tx-pane-top-card .tx-pane-list-hd{border-radius:var(--r8) var(--r8) 0 0;}
 .tx-pane-top-card .rev-mod-wrap,.tx-pane-top-card .rev-card{border:none;border-radius:0;box-shadow:none;}
@@ -1701,8 +1714,17 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .tx-pane-bottom{
   flex-shrink:0;background:var(--surface);
   border:1px solid var(--border);border-radius:var(--r8);
-  margin-top:10px;
 }
+.tx-layout-horizontal.has-detail .tx-pane-bottom{margin-top:0;}
+/* invisible drag hit area in the gap between list card and detail panel */
+.tx-pane-split-gap{
+  flex-shrink:0;height:10px;cursor:row-resize;position:relative;z-index:2;background:transparent;
+}
+.tx-pane-split-gap::before{
+  content:'';position:absolute;left:0;right:0;top:-6px;bottom:-6px;
+}
+body.tx-pane-dragging{user-select:none;}
+body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .tx-table-shell.tx-pane-mode:has(.tx-layout-horizontal){overflow:visible;min-height:0;border:none;background:transparent;}
 .tx-layout-horizontal .tx-pane-bottom .tx-pane-detail-inner{
   height:auto;overflow:visible;display:block;
@@ -1733,7 +1755,6 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .tx-pane-list-scroll{flex:1;overflow-y:auto;min-height:0;}
 .tx-pane-resizer{flex-shrink:0;transition:background .12s;position:relative;z-index:2;background:var(--border);}
 .tx-layout-vertical .tx-pane-resizer{width:5px;cursor:col-resize;}
-.tx-layout-horizontal .tx-pane-resizer{width:100%;height:8px;cursor:row-resize;margin:6px 0;border-radius:9999px;background:var(--stone20);border:1px solid var(--border);}
 .tx-pane-resizer:hover,.tx-pane-dragging .tx-pane-resizer{background:var(--lavender);}
 .tx-pane-detail{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:var(--surface);}
 .tx-pane-detail-inner{display:flex;flex-direction:column;height:100%;overflow:hidden;}
@@ -1773,8 +1794,25 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .tx-pane-tool-sp{flex:1;}
 .tx-pane-head-main{padding:8px 12px 10px;display:flex;align-items:flex-start;gap:12px;}
 .tx-pane-head-copy{flex:1;min-width:0;}
-.tx-pane-head-line1{display:flex;align-items:baseline;gap:10px;min-width:0;flex-wrap:wrap;}
+.tx-pane-head-line1{display:flex;align-items:center;gap:10px;min-width:0;flex-wrap:wrap;}
 .tx-pane-head-line1 .src{font-size:11px;padding:2px 6px;flex-shrink:0;}
+.tx-pane-head-open{
+  flex-shrink:0;display:inline-flex;align-items:center;gap:5px;margin-left:auto;
+  padding:4px 10px;border:1px solid var(--border);border-radius:var(--r4);
+  background:#fff;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;
+  font-family:var(--font);line-height:1.2;white-space:nowrap;
+}
+.tx-pane-head-open:hover{border-color:var(--lavender);color:var(--purple);background:var(--brand-subtle);}
+.tx-pane-head-open svg{flex-shrink:0;}
+.tx-pane-head-note{
+  flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;
+  border:1px solid var(--border);border-radius:var(--r4);background:#fff;
+  font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;
+  font-family:var(--font);line-height:1.2;white-space:nowrap;
+}
+.tx-pane-head-note:hover,.tx-pane-head-note.act{border-color:var(--lavender);color:var(--purple);background:var(--brand-subtle);}
+.tx-pane-head-note.has-note{color:var(--text);}
+.tx-pane-head-note svg{flex-shrink:0;display:block;}
 .tx-pane-amt{font-size:18px;font-weight:700;line-height:1.2;flex-shrink:0;}
 .tx-pane-desc{font-size:14px;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tx-pane-head-line2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;}
@@ -1840,11 +1878,14 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .pane-detail-shell .dim-changed-banner{margin:0 0 10px;padding:10px 12px;font-size:13px;}
 .pane-detail-shell .dim-changed-banner strong{font-size:13px;}
 .tx-note-field{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--stone20);flex-shrink:0;}
+.tx-note-field--compact{padding:8px 12px;}
+.tx-note-field--compact .frm-label{font-size:12px;text-transform:none;letter-spacing:0;margin-bottom:3px;}
 .tx-note-field .frm-label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
 .tx-note-inp{width:100%;padding:7px 9px;border:1px solid var(--border);border-radius:var(--r4);font-size:14px;font-family:var(--font);line-height:1.4;resize:vertical;min-height:44px;box-sizing:border-box;background:#fff;}
 .tx-note-inp:focus{outline:none;border-color:var(--lavender);box-shadow:0 0 0 2px var(--brand-subtle);}
 .pane-detail-shell .tx-note-field{padding:8px 16px;}
 .pane-detail-shell .tx-pane-head-main{padding:6px 12px 8px;}
+.tx-layout-horizontal .tx-pane-bottom .pane-detail-shell .tx-pane-head-main{padding:6px 12px 6px;align-items:center;}
 .pane-detail-shell .tx-pane-dims{display:none;}
 .dismiss-type-badge{font-size:11px;font-weight:600;padding:2px 7px;border-radius:var(--r4);background:var(--stone20);color:var(--muted);white-space:nowrap;}
 
@@ -2528,13 +2569,22 @@ const AI_SPLITS = {
   ]},
 };
 
+const AI_EXPLAINER_MAX={why:28,done:18,check:14};
 const AI_ASIDE_HINTS={
+  3:{
+    tab:'create',recordType:'spend',codePrefill:{cat:'Materials',tax:'GST',job:'ECO-0231'},
+    explainer:{
+      why:'No MYOB record for this Bunnings payment. The description points to job ECO-0231 and trade materials — consistent with how you code other Bunnings job purchases.',
+      done:'Pre-filled spend money with Materials, GST, and job ECO-0231 from the description and your Bunnings pattern.',
+      check:'Confirm job, category, and tax are right, and add a receipt if you have one.',
+    },
+  },
   26:{
     tab:'create',recordType:'spend',codePrefill:{cat:'Office supplies',tax:'GST',job:'ECO-0231'},
     explainer:{
-      kind:'difference',
-      body:'You previously declined our suggestions for category and tax on this transaction, but the uploaded receipt from Officeworks is a tax invoice for stationery and print supplies. We have suggested Office supplies with GST because the receipt shows a standard taxable supply — the category matches the line items on the receipt, and the tax invoice includes GST at roughly 1/11 of the total payment.',
-      check:'Review the receipt items and confirm the category, tax code, and job are correct for this purchase before saving.',
+      why:'You declined our earlier suggestions, but the Officeworks receipt is a tax invoice for stationery.',
+      done:'Suggested Office supplies with GST to match the receipt line items.',
+      check:'Confirm category, tax, and job against the receipt before saving.',
     },
   },
   10:{tab:'create',recordType:'spend',codePrefill:{cat:'Office supplies',tax:'GST'}},
@@ -2542,17 +2592,17 @@ const AI_ASIDE_HINTS={
   21:{
     tab:'create',recordType:'transfer',
     explainer:{
-      kind:'difference',
-      body:'The suggested tax code is N-T (not reportable on BAS) because this appears to be a transfer between accounts, while a purchase tax code such as GST would apply if this payment includes taxable business supplies.',
-      check:'Review your bank statement to confirm whether this is a transfer between your own accounts, or a payment for business purchases that include GST.',
+      why:'This payment looks like money moving between your own accounts, not a supplier purchase.',
+      done:'Set Transfer and tax code N-T so it stays off your BAS.',
+      check:'Confirm this is internal, not a taxable business purchase.',
     },
   },
   9:{
     tab:'create',recordType:'spend',codePrefill:{cat:'Staff meals',tax:'GST'},
     explainer:{
-      kind:'flagged',
-      body:'This transaction at Uber Eats has been flagged because food delivery purchases can include personal meals alongside crew catering. We have suggested Staff meals based on the description and your past coding for site mobilisation days.',
-      check:'Review the order details and confirm whether this purchase is a business expense related to your operations.',
+      why:'Uber Eats can mix personal meals and crew catering — flagged because the description alone is unclear.',
+      done:'Suggested Staff meals with GST based on site mobilisation coding.',
+      check:'Confirm this is a business meal before saving.',
     },
   },
 };
@@ -2569,7 +2619,7 @@ const S = {
   asideId:null, asideTab:'matches', asideFrom:'all',
   txLayout:'vertical',           // 'none' | 'vertical' | 'horizontal' (Gmail reading pane)
   txPaneRatio:0.38,              // list width fraction — vertical split
-  txPaneRatioH:0.42,             // list height fraction — horizontal split
+  txPaneRatioH:0.5,              // list height fraction — horizontal split (50% viewport)
   asideRule:null,         // null | {source:'suggested'|'memory', id:number}
   editingCard:null,       // {txId, field}
   reviewView:'table',     // 'table' | 'modern'
@@ -2587,6 +2637,7 @@ const S = {
   splitLines:{},          // {txId: [{id,desc,cat,tax,amount,job,discount}]}
   splitLineOpts:{},       // {'txId:lineId': true} — optional fields expanded in split view
   txNotes:{},             // {txId: note text}
+  txNoteOpenId:null,       // tx id when note field expanded (horizontal compact)
   recordTypes:{},         // {txId: 'spend'|'receive'|'transfer'|...}
   matchSel:{},            // {txId: {ref: name}} — shortlisted records per tx
   automatch: true,        // master automatch toggle
@@ -4148,8 +4199,26 @@ function getTxNavList(){
 }
 function scrollTxPaneRowIntoView(txId){
   requestAnimationFrame(()=>{
-    document.querySelector(`[data-tx-pane-id="${txId}"]`)?.scrollIntoView({block:'nearest',behavior:'smooth'});
+    const row=document.querySelector(`[data-tx-pane-id="${txId}"]`);
+    if(!row) return;
+    const scrollEl=row.closest('.tx-pane-list-scroll');
+    if(scrollEl){
+      const rowTop=row.offsetTop;
+      const rowBottom=rowTop+row.offsetHeight;
+      const viewTop=scrollEl.scrollTop;
+      const viewBottom=viewTop+scrollEl.clientHeight;
+      if(rowTop<viewTop) scrollEl.scrollTop=rowTop;
+      else if(rowBottom>viewBottom) scrollEl.scrollTop=rowBottom-scrollEl.clientHeight;
+    }else row.scrollIntoView({block:'nearest',behavior:'smooth'});
   });
+}
+function updateTxPaneRowSelection(prevId,newId){
+  if(prevId){
+    document.querySelectorAll(`[data-tx-pane-id="${prevId}"]`).forEach(el=>el.classList.remove('sel'));
+  }
+  if(newId){
+    document.querySelectorAll(`[data-tx-pane-id="${newId}"]`).forEach(el=>el.classList.add('sel'));
+  }
 }
 function navTxPane(delta){
   const list=getTxNavList();
@@ -4209,6 +4278,14 @@ function buildTxPaneListToolbar(count){
     </div>
   </div>`;
 }
+function refreshTxPaneListToolbar(){
+  const hd=document.querySelector('.tx-pane-list-hd');
+  if(!hd) return;
+  const count=getTxNavList().length;
+  const wrap=document.createElement('div');
+  wrap.innerHTML=buildTxPaneListToolbar(count);
+  hd.replaceWith(wrap.firstElementChild);
+}
 function startTxPaneResize(e){
   if(e.button!==0) return;
   e.preventDefault();
@@ -4231,14 +4308,15 @@ function startTxPaneResize(e){
       wrap.style.setProperty('--tx-pane-list-pct',(next*100).toFixed(1)+'%');
     }
   }
+  document.body.classList.add('tx-pane-dragging');
+  if(horizontal) document.body.classList.add('tx-pane-drag-h');
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
   function onUp(){
     document.removeEventListener('mousemove',onMove);
     document.removeEventListener('mouseup',onUp);
-    document.body.classList.remove('tx-pane-dragging');
+    document.body.classList.remove('tx-pane-dragging','tx-pane-drag-h');
   }
-  document.body.classList.add('tx-pane-dragging');
-  document.addEventListener('mousemove',onMove);
-  document.addEventListener('mouseup',onUp);
 }
 function bindTxPaneKeys(){
   if(window._txPaneKeysBound) return;
@@ -4349,9 +4427,9 @@ function buildTxPaneShell({listHtml,count,title='transactions'}){
   const horiz=layout==='horizontal';
   const hasDetail=!!S.asideId;
   const pctV=(S.txPaneRatio*100).toFixed(1);
-  const pctH=(S.txPaneRatioH*100).toFixed(1);
+  const topH=(S.txPaneRatioH*100).toFixed(1);
+  const pctH=topH;
   if(horiz){
-    const topH=(pctH*100).toFixed(1);
     return `
     <div class="tx-pane-wrap tx-layout-horizontal${hasDetail?' has-detail':''}" id="tx-pane-wrap" style="${hasDetail?`--tx-pane-top-h:${topH}vh`:''}">
       <div class="tx-pane-top-card" id="tx-pane-top">
@@ -4359,7 +4437,7 @@ function buildTxPaneShell({listHtml,count,title='transactions'}){
         <div class="tx-pane-list-scroll" onclick="handleTxPaneListClickOff(event)">${listHtml}</div>
       </div>
       ${hasDetail?`
-      <div class="tx-pane-resizer" onmousedown="startTxPaneResize(event)" ondblclick="setTxLayout('none')" title="Drag to resize list height · double-click for no split"></div>
+      <div class="tx-pane-split-gap" onmousedown="startTxPaneResize(event)" ondblclick="setTxLayout('none')" title="Drag to resize list height · double-click for no split" aria-hidden="true"></div>
       ${buildTxPaneBottom()}`:''}
     </div>`;
   }
@@ -4373,9 +4451,20 @@ function buildTxPaneShell({listHtml,count,title='transactions'}){
     ${buildTxPaneDetail()}
   </div>`;
 }
-function buildAsideHeadReceipt(tx){
+function buildAsideHeadReceipt(tx,{compact=false}={}){
   const count=Math.max(tx.attach||0, ATTACH_DATA[tx.id]?.length||0);
   const uploadSvg=`<svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12V4"/><path d="M6 7l3-3 3 3"/><path d="M3 14h12"/></svg>`;
+  const clipSvg=`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 2.5l-4 4a2.5 2.5 0 103.5 3.5l4.5-4.5a3.5 3.5 0 10-5 5l-4.8 4.8"/></svg>`;
+  if(compact){
+    if(count>0){
+      const attName=(ATTACH_DATA[tx.id]?.[0]?.name||tx.ai.file?.val||'Attachment').replace(/"/g,'&quot;');
+      return `<button type="button" class="aside-head-att-chip" onclick="event.stopPropagation();openAttachModal(${tx.id},0)" title="View ${count} attachment${count!==1?'s':''} — ${attName}" aria-label="View ${count} attachment${count!==1?'s':''}">
+        ${clipSvg}
+        <span class="aside-head-att-chip-count">${count}</span>
+      </button>`;
+    }
+    return `<button type="button" class="aside-head-att-chip aside-head-att-chip--empty" onclick="event.stopPropagation();openInlineAttach(${tx.id})" title="Add attachment" aria-label="Add attachment">${uploadSvg}</button>`;
+  }
   if(count>0){
     const previewImg=attachPreviewImg(tx);
     const badge=count>1?`<span class="aside-head-att-badge">${count}</span>`:'';
@@ -4397,27 +4486,40 @@ function buildTxPaneHead(tx){
   const navList=getTxNavList();
   const navIdx=navList.findIndex(t=>t.id===tx.id);
   const fullScreen=isTxFullScreenDetail();
-  return `
-  <div class="tx-pane-head">
+  const horizontalDetail=isHorizontalSplitLayout()&&!fullScreen;
+  const toolbar=horizontalDetail?'':`
     <div class="tx-pane-toolbar">
       ${fullScreen?`<button type="button" class="tx-pane-tool-btn" onclick="closeAside()" title="Back to list">← Back</button>`:''}
       <button type="button" class="tx-pane-tool-btn" ${navIdx>0?'':'disabled'} onclick="navTxPane(-1)" title="Previous transaction">‹</button>
       <button type="button" class="tx-pane-tool-btn" ${navIdx<navList.length-1?'':'disabled'} onclick="navTxPane(1)" title="Next transaction">›</button>
       <span class="tx-pane-tool-sp"></span>
       ${fullScreen?'':`<button type="button" class="tx-pane-tool-btn" onclick="S.asideId=null;render()" title="Deselect">✕</button>`}
-    </div>
+    </div>`;
+  const openNewWindow=horizontalDetail?`
+      <button type="button" class="tx-pane-head-open" onclick="setTxLayout('none')" title="Open in new window" aria-label="Open in new window">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 1h4v4"/><path d="M5 13H1V9"/><path d="M13 1L6 8"/><path d="M8 1h5v5"/></svg>
+        <span>Open in new window</span>
+      </button>`:'';
+  const receiptMarkup=buildAsideHeadReceipt(tx,{compact:horizontalDetail});
+  const noteBtn=horizontalDetail?buildTxNoteHeadBtn(tx):'';
+  return `
+  <div class="tx-pane-head">
+    ${toolbar}
     <div class="tx-pane-head-main">
       <div class="tx-pane-head-copy">
         <div class="tx-pane-head-line1">
           ${asideSrcBadge(tx)}
           <span class="tx-pane-amt ${amtCls}">${fmt(tx.amount)}</span>
           <span class="tx-pane-desc" title="${tx.desc.replace(/"/g,'&quot;')}">${tx.desc}</span>
+          ${horizontalDetail?receiptMarkup:''}
+          ${noteBtn}
+          ${openNewWindow}
         </div>
         <div class="tx-pane-head-line2">
           <span class="tx-pane-meta">${tx.date} · ${tx.ref} · ${BANKS.find(b=>b.id===tx.bank)?.label}</span>
         </div>
       </div>
-      ${buildAsideHeadReceipt(tx)}
+      ${horizontalDetail?'':receiptMarkup}
     </div>
   </div>`;
 }
@@ -4496,13 +4598,38 @@ function buildPaneStickyFooter(tx,fromReview){
   if(fromReview) return `<div class="pane-sticky-foot">${buildReviewFooterContent(tx)}</div>`;
   return '';
 }
-function buildTxNoteField(tx){
+function buildTxNoteHeadBtn(tx){
+  const note=(S.txNotes&&S.txNotes[tx.id])||'';
+  const open=S.txNoteOpenId===tx.id;
+  const label=note?'Edit note':'Add note';
+  const noteSvg=`<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 1.5l2 2L4.5 10.5H2.5v-2L9.5 1.5z"/><path d="M8 2.5l2 2"/></svg>`;
+  return `<button type="button" class="tx-pane-head-note${open?' act':''}${note?' has-note':''}" onclick="toggleTxNoteField(${tx.id})" title="${label}" aria-expanded="${open}" aria-label="${label}">${noteSvg}<span>${label}</span></button>`;
+}
+function buildTxNoteField(tx,{compact=false}={}){
+  if(compact&&S.txNoteOpenId!==tx.id) return '';
   const note=(S.txNotes&&S.txNotes[tx.id])||'';
   const safe=note.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-  return `<div class="tx-note-field">
-    <label class="frm-label" for="tx-note-${tx.id}">Transaction note</label>
+  const label=compact?'Note':'Transaction note';
+  const compactCls=compact?' tx-note-field--compact':'';
+  return `<div class="tx-note-field${compactCls}">
+    <label class="frm-label" for="tx-note-${tx.id}">${label}</label>
     <textarea id="tx-note-${tx.id}" class="tx-note-inp" rows="2" placeholder="Add a note for this transaction…" oninput="setTxNote(${tx.id},this.value)">${safe}</textarea>
   </div>`;
+}
+function toggleTxNoteField(txId){
+  S.txNoteOpenId=S.txNoteOpenId===txId?null:txId;
+  if(useTxPaneForMain()&&isTxDetailOpen()){
+    renderAside();
+    if(S.txNoteOpenId===txId){
+      requestAnimationFrame(()=>document.getElementById(`tx-note-${txId}`)?.focus());
+    }
+    return;
+  }
+  const inner=document.getElementById('aside-inner');
+  if(inner) inner.innerHTML=buildAsideContent();
+  if(S.txNoteOpenId===txId){
+    requestAnimationFrame(()=>document.getElementById(`tx-note-${txId}`)?.focus());
+  }
 }
 function setTxNote(txId,val){
   if(!S.txNotes) S.txNotes={};
@@ -4518,11 +4645,12 @@ function buildAsideTabContent(tx,compact){
   return buildAsideCreate(tx,compact);
 }
 function buildPaneDetailContent(tx,fromReview){
+  const horizontalDetail=isHorizontalSplitLayout();
   return `
   <div class="pane-detail-shell">
     ${buildTxPaneHead(tx)}
     <div class="pane-detail-tabs at-tabs">${buildAsideTabButtons(tx)}</div>
-    ${buildTxNoteField(tx)}
+    ${buildTxNoteField(tx,{compact:horizontalDetail})}
     <div class="pane-detail-body aside-body">${txHasChanged(tx)&&tx.ctxOld?`<div style="margin-bottom:10px">${buildDimChangedBanner(tx)}</div>`:''}${buildAsideTabContent(tx,true)}</div>
     ${buildPaneStickyFooter(tx,fromReview)}
     ${S.previewFile?buildPreviewOverlay():''}
@@ -4563,11 +4691,15 @@ function savePartialAside(txId){
 function openAside(id,from='all',tab='matches'){
   if(S.txLayout==='horizontal'&&S.asideId===id){
     S.asideId=null;
+    S.txNoteOpenId=null;
     render();
     return;
   }
+  const prevId=S.asideId;
+  const horizontalRowSwitch=S.txLayout==='horizontal'&&prevId&&prevId!==id&&useTxPaneForMain();
   S.asideRule=null;
   S.asideId=id;S.asideFrom=from;S.asideTab=tab;
+  if(S.txNoteOpenId&&S.txNoteOpenId!==id) S.txNoteOpenId=null;
   S.asideSearch='';
   // Pre-populate AI-suggested match shortlist if not already set
   if(!S.matchSel[id]&&AI_PRESEL[id]){
@@ -4581,6 +4713,13 @@ function openAside(id,from='all',tab='matches'){
   }
   if(useTxPaneForMain()){
     bindTxPaneKeys();
+    if(horizontalRowSwitch){
+      updateTxPaneRowSelection(prevId,id);
+      refreshTxPaneListToolbar();
+      renderAside();
+      scrollTxPaneRowIntoView(id);
+      return;
+    }
     render();
     scrollTxPaneRowIntoView(id);
     return;
@@ -6580,10 +6719,50 @@ function saveNewRecord(txId){
   commitLedger(txId);
 }
 
+function trimAiExplainerText(text,maxWords){
+  if(!text||maxWords<=0) return text||'';
+  const words=text.trim().split(/\s+/).filter(Boolean);
+  if(words.length<=maxWords) return text.trim();
+  return words.slice(0,maxWords).join(' ')+'…';
+}
+function clampAiExplainer(copy){
+  if(!copy) return copy;
+  return {
+    why:trimAiExplainerText(copy.why,AI_EXPLAINER_MAX.why),
+    done:trimAiExplainerText(copy.done,AI_EXPLAINER_MAX.done),
+    check:copy.check?trimAiExplainerText(copy.check,AI_EXPLAINER_MAX.check):'',
+  };
+}
+function normalizeAiExplainer(explainer){
+  if(!explainer) return null;
+  if(explainer.why&&explainer.done) return clampAiExplainer(explainer);
+  if(explainer.body){
+    return clampAiExplainer({
+      why:explainer.body,
+      done:'Updated the fields below for you to review.',
+      check:explainer.check,
+    });
+  }
+  return null;
+}
+function txHasAcceptedMatch(tx){
+  const m=tx.ai?.match;
+  return m?.val&&(m.st==='accepted'||tx.status==='accepted'||tx.source==='both');
+}
+function describeAiPrefill({recType,sugCat,sugTax,sugJob}){
+  const parts=[];
+  if(recType==='spend') parts.push('spend money');
+  else if(recType==='transfer') parts.push('transfer');
+  else if(recType&&RECORD_TYPE_LABELS[recType]) parts.push(RECORD_TYPE_LABELS[recType].toLowerCase());
+  if(sugCat) parts.push(sugCat);
+  if(sugTax) parts.push(sugTax);
+  if(sugJob) parts.push(sugJob);
+  return parts.length?parts.join(', '):'the form below';
+}
 function getAiCreateExplainerCopy(tx){
   const hint=getAiAsideHint(tx);
   if(hint.tab!=='create') return null;
-  if(hint.explainer) return hint.explainer;
+  if(hint.explainer) return normalizeAiExplainer(hint.explainer);
 
   const pre=hint.codePrefill||{};
   const att=ATTACH_DATA[tx.id]?.[0];
@@ -6597,96 +6776,87 @@ function getAiCreateExplainerCopy(tx){
   const recType=getRecordType(tx.id)||hint.recordType;
   const receiptDetail=tx.desc.includes('–')?tx.desc.split('–').slice(1).join('–').trim():tx.desc;
   const hasReceipt=!!(att||tx.attach>0);
+  const prefillDesc=describeAiPrefill({recType,sugCat,sugTax,sugJob});
 
   if(aiSplit&&aiSplit.lines.length>1){
-    const items=aiSplit.lines.map(l=>l.desc).join(', ');
-    return {
-      kind:'difference',
-      body:`The uploaded receipt lists several separate items (${items}) rather than a single purchase total. We have split this into ${aiSplit.lines.length} lines so each item can carry its own category and amount, based on how the receipt breaks down the sale.`,
-      check:'Review each line against the receipt and adjust categories, tax codes, or amounts before saving.',
-    };
+    return clampAiExplainer({
+      why:`Receipt lists ${aiSplit.lines.length} separate items, not one combined total.`,
+      done:`Split into line items matching the receipt breakdown.`,
+      check:'Check each line against the receipt before saving.',
+    });
   }
 
   if(recType==='transfer'||/transfer/i.test(tx.desc)){
-    return {
-      kind:'difference',
-      body:`The suggested tax code is ${sugTax||'N-T'} (not reportable on BAS) because this appears to be a transfer between accounts, while a purchase tax code such as GST would apply if this payment includes taxable business supplies. The record type is set to Transfer to reflect money moving between your own accounts.`,
-      check:'Review your bank statement to confirm whether this is a transfer between your own accounts, or a payment for business purchases that include GST.',
-    };
+    return clampAiExplainer({
+      why:'This payment looks like money moving between your own accounts, not a supplier purchase.',
+      done:`Set Transfer and ${sugTax||'N-T'} so it stays off your BAS.`,
+      check:'Confirm this is internal, not a taxable purchase.',
+    });
+  }
+
+  if(txHasAcceptedMatch(tx)){
+    const matchNames=(tx.ai.match?.val||'').split(', ').filter(Boolean);
+    const matchLabel=matchNames.length?matchNames[0]:'an existing record';
+    return clampAiExplainer({
+      why:`Already matched to ${matchLabel}. Revisit coding before you save.`,
+      done:`Kept the match and pre-filled ${prefillDesc}.`,
+      check:'Confirm match, category, tax, and record type.',
+    });
   }
 
   if(rejectedTax&&sugTax&&rejectedTax!==sugTax){
-    const gstNote=sugTax==='GST'&&att?.extractedGst
-      ? ` The receipt shows GST of $${att.extractedGst.toFixed(2)}, which is roughly 1/11 of the payment — consistent with a standard taxable supply in Australia.`
-      : sugTax==='GST'
-      ? ' For Australian GST, a tax invoice typically includes GST at about 1/11 of the total amount paid.'
-      : '';
-    const catNote=rejectedCat&&sugCat&&rejectedCat!==sugCat
-      ? ` We have also suggested category "${sugCat}" instead of "${rejectedCat}" because the receipt line items point to that type of expense.`
-      : sugCat&&!rejectedCat
-      ? ` Category "${sugCat}" matches the items listed on the receipt.`
-      : '';
-    return {
-      kind:'difference',
-      body:`You previously had ${rejectedTax} on this transaction, but the uploaded receipt from ${vendor} is a tax invoice. We have suggested ${sugTax} instead.${gstNote}${catNote}`,
-      check:'Review the receipt and confirm the correct tax code and category before saving.',
-    };
+    return clampAiExplainer({
+      why:`You chose ${rejectedTax}; ${vendor} receipt points to ${sugTax}${rejectedCat&&sugCat&&rejectedCat!==sugCat?` and ${sugCat}`:''}.`,
+      done:`Suggested ${sugTax}${sugCat?` and ${sugCat}`:''} instead.`,
+      check:'Confirm tax and category against the receipt.',
+    });
   }
 
   if(rejectedCat&&sugCat&&rejectedCat!==sugCat){
-    return {
-      kind:'difference',
-      body:`You previously declined "${rejectedCat}" as the category, but the receipt from ${vendor} (${receiptDetail.toLowerCase()}) still points to "${sugCat}" — this is consistent with how you usually code similar purchases from this supplier.`,
-      check:'Review the items on the receipt and confirm the category is correct for this purchase.',
-    };
+    return clampAiExplainer({
+      why:`You declined "${rejectedCat}"; ${vendor} receipt still points to "${sugCat}".`,
+      done:`Suggested ${sugCat} based on the receipt and past ${vendor} coding.`,
+      check:'Confirm the category matches the receipt items.',
+    });
   }
 
   if(tx.ctxOld?.tax&&sugTax&&tx.ctxOld.tax!==sugTax){
-    return {
-      kind:'difference',
-      body:`The suggested tax code is ${sugTax} because the linked receipt indicates this purchase is ${sugTax==='N-T'?'not subject to GST and not reportable on BAS':'a taxable supply'}, while the transaction was previously coded as ${tx.ctxOld.tax}.`,
-      check:'Review the receipt and confirm whether GST applies to this purchase.',
-    };
+    return clampAiExplainer({
+      why:`Context changed — tax was ${tx.ctxOld.tax}, receipt now points to ${sugTax}.`,
+      done:`Suggested ${sugTax} and updated the create form.`,
+      check:'Confirm whether GST applies to this purchase.',
+    });
   }
 
   if(tx.ctxOld?.cat&&sugCat&&tx.ctxOld.cat!==sugCat){
-    return {
-      kind:'difference',
-      body:`The suggested category is "${sugCat}" because the linked receipt shows items that fit this account, while the transaction was previously coded as "${tx.ctxOld.cat}".`,
-      check:'Review the receipt line items and confirm the category reflects what was actually purchased.',
-    };
+    return clampAiExplainer({
+      why:`Context changed — was "${tx.ctxOld.cat}", receipt fits "${sugCat}".`,
+      done:`Suggested ${sugCat} and updated the create form.`,
+      check:'Confirm the category matches what was purchased.',
+    });
+  }
+
+  if(txHasChanged(tx)&&!tx.ctxOld){
+    return clampAiExplainer({
+      why:'New receipt or context means earlier coding may no longer fit.',
+      done:`Revisited and pre-filled ${prefillDesc}.`,
+      check:'Review updates against the receipt before saving.',
+    });
   }
 
   if(hasReceipt){
-    const detailParts=[];
-    if(sugCat) detailParts.push(`category "${sugCat}" from the receipt line items`);
-    if(sugTax){
-      detailParts.push(sugTax==='GST'&&att?.extractedGst
-        ? `tax code ${sugTax} (the invoice shows GST of $${att.extractedGst.toFixed(2)})`
-        : `tax code ${sugTax}`);
-    }
-    if(sugJob) detailParts.push(`job ${sugJob} from your recent coding on similar site purchases`);
-    const recLabel=recType&&RECORD_TYPE_LABELS[recType]?`a ${RECORD_TYPE_LABELS[recType].toLowerCase()} record`:'a new record';
-    const filled=detailParts.length?detailParts.join(', '):'the fields below from the receipt totals';
-    return {
-      kind:'difference',
-      body:`No open MYOB record matches this bank transaction, so we have set up ${recLabel} from your uploaded receipt from ${vendor}. We have suggested ${filled}.`,
-      check:'Review the pre-filled values against the receipt and edit anything that does not look right before saving.',
-    };
+    return clampAiExplainer({
+      why:`No MYOB record, but the ${vendor} receipt describes what was purchased.`,
+      done:`Set up a new record with ${prefillDesc} from the receipt.`,
+      check:'Confirm pre-filled values against the receipt.',
+    });
   }
 
-  const histParts=[];
-  if(sugCat) histParts.push(`category "${sugCat}"`);
-  if(sugTax) histParts.push(`tax code ${sugTax}`);
-  if(sugJob) histParts.push(`job ${sugJob}`);
-  return {
-    kind:'difference',
-    body:`No matching MYOB record was found for this transaction. We have pre-filled ${histParts.join(', ')} based on the transaction description and how you have coded similar payments from ${vendor} before.`,
-    check:'Confirm the record type, category, and tax code are correct before saving.',
-  };
-}
-function aiExplainerLabel(kind){
-  return kind==='flagged'?'What was flagged:':'What is the difference:';
+  return clampAiExplainer({
+    why:`No MYOB record. "${receiptDetail}" and your ${vendor} coding pattern fit this expense.`,
+    done:`Pre-filled ${prefillDesc} from the description and past coding.`,
+    check:'Confirm job, category, and tax; add a receipt if you have one.',
+  });
 }
 function shouldShowAiCreateExplainer(tx){
   const hint=getAiAsideHint(tx);
@@ -6702,13 +6872,13 @@ function shouldShowAiCreateExplainer(tx){
 function buildAiCreateExplainer(tx){
   if(!shouldShowAiCreateExplainer(tx)) return '';
   const copy=getAiCreateExplainerCopy(tx);
-  if(!copy?.body) return '';
-  const kind=copy.kind||'difference';
+  if(!copy?.why||!copy.done) return '';
   return `
   <div class="ai-create-explainer">
     <div class="ai-create-explainer-head">AI explanation</div>
     <div class="ai-create-explainer-body">
-      <p><span class="ai-create-explainer-label">${aiExplainerLabel(kind)}</span> ${copy.body}</p>
+      <p><span class="ai-create-explainer-label">Why this match:</span> ${copy.why}</p>
+      <p><span class="ai-create-explainer-label">What we've done:</span> ${copy.done}</p>
       ${copy.check?`<p class="ai-create-explainer-check"><span class="ai-create-explainer-label">What to check:</span> ${copy.check}</p>`:''}
     </div>
   </div>`;
