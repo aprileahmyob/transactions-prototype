@@ -77,62 +77,135 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
 .main{flex:1;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;min-width:0;min-height:0;}
 .content{flex:1;overflow:visible;padding:24px 32px 48px;transition:padding-right .25s ease;max-width:100%;}
 .content.aside-open{padding-right:448px;}
-/* slim scroll context — account + task + table head; sticks on scroll (topbar scrolls away) */
+/* sticky header — Figma 11858:71062 */
 .scroll-ctx{
   position:fixed;top:0;left:64px;right:0;z-index:140;
   transform:translateY(-100%);opacity:0;pointer-events:none;
-  background:var(--surface);border-bottom:1px solid var(--border);
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  background:#fff;border-top:1px solid var(--fx2-border,#e5e5e5);
+  border-bottom:1px solid var(--fx2-border,#e5e5e5);
+  box-shadow:0 2px 4px rgba(35,36,40,.12);
   transition:transform .2s ease,opacity .2s ease,padding-right .25s ease;
 }
 .scroll-ctx.aside-open{padding-right:448px;}
-.scroll-ctx.is-visible{transform:translateY(0);opacity:1;pointer-events:auto;box-shadow:0 4px 16px rgba(0,0,0,.08);}
-.scroll-ctx-stack{display:flex;flex-direction:column;}
-.scroll-ctx-inner{
-  display:flex;align-items:center;gap:14px;padding:0 32px;height:40px;
-  background:linear-gradient(90deg,var(--brand-subtle) 0%,var(--surface) 120px);
-  border-bottom:1px solid var(--border);white-space:nowrap;overflow:visible;
+.scroll-ctx.is-visible{transform:translateY(0);opacity:1;pointer-events:auto;}
+.scroll-ctx-stack{display:flex;flex-direction:column;gap:2px;padding-top:4px;}
+.scroll-ctx-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:4px 20px 4px 32px;min-height:36px;white-space:nowrap;
 }
-.scroll-ctx-has-table .scroll-ctx-inner{border-bottom-color:var(--border);}
-.scroll-ctx-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.scroll-ctx-logo{
-  width:22px;height:22px;background:var(--purple);border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:12px;font-weight:700;letter-spacing:.03em;line-height:1;
-  box-shadow:0 1px 3px rgba(123,20,239,.35);
+.scroll-ctx-toolbar-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
+.scroll-ctx-flow-chev{
+  display:flex;transform:rotate(-90deg);color:var(--fx2-text-muted,#74767b);
+  opacity:.55;flex-shrink:0;line-height:0;
 }
-.scroll-ctx-page{display:flex;flex-direction:column;gap:1px;line-height:1;}
-.scroll-ctx-page-kicker{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--purple);opacity:.85;}
-.scroll-ctx-page-title{font-family:var(--font-heading);font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--text);}
-.scroll-ctx-vrule{width:1px;height:22px;background:var(--border);flex-shrink:0;}
-.scroll-ctx-meta{display:flex;align-items:center;gap:8px;min-width:0;flex:1;overflow:visible;}
-.scroll-ctx-acct-wrap{position:relative;flex-shrink:0;}
-.scroll-ctx-acct-wrap .acct-menu{top:calc(100% + 6px);left:0;z-index:250;}
-.scroll-ctx-acct-pill{
-  display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;
-  border-radius:999px;border:1px solid var(--border);background:var(--surface);
-  font-size:14px;font-weight:600;color:var(--text);flex-shrink:0;
-  box-shadow:0 1px 2px rgba(0,0,0,.04);cursor:pointer;font-family:var(--font);
-  transition:border-color .12s,box-shadow .12s;
+.scroll-ctx-vdiv{width:1px;height:20px;background:var(--fx2-border,#e5e5e5);flex-shrink:0;}
+.scroll-ctx-acct{
+  display:inline-flex;align-items:center;gap:6px;padding:2px 7px;
+  border:1px solid var(--fx2-border,#e5e5e5);border-radius:30px;background:#fff;
+  font-size:12px;font-weight:500;line-height:12px;letter-spacing:.17px;
+  color:var(--fx2-text,#070708);cursor:pointer;font-family:var(--font);flex-shrink:0;
 }
-.scroll-ctx-acct-pill:hover{border-color:var(--lavender);}
-.scroll-ctx-acct-pill.open{border-color:var(--purple);box-shadow:0 0 0 2px var(--brand-subtle);}
-.scroll-ctx-acct-chev{display:flex;align-items:center;color:var(--muted);margin-left:1px;opacity:.85;}
-.scroll-ctx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
-.scroll-ctx-dot-all{background:linear-gradient(135deg,var(--purple) 0%,var(--lavender) 100%);}
-.scroll-ctx-path-ico{color:#c4c4c4;flex-shrink:0;display:flex;align-items:center;}
-.scroll-ctx-task-pill{
-  display:inline-flex;align-items:center;gap:5px;padding:4px 12px;
-  border-radius:999px;border:1px solid var(--lavender);background:var(--brand-subtle);
-  font-size:14px;line-height:1;overflow:hidden;text-overflow:ellipsis;min-width:0;
+.scroll-ctx-acct:hover{border-color:var(--lavender);background:var(--brand-subtle);}
+.scroll-ctx-acct-dot{width:18px;height:18px;border-radius:50%;flex-shrink:0;}
+.scroll-ctx-acct-dot-all{background:linear-gradient(135deg,var(--purple) 0%,var(--lavender) 100%);}
+.scroll-ctx-acct-label{max-width:160px;overflow:hidden;text-overflow:ellipsis;}
+.scroll-ctx-acct-chev{color:var(--fx2-text-muted,#74767b);display:flex;flex-shrink:0;}
+.scroll-ctx-pill{
+  display:inline-flex;align-items:center;gap:6px;height:28px;padding:4px 12px;
+  border:1px solid var(--fx2-border,#e5e5e5);border-radius:34px;background:#fff;
+  font-size:12px;font-weight:500;line-height:12px;letter-spacing:.17px;
+  color:var(--fx2-text,#070708);cursor:pointer;font-family:var(--font);flex-shrink:0;
+  max-width:220px;overflow:hidden;
 }
-.scroll-ctx-task-primary{font-weight:600;color:var(--purple);}
-.scroll-ctx-task-sep{color:var(--lavender);font-weight:400;}
-.scroll-ctx-task-sub{font-weight:500;color:var(--text);}
-.scroll-ctx-table{margin:0 32px;background:var(--surface);border-left:1px solid var(--border);border-right:1px solid var(--border);}
-.scroll-ctx .scroll-ctx-mod-head{position:static;top:auto;z-index:auto;padding:8px 16px 10px;border-bottom:1px solid var(--border);border-radius:0;background:var(--surface);}
-.scroll-ctx-tbl-wrap{margin:0 32px;background:var(--surface);border:1px solid var(--border);border-top:none;overflow:hidden;box-sizing:border-box;}
+.scroll-ctx-pill:hover{border-color:var(--lavender);background:var(--brand-subtle);}
+.scroll-ctx-pill-key{color:var(--fx2-text-muted,#74767b);font-weight:500;}
+.scroll-ctx-pill-val{color:var(--fx2-text,#070708);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.scroll-ctx-pill-chev{color:var(--fx2-text-muted);display:flex;flex-shrink:0;}
+.scroll-ctx-search{
+  position:relative;width:216px;flex-shrink:0;
+}
+.scroll-ctx-search-ico{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--fx2-text-muted,#74767b);pointer-events:none;display:flex;
+}
+.scroll-ctx-search input{
+  width:100%;height:28px;padding:4px 12px 4px 34px;
+  border:1px solid var(--fx2-border,#e5e5e5);border-radius:34px;
+  font-family:var(--font);font-size:12px;font-weight:500;line-height:12px;
+  letter-spacing:.17px;color:var(--fx2-text,#070708);background:#fff;outline:none;
+}
+.scroll-ctx-search input::placeholder{color:var(--fx2-text-muted,#74767b);}
+.scroll-ctx-search input:focus{border-color:var(--purple);box-shadow:0 0 0 2px var(--brand-subtle);}
+.scroll-ctx-date-pill{min-width:0;max-width:none;justify-content:space-between;gap:9px;}
+.scroll-ctx-date-inner{display:flex;align-items:center;gap:4px;}
+.scroll-ctx-search-chip{max-width:202px;gap:6px;}
+.scroll-ctx-search-chip-ico{display:flex;color:var(--fx2-text-muted);flex-shrink:0;}
+.scroll-ctx-balances{
+  display:flex;align-items:center;gap:12px;padding:4px 8px;flex-shrink:0;
+}
+.scroll-ctx-bal-item{display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;letter-spacing:.24px;}
+.scroll-ctx-bal-myob{gap:8px;}
+.scroll-ctx-bal-label{font-weight:400;color:var(--fx2-text,#070708);}
+.scroll-ctx-bal-val{font-weight:600;color:var(--fx2-text,#070708);font-variant-numeric:tabular-nums;}
+.scroll-ctx-bal-var{font-weight:600;color:#c00;font-variant-numeric:tabular-nums;}
+.scroll-ctx-bal-var-pos{color:#008536;}
+.scroll-ctx-bal-info{color:var(--fx2-text-muted);display:flex;flex-shrink:0;}
+.scroll-ctx-filter-btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;padding:2px;border:none;background:none;border-radius:20px;
+  cursor:pointer;color:var(--fx2-text-muted,#74767b);flex-shrink:0;
+}
+.scroll-ctx-filter-btn:hover{background:var(--stone20);}
+.scroll-ctx-filter-count{
+  position:absolute;top:1px;right:-3px;min-width:13px;height:13px;padding:0 2px;
+  background:var(--brand-subtle,#f2e8fd);border-radius:10px;
+  font-size:8px;font-weight:600;line-height:13px;color:var(--purple,#7b14ef);text-align:center;
+}
+.scroll-ctx-menu-wrap{position:relative;flex-shrink:0;}
+.scroll-ctx-acct.open,.scroll-ctx-pill.open{border-color:var(--fx2-brand);box-shadow:0 0 0 2px var(--fx2-brand-weak);}
+.scroll-ctx .acct-menu{
+  position:absolute;top:calc(100% + 6px);left:0;min-width:240px;z-index:260;
+  font-size:14px;
+}
+.scroll-ctx .all-filter-menu{
+  position:absolute;top:calc(100% + 6px);left:0;z-index:260;
+  min-width:220px;
+}
+.scroll-ctx .fx-ms-menu{
+  position:absolute;top:calc(100% + 6px);left:0;z-index:260;min-width:240px;
+}
+.scroll-ctx .fx-ms-pill.fx-pill{
+  display:inline-flex;align-items:center;height:28px;padding:4px 12px;
+  border:1px solid var(--fx2-border,#e5e5e5);border-radius:34px;background:#fff;
+  font-size:12px;font-weight:500;line-height:12px;letter-spacing:.17px;
+  color:var(--fx2-text,#070708);max-width:220px;
+}
+.scroll-ctx .fx-ms-pill.fx-pill:hover{border-color:var(--lavender);background:var(--brand-subtle);}
+.scroll-ctx .fx-ms-pill.fx-pill[aria-expanded="true"]{border-color:var(--fx2-brand);box-shadow:0 0 0 2px var(--fx2-brand-weak);}
+.scroll-ctx-rev-source-menu{display:flex;flex-direction:column;gap:2px;padding:6px;}
+.scroll-ctx-rev-source-menu button{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  width:100%;padding:8px 10px;border:none;background:none;border-radius:6px;
+  font-family:var(--font);font-size:14px;font-weight:500;color:var(--fx2-text);cursor:pointer;text-align:left;
+}
+.scroll-ctx-rev-source-menu button:hover{background:var(--stone20);}
+.scroll-ctx-rev-source-menu button.act{background:var(--brand-subtle);color:var(--purple);font-weight:600;}
+.scroll-ctx-toolbar-divider{height:1px;background:var(--fx2-border,#e5e5e5);margin:0;}
+.scroll-ctx-table-head{flex-shrink:0;}
+.scroll-ctx-table{margin:0;background:var(--surface);}
+.scroll-ctx .scroll-ctx-mod-head{
+  position:static;top:auto;z-index:auto;padding:5px 20px 5px 32px;
+  border-bottom:1px solid var(--fx2-border,#e5e5e5);border-radius:0;
+  background:var(--surface);margin:0;
+}
+.scroll-ctx-tbl-wrap{margin:0 32px 0 32px;background:var(--surface);overflow:hidden;box-sizing:border-box;}
+.scroll-ctx-all-tbl-wrap{border-bottom:1px solid var(--fx2-border,#e5e5e5);margin:0;padding:0 20px 0 32px;}
 .scroll-ctx-tbl-wrap .all-tbl thead th{position:static;background:var(--surface);padding:10px 12px;font-size:14px;}
+.scroll-ctx-all-tbl-wrap .all-tbl-v2 thead th{
+  position:static;background:#fff;padding:5px 8px;font-size:12px;font-weight:500;
+  line-height:12px;letter-spacing:.17px;color:var(--fx2-text-muted,#74767b);
+  border-bottom:1px solid var(--fx2-border,#e5e5e5);vertical-align:middle;
+}
 .review-tbl{table-layout:fixed;width:100%;}
 .review-tbl th.col-act,.review-tbl td.col-act{min-width:0;width:13%;max-width:168px;overflow:visible;vertical-align:middle;}
 .review-tbl td.col-act{padding:8px 8px!important;}
@@ -275,11 +348,70 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .tx-nav-search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--fx2-text-muted);pointer-events:none;display:flex;}
 .tx-nav-more{width:34px;height:34px;border:1px solid var(--fx2-border);border-radius:var(--r4);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--fx2-text-muted);cursor:pointer;flex-shrink:0;}
 .tx-nav-more:hover{border-color:var(--lavender);color:var(--text);}
+.tx-nav-balance{
+  display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap;
+  padding:0;margin:0;font-size:14px;line-height:20px;letter-spacing:.24px;
+}
+.tx-nav-bal-label{color:var(--muted);font-weight:500;}
+.tx-nav-bal-val{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;}
+.tx-nav-bal-chips{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.tx-nav-bal-chip{
+  display:inline-flex;align-items:center;gap:5px;padding:4px 10px;
+  border:1px solid var(--fx2-border);border-radius:999px;font-size:12px;font-weight:600;
+  color:var(--fx2-text-sub);background:var(--surface);
+}
+.tx-nav-bal-chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 
-/* filter row — date range / source / type pills + reset + view icons */
-.all-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:220;}
+/* page IA — 2 rows: (1) title+account+tabs+balances+more, scoped to the whole page;
+   (2) search+date+filters+recent+split-view+refresh, scoped to the table below it */
+.tx-nav-bar{margin-bottom:0;}
+.tx-nav-row{display:flex;align-items:center;gap:12px;min-width:0;}
+.tx-nav-row-primary{margin-bottom:12px;min-height:37px;flex-wrap:wrap;row-gap:8px;}
+.tx-nav-row-filters{
+  gap:8px;flex-wrap:wrap;min-height:36px;position:relative;z-index:220;
+  padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:12px;
+}
+.tx-nav-title-row{display:flex;align-items:center;gap:12px;flex:0 0 auto;min-width:0;flex-wrap:wrap;}
+.tx-nav-bar .tx-nav-title{
+  font-family:var(--font-heading);font-size:24px;font-weight:600;line-height:28px;
+  letter-spacing:.7px;color:#000;margin:0;white-space:nowrap;
+}
+.tx-nav-bar .acct-pill-wrap .acct-pill{
+  padding:0 10px 0 6px;height:38px;font-size:14px;font-weight:600;border-radius:90px;gap:8px;
+  border-color:var(--fx2-border);color:var(--fx2-text);
+}
+.tx-attn-panel{margin-bottom:20px;padding:16px;border-radius:8px;background:#fff;}
+.tx-attn-hd{font-family:var(--font-heading);font-size:20px;font-weight:500;line-height:24px;color:var(--fx2-text);margin:0 0 16px;}
+.tx-attn-cards{display:flex;gap:16px;flex-wrap:wrap;}
+.tx-attn-card{
+  display:flex;align-items:flex-start;gap:12px;flex:1;min-width:280px;max-width:420px;
+  padding:16px 16px 16px 20px;border:none;border-radius:16px;background:#f9f9f9;
+  text-align:left;cursor:pointer;font-family:var(--font);transition:box-shadow .12s,background .12s;
+}
+.tx-attn-card:hover{background:#f2f2f2;box-shadow:0 2px 8px rgba(35,36,40,.08);}
+.tx-attn-card.act{box-shadow:0 0 0 2px var(--fx2-brand);}
+.tx-attn-badge{
+  display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:16px;padding:2px 6px;
+  border-radius:10px;background:var(--fx2-brand);color:#fff;font-size:12px;font-weight:500;flex-shrink:0;margin-top:2px;
+}
+.tx-attn-body{flex:1;min-width:0;}
+.tx-attn-title{display:block;font-size:14px;font-weight:700;line-height:20px;color:var(--fx2-text);margin-bottom:4px;}
+.tx-attn-sub{display:block;font-size:14px;font-weight:500;line-height:20px;color:var(--fx2-text-muted);}
+.tx-attn-chev{color:var(--fx2-text-muted);font-size:20px;line-height:1;flex-shrink:0;margin-top:8px;}
+.rev-match-filter-wrap .fx-ms-pill-wrap{position:relative;z-index:221;}
+.all-filter-row .fx-ms-pill.fx-pill{
+  height:32px;min-height:32px;padding:4px 12px;font-size:14px;font-weight:600;
+  border-color:var(--fx2-border);color:var(--fx2-text);letter-spacing:.235px;
+}
+.all-filter-row .fx-ms-pill.fx-pill:hover{border-color:var(--lavender);background:var(--brand-subtle);}
+.all-filter-row .fx-ms-pill.fx-pill[aria-expanded="true"],
+.all-filter-row .fx-ms-pill.fx-pill.open{border-color:var(--fx2-brand);box-shadow:0 0 0 2px var(--fx2-brand-weak);}
+.all-filter-row .fx-ms-menu{font-size:14px;min-width:220px;}
+.all-filter-row .fx-ms-opt{font-size:14px;padding:6px 10px;}
+/* filter row — attaches flush to the table it controls; date pill + "Filters" popover + view icons, all on one line */
+.all-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0;position:relative;z-index:220;flex:1;min-width:0;}
 .all-filter-date{
-  display:inline-flex;align-items:center;gap:9px;height:36px;min-width:220px;padding:4px 12px;
+  display:inline-flex;align-items:center;gap:9px;height:32px;min-width:190px;padding:4px 12px;
   border:1px solid var(--fx2-border);border-radius:34px;background:var(--surface);
   font-size:14px;font-weight:600;letter-spacing:.235px;color:var(--fx2-text);
   cursor:pointer;font-family:var(--font);
@@ -287,7 +419,7 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .all-filter-date .all-date-sep{display:flex;align-items:center;color:var(--fx2-text-muted);flex-shrink:0;}
 .all-filter-date .all-cal-ico{display:flex;align-items:center;color:var(--fx2-text-muted);margin-left:auto;flex-shrink:0;}
 .all-filter-pill{
-  display:inline-flex;align-items:center;gap:6px;height:36px;padding:4px 10px 4px 12px;border:1px solid var(--fx2-border);
+  display:inline-flex;align-items:center;gap:6px;height:32px;padding:4px 10px 4px 12px;border:1px solid var(--fx2-border);
   border-radius:100px;background:var(--surface);font-family:var(--font);font-size:14px;font-weight:600;
   letter-spacing:.235px;color:var(--fx2-text);cursor:pointer;white-space:nowrap;
 }
@@ -295,15 +427,79 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .all-filter-pill .fpl-label{color:var(--fx2-text-muted);}
 .all-filter-pill .fpl-val{color:var(--fx2-text);}
 .all-filter-pill svg{color:var(--fx2-text-muted);flex-shrink:0;}
+.all-filter-icon-btn{
+  width:32px;height:32px;flex-shrink:0;padding:0;
+  border:1px solid var(--fx2-border);border-radius:50%;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;color:var(--fx2-text-muted);
+  cursor:pointer;position:relative;font-family:var(--font);
+}
+.all-filter-icon-btn:hover{border-color:var(--lavender);color:var(--purple);}
+.all-filter-icon-btn.open{border-color:var(--fx2-brand);box-shadow:0 0 0 2px var(--fx2-brand-weak);}
+.all-filter-icon-btn svg{color:currentColor;flex-shrink:0;}
+.all-filter-icon-btn.has-active{border-color:var(--fx2-brand);color:var(--fx2-brand);background:var(--fx2-brand-weak);}
+.all-filter-icon-btn.has-active svg{color:var(--fx2-brand);}
+.all-filter-more-badge{
+  display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;
+  border-radius:8px;background:var(--fx2-brand);color:#fff;font-size:10px;font-weight:700;flex-shrink:0;
+}
+.all-filter-icon-btn .all-filter-more-badge{
+  position:absolute;top:-5px;right:-5px;min-width:14px;height:14px;padding:0 3px;font-size:9px;border-radius:7px;
+}
+.all-filter-more-menu{min-width:230px;padding:8px;display:flex;flex-direction:column;gap:6px;}
+.all-filter-more-section+.all-filter-more-section{border-top:1px solid var(--fx2-border);padding-top:6px;}
+.all-filter-more-hd{font-size:12px;font-weight:700;color:var(--fx2-text-muted);text-transform:uppercase;letter-spacing:.04em;padding:4px 10px 2px;}
 .all-filter-reset{font-size:14px;font-weight:500;color:var(--fx2-brand);cursor:pointer;border:none;background:none;font-family:var(--font);padding:4px 8px;border-radius:4px;}
 .all-filter-reset:hover{background:var(--fx2-brand-weak);}
 .all-filter-wrap{position:relative;}
-.all-filter-date,.all-filter-pill{
+/* floating bulk actions pill — appears bottom-center while "All" table rows are selected,
+   independent of the filter row so filters stay visible during bulk edits */
+.all-bulk-pill{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:250;
+  display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:999px;
+  background:var(--fx2-text,#141416);color:#fff;box-shadow:0 14px 36px rgba(0,0,0,.3);
+  animation:bulkPillIn .18s ease;
+}
+@keyframes bulkPillIn{from{opacity:0;transform:translateX(-50%) translateY(10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+.all-bulk-count{font-size:14px;font-weight:700;color:var(--fx2-text);white-space:nowrap;}
+.all-bulk-pill .all-bulk-count{color:#fff;}
+.all-bulk-sep{width:1px;height:20px;background:var(--fx2-border);flex-shrink:0;}
+.all-bulk-pill .all-bulk-sep{background:rgba(255,255,255,.22);}
+.all-bulk-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.all-bulk-cat-menu{max-height:280px;overflow-y:auto;min-width:200px;}
+.all-bulk-pill .fx-btn-neutral-ghost{background:rgba(255,255,255,.14)!important;color:#fff!important;border-color:rgba(255,255,255,.26)!important;}
+.all-bulk-pill .fx-btn-neutral-ghost:hover{background:rgba(255,255,255,.24)!important;}
+.all-bulk-pill .btn-rev-reject{background:transparent!important;border:none!important;color:#ffb0a6!important;}
+.all-bulk-pill .btn-rev-reject:hover{color:#fff!important;}
+.all-bulk-pill .all-filter-menu{top:auto;bottom:calc(100% + 8px);}
+.all-bulk-pill-close{width:24px;height:24px;flex-shrink:0;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.all-bulk-pill-close:hover{background:rgba(255,255,255,.3);}
+/* "Filters" modal — consolidates Source + Type into a single control on the table's filter row */
+.txf-modal-overlay{position:fixed;inset:0;background:rgba(7,7,8,.42);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;}
+.txf-modal{background:#fff;border-radius:14px;width:420px;max-width:100%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.24);overflow:hidden;}
+.txf-modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--fx2-border);}
+.txf-modal-title{font-family:var(--font-heading);font-size:17px;font-weight:600;margin:0;color:var(--fx2-text);}
+.txf-modal-body{padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:18px;}
+.txf-modal-section-hd{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--fx2-text-muted);margin-bottom:8px;}
+.txf-modal-opts{display:flex;flex-direction:column;gap:2px;}
+.txf-modal-opt{display:flex;align-items:center;gap:9px;padding:8px 6px;border-radius:6px;font-size:14px;color:var(--fx2-text);cursor:pointer;}
+.txf-modal-opt:hover{background:var(--stone20);}
+.txf-modal-opt input{width:16px;height:16px;accent-color:var(--fx2-brand);cursor:pointer;}
+.txf-modal-foot{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-top:1px solid var(--fx2-border);}
+/* row-1 overflow menu (sort columns, expand table) */
+.tx-nav-more-wrap{flex-shrink:0;}
+.tx-nav-more.open{border-color:var(--lavender);color:var(--purple);}
+.tx-nav-more-menu{right:0;left:auto;min-width:200px;}
+/* refresh + recent-filters affordances on row 2 */
+.tx-refresh-btn{width:32px;height:32px;flex-shrink:0;border:1px solid var(--fx2-border);border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--fx2-text-muted);cursor:pointer;}
+.tx-refresh-btn:hover{border-color:var(--lavender);color:var(--purple);}
+.tx-refresh-btn.spinning .tx-refresh-ico{animation:txRefreshSpin .6s linear;}
+@keyframes txRefreshSpin{to{transform:rotate(360deg);}}
+.all-filter-date,.all-filter-pill,.all-filter-icon-btn{
   cursor:pointer;font-family:var(--font);
   appearance:none;-webkit-appearance:none;
   margin:0;text-align:left;
 }
-.all-filter-date.open,.all-filter-pill.open{border-color:var(--fx2-brand);box-shadow:0 0 0 2px var(--fx2-brand-weak);}
+.all-filter-date.open,.all-filter-pill.open,.all-filter-icon-btn.open{border-color:var(--fx2-brand);box-shadow:0 0 0 2px var(--fx2-brand-weak);}
 .all-filter-menu{
   position:absolute;top:calc(100% + 6px);left:0;min-width:220px;z-index:220;
   background:var(--surface);border:1px solid var(--fx2-border);border-radius:8px;
@@ -485,13 +681,8 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .src-ico-img--bank{width:24px;height:18px;}
 .src-ico-img--myob{width:17px;height:22px;}
 .src-ico-img--matched{width:18px;height:18px;}
-.src-bank-logo-row{display:inline-flex;align-items:center;gap:4px;}
 .src-ico-img--fallback{display:flex;align-items:center;justify-content:center;width:19px;height:18px;}
 .src-ico-img--fallback svg{width:19px;height:18px;display:block;}
-.all-src-legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 0 12px;font-size:14px;color:var(--muted);}
-.all-src-legend-label{font-weight:600;color:var(--text);margin-right:2px;}
-.all-src-legend-item{display:inline-flex;align-items:center;gap:6px;}
-.all-src-legend-text{font-size:14px;color:var(--muted);}
 tbody tr.tr-myob{background:linear-gradient(90deg,rgba(123,20,239,.05) 0%,transparent 160px);}
 tbody tr.tr-myob:hover{background:linear-gradient(90deg,rgba(123,20,239,.08) 0%,var(--stone20) 160px);}
 
@@ -800,36 +991,50 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .ri-amt{font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap;}
 .btn-ri{padding:4px 10px;background:var(--success);color:#fff;border:none;border-radius:var(--r4);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font);margin-top:3px;}
 .btn-ri:hover{background:var(--success-hover);}
-/* split lines */
+/* split lines — compact spreadsheet-style grid */
 .split-total-bar{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid var(--border);margin-top:4px;font-size:14px;}
 .split-rem{font-weight:600;}
 .split-rem.ok{color:var(--green);}
 .split-rem.over{color:var(--red);}
-.split-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;background:var(--stone20);border-radius:var(--r8);margin-bottom:6px;position:relative;}
-.split-row-num{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;}
-.split-inp{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--r4);font-size:14px;font-family:var(--font);outline:none;background:#fff;box-sizing:border-box;}
-.split-inp:focus{border-color:var(--lavender);}
-.split-inp.full{grid-column:1/-1;}
-.split-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0;}
-.split-del:hover{color:var(--red);}
-.split-more-btn{grid-column:1/-1;justify-self:start;padding:0;border:none;background:none;font-size:12px;font-weight:600;color:var(--purple);cursor:pointer;font-family:var(--font);text-decoration:underline;text-underline-offset:2px;}
-.split-more-btn:hover{color:var(--lavender);}
-.split-row-extras{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;padding-top:2px;}
 .split-inp-ai{border-color:var(--lavender)!important;background:var(--brand-subtle)!important;box-shadow:0 0 0 1px rgba(123,20,239,.12);}
 .split-inp-ai:focus{border-color:var(--purple)!important;box-shadow:0 0 0 2px var(--mauve);}
-.split-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;}
-.split-tbl th,.split-tbl td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle;}
-.split-tbl th{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:var(--stone20);}
-.split-tbl td .split-inp{min-width:0;}
-.split-tbl .split-del{font-size:14px;}
+.split-tbl-wrap{border:1px solid var(--border);border-radius:var(--r8);overflow:hidden;}
+.split-tbl{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
+.split-tbl th{padding:6px 8px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:var(--stone20);border-bottom:1px solid var(--border);text-align:left;}
+.split-tbl td{padding:0;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:middle;}
+.split-tbl td:last-child,.split-tbl th:last-child{border-right:none;}
+.split-tbl tbody tr:last-of-type td{border-bottom:none;}
+.split-th-amt{text-align:right;}
+.split-cell-inp,.split-cell-sel{width:100%;height:32px;padding:0 8px;border:1px solid transparent;background:transparent;font-size:13px;font-family:var(--font);color:var(--text);outline:none;box-sizing:border-box;border-radius:0;appearance:none;-webkit-appearance:none;}
+.split-cell-sel{padding-right:20px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath fill='none' stroke='%23888' stroke-width='1.6' d='M1.5 3l3 3 3-3'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;}
+.split-cell-inp:hover,.split-cell-sel:hover{background-color:var(--stone20);}
+.split-cell-sel:hover{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath fill='none' stroke='%23888' stroke-width='1.6' d='M1.5 3l3 3 3-3'/%3E%3C/svg%3E");}
+.split-cell-inp:focus,.split-cell-sel:focus{position:relative;z-index:2;background-color:#fff;border-color:var(--purple);box-shadow:inset 0 0 0 1px var(--purple);}
+.split-cell-inp.split-inp-ai,.split-cell-sel.split-inp-ai{border:none!important;border-bottom:2px solid var(--lavender)!important;background:var(--brand-subtle)!important;box-shadow:none!important;}
+.split-cell-inp.split-inp-ai:focus,.split-cell-sel.split-inp-ai:focus{background:#fff!important;border-bottom-color:var(--purple)!important;box-shadow:inset 0 0 0 1px var(--purple)!important;}
+.split-cell-amt{text-align:right;font-variant-numeric:tabular-nums;}
+.split-drag-cell{width:22px;text-align:center;}
+.split-drag-handle{display:flex;align-items:center;justify-content:center;height:32px;color:#c9c9c9;cursor:grab;touch-action:none;}
+.split-drag-handle:hover{color:var(--purple);}
+.split-tbl tbody tr.split-row-dragging{opacity:.35;}
+.split-tbl tbody tr.split-row-dragover td{box-shadow:inset 0 2px 0 var(--purple);}
+.split-del-cell{width:24px;text-align:center;}
+.split-del{width:100%;height:32px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;opacity:0;transition:opacity .1s;}
+.split-tbl tbody tr:hover .split-del{opacity:1;}
+.split-del:hover{color:var(--red);}
+.split-add-row td{padding:0;border-right:none;}
+.split-add-btn{display:block;width:100%;padding:7px 8px;border:none;background:none;text-align:left;font-size:13px;font-weight:600;color:var(--purple);cursor:pointer;font-family:var(--font);}
+.split-add-btn:hover{background:var(--brand-subtle);}
+.pane-detail-shell .split-tbl-wrap{overflow-x:auto;margin-bottom:4px;-webkit-overflow-scrolling:touch;}
+.pane-detail-shell .split-tbl{font-size:12px;margin-bottom:0;min-width:640px;}
+.pane-detail-shell .split-tbl th{font-size:10px;}
+.pane-detail-shell .split-cell-inp,.pane-detail-shell .split-cell-sel{height:30px;font-size:13px;}
 .at.at-ai-suggest:not(.act){color:var(--purple);}
 .at .tab-sparkle{display:inline-block;margin-left:5px;color:var(--purple);font-size:11px;font-weight:700;vertical-align:1px;}
 .create-record-type-row{margin-bottom:12px;}
 .create-record-type-row .frm-sel{width:100%;max-width:320px;}
 .frm-sel.split-inp-ai{border-color:var(--lavender)!important;background:var(--brand-subtle)!important;box-shadow:0 0 0 1px rgba(123,20,239,.12);}
 .frm-sel.split-inp-ai:focus{border-color:var(--purple)!important;box-shadow:0 0 0 2px var(--mauve);}
-.btn-add-line{padding:5px 12px;background:#fff;color:var(--purple);border:1px solid var(--lavender);border-radius:var(--r4);font-size:14px;cursor:pointer;font-family:var(--font);width:100%;margin:4px 0 10px;}
-.btn-add-line:hover{background:var(--mauve);}
 .btn-commit{width:100%;padding:10px;background:var(--success);color:#fff;border:none;border-radius:var(--r4);font-size:16px;font-weight:500;cursor:pointer;font-family:var(--font);margin-top:8px;}
 .btn-commit:hover{background:var(--success-hover);}
 .ai-split-banner{background:var(--mauve);border:1px solid var(--lavender);border-radius:var(--r8);padding:10px 12px;margin-bottom:12px;}
@@ -1482,7 +1687,7 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .btn-save-stg:hover,.btn-att-confirm:hover,.btn-toast-yes:hover,.btn-att-dl:hover,.btn-wiz-next:hover,.btn-asp-acc:hover{background:var(--success-hover)!important;}
 .btn-asp-dis,.btn-att-can,.btn-att-invoice,.btn-ctx-cancel,.btn-ctx-keep,.btn-rc-skip,.btn-rc-detail{background:var(--surface)!important;color:var(--text)!important;border:1px solid var(--border)!important;}
 .btn-att-reassign,.btn-asave,.btn-ctx-save{background:var(--success)!important;color:#fff!important;border:none!important;}
-.btn-add-line,.btn-rc-detail{color:var(--purple)!important;border-color:var(--lavender)!important;background:var(--surface)!important;}
+.btn-rc-detail{color:var(--purple)!important;border-color:var(--lavender)!important;background:var(--surface)!important;}
 .mem-fc.act,.mem-fc.act:hover{background:var(--brand-subtle)!important;color:var(--purple)!important;border-color:var(--purple)!important;}
 .rtbl-w tbody tr.tr-upd,.rtbl-w tbody tr.tr-done{background:transparent!important;}
 .all-tbl th{font-size:14px;padding:10px 12px;}
@@ -1660,10 +1865,6 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 }
 .rev-mod-ai-col.has-ai-sug .rev-mod-conf{color:var(--ai-text);}
 /* verify-by-exception — signals, dismissal */
-.rev-ready-banner{background:linear-gradient(90deg,var(--brand-subtle),#fff);border:1px solid var(--lavender);border-radius:var(--r8);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.rev-ready-banner-main{flex:1;min-width:200px;}
-.rev-ready-banner-title{font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;}
-.rev-ready-banner-sub{font-size:14px;color:var(--muted);margin:0;}
 .match-signals{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 4px;}
 .match-signal-chip{font-size:12px;font-weight:500;padding:2px 8px;border-radius:9999px;background:var(--stone20);color:var(--text);line-height:1.35;}
 .match-signal-chip.sig-strong{background:var(--success-bg);color:var(--success);}
@@ -1687,10 +1888,27 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 
 /* transaction pane — Gmail-style reading pane (All + Review tabs) */
 .tx-pane-wrap{display:flex;min-height:520px;max-height:calc(100vh - 200px);border:1px solid var(--border);border-radius:var(--r8);overflow:hidden;background:var(--surface);}
-.tx-pane-wrap.tx-layout-vertical{flex-direction:row;}
+.tx-pane-wrap.tx-layout-vertical{flex-direction:column;}
+.tx-pane-wrap.tx-layout-vertical .tx-pane-body{display:flex;flex-direction:row;flex:1;min-height:0;}
 .tx-pane-wrap.tx-layout-horizontal{
   flex-direction:column;border:none;border-radius:0;background:transparent;
   overflow:visible;max-height:none;min-height:0;height:auto;gap:0;
+}
+.tx-pane-wrap.tx-layout-horizontal.has-detail{
+  flex:1;min-height:0;overflow:hidden;height:auto;
+}
+/* horizontal + detail — fill viewport; scroll inside panels; action bar pinned to bottom */
+.main:has(.tx-layout-horizontal.has-detail){overflow:hidden;}
+.content:has(.tx-layout-horizontal.has-detail){
+  flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;
+  padding-bottom:16px;
+}
+.content:has(.tx-layout-horizontal.has-detail) .fade-in{
+  flex:1;min-height:0;display:flex;flex-direction:column;
+}
+.tx-table-shell.tx-pane-mode:has(.tx-layout-horizontal.has-detail){
+  flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;
+  border:none;background:transparent;
 }
 .tx-pane-wrap.tx-layout-none-full{min-height:560px;}
 .tx-pane-wrap.tx-layout-none-full .tx-pane-detail{flex:1;max-width:100%;}
@@ -1706,16 +1924,17 @@ td.aitd.aitd-rejected{background:#fff8f8;}
   height:auto;max-height:75vh;min-height:360px;
 }
 .tx-layout-horizontal.has-detail .tx-pane-top-card{
-  height:var(--tx-pane-top-h,50vh);max-height:75vh;flex-shrink:0;
+  height:var(--tx-pane-top-h,50%);max-height:68%;flex-shrink:0;min-height:120px;
 }
-.tx-pane-top-card .tx-pane-list-hd{border-radius:var(--r8) var(--r8) 0 0;}
 .tx-pane-top-card .rev-mod-wrap,.tx-pane-top-card .rev-card{border:none;border-radius:0;box-shadow:none;}
 .tx-pane-top-card .all-tbl-v2-wrap{border:none;border-radius:0;}
 .tx-pane-bottom{
   flex-shrink:0;background:var(--surface);
   border:1px solid var(--border);border-radius:var(--r8);
 }
-.tx-layout-horizontal.has-detail .tx-pane-bottom{margin-top:0;}
+.tx-layout-horizontal.has-detail .tx-pane-bottom{
+  flex:1 1 0;min-height:180px;margin-top:0;display:flex;flex-direction:column;overflow:hidden;
+}
 /* invisible drag hit area in the gap between list card and detail panel */
 .tx-pane-split-gap{
   flex-shrink:0;height:10px;cursor:row-resize;position:relative;z-index:2;background:transparent;
@@ -1725,33 +1944,47 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 }
 body.tx-pane-dragging{user-select:none;}
 body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
-.tx-table-shell.tx-pane-mode:has(.tx-layout-horizontal){overflow:visible;min-height:0;border:none;background:transparent;}
+.tx-table-shell.tx-pane-mode:has(.tx-layout-horizontal:not(.has-detail)){overflow:visible;min-height:0;border:none;background:transparent;}
 .tx-layout-horizontal .tx-pane-bottom .tx-pane-detail-inner{
-  height:auto;overflow:visible;display:block;
+  flex:1;min-height:0;display:flex;flex-direction:column;height:auto;overflow:hidden;
 }
 .tx-layout-horizontal .tx-pane-bottom .tx-pane-detail-inner .aside-body{
   flex:none;overflow:visible;min-height:0;
 }
-.tx-layout-horizontal .tx-pane-bottom .match-footer,
-.tx-layout-horizontal .tx-pane-bottom .aside-review-footer,
-.tx-layout-horizontal .tx-pane-bottom .pane-sticky-foot{
-  box-shadow:none;
+.tx-layout-horizontal.has-detail .tx-pane-bottom .tx-pane-detail-inner .aside-body{
+  flex:1 1 0;overflow-y:auto;min-height:0;
 }
-.tx-layout-horizontal .tx-pane-bottom .pane-detail-shell{
-  height:auto;overflow:visible;
+.tx-layout-horizontal.has-detail .tx-pane-bottom .pane-detail-shell{
+  flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;height:auto;
 }
-.tx-layout-horizontal .tx-pane-bottom .pane-detail-body{
-  flex:none;overflow:visible;min-height:0;
+.tx-layout-horizontal.has-detail .tx-pane-bottom .pane-detail-body{
+  flex:1 1 0;overflow-y:auto;min-height:0;
+}
+.tx-layout-horizontal.has-detail .tx-pane-bottom .tx-pane-head,
+.tx-layout-horizontal.has-detail .tx-pane-bottom .pane-detail-tabs,
+.tx-layout-horizontal.has-detail .tx-pane-bottom .tx-note-field{
+  flex-shrink:0;
+}
+.tx-layout-horizontal.has-detail .tx-pane-bottom .match-footer,
+.tx-layout-horizontal.has-detail .tx-pane-bottom .aside-review-footer,
+.tx-layout-horizontal.has-detail .tx-pane-bottom .pane-sticky-foot{
+  flex-shrink:0;box-shadow:0 -4px 12px rgba(0,0,0,.06);
 }
 .tx-pane-row.sel,.rev-mod-row.sel{background:#d3e3fd;}
 .rev-mod-row.sel{box-shadow:inset 3px 0 0 var(--purple);}
 .all-tbl-v2 tbody tr.sel,.review-tbl tbody tr.sel{background:#d3e3fd;}
-.tx-pane-list-hd{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;flex-wrap:wrap;}
+/* shared pagination toolbar — sits above both the list and detail panes, once, instead of
+   each pane duplicating its own prev/next control */
+.tx-pane-nav-toolbar{display:flex;align-items:center;gap:8px;padding:6px 10px;flex-shrink:0;flex-wrap:wrap;}
+.tx-layout-vertical .tx-pane-nav-toolbar{border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--r8) var(--r8) 0 0;}
+.tx-layout-horizontal .tx-pane-nav-toolbar{border:1px solid var(--border);border-radius:var(--r8);background:var(--surface);margin-bottom:8px;}
 .tx-pane-list-title{font-size:13px;color:var(--muted);flex:1;min-width:60px;}
 .tx-pane-list-nav{display:inline-flex;align-items:center;gap:2px;}
 .tx-pane-nav-btn{width:28px;height:28px;border:1px solid var(--border);border-radius:var(--r4);background:#fff;color:var(--text);cursor:pointer;font-size:16px;line-height:1;font-family:var(--font);display:flex;align-items:center;justify-content:center;}
 .tx-pane-nav-btn:hover:not(:disabled){background:var(--stone20);border-color:var(--lavender);}
 .tx-pane-nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.tx-pane-nav-deselect{width:28px;height:28px;border:1px solid var(--border);border-radius:var(--r4);background:#fff;color:var(--muted);cursor:pointer;font-size:13px;font-family:var(--font);display:flex;align-items:center;justify-content:center;}
+.tx-pane-nav-deselect:hover{border-color:var(--lavender);color:var(--red);background:var(--stone20);}
 .tx-pane-list-scroll{flex:1;overflow-y:auto;min-height:0;}
 .tx-pane-resizer{flex-shrink:0;transition:background .12s;position:relative;z-index:2;background:var(--border);}
 .tx-layout-vertical .tx-pane-resizer{width:5px;cursor:col-resize;}
@@ -1791,7 +2024,6 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .tx-pane-tool-btn{padding:4px 8px;border:1px solid var(--border);border-radius:var(--r4);background:#fff;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;font-family:var(--font);line-height:1.2;}
 .tx-pane-tool-btn:hover{border-color:var(--lavender);background:var(--brand-subtle);}
 .tx-pane-tool-btn:disabled{opacity:.4;cursor:not-allowed;}
-.tx-pane-tool-sp{flex:1;}
 .tx-pane-head-main{padding:8px 12px 10px;display:flex;align-items:flex-start;gap:12px;}
 .tx-pane-head-copy{flex:1;min-width:0;}
 .tx-pane-head-line1{display:flex;align-items:center;gap:10px;min-width:0;flex-wrap:wrap;}
@@ -1860,8 +2092,6 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .pane-create-intro{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.45;}
 .pane-create-divider{display:flex;align-items:center;gap:10px;margin:14px 0 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
 .pane-create-divider::before,.pane-create-divider::after{content:'';flex:1;height:1px;background:var(--border);}
-.pane-detail-shell .split-row{grid-template-columns:minmax(0,1.4fr) minmax(120px,1fr) 72px 88px;gap:6px 8px;padding:8px 10px;}
-.pane-detail-shell .split-inp.full{grid-column:1/-1;}
 .match-rec-sub{font-size:11px;color:var(--muted);}
 .pane-sticky-foot{flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);padding:10px 14px;box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:10;}
 .pane-foot-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
@@ -1886,6 +2116,11 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .pane-detail-shell .tx-note-field{padding:8px 16px;}
 .pane-detail-shell .tx-pane-head-main{padding:6px 12px 8px;}
 .tx-layout-horizontal .tx-pane-bottom .pane-detail-shell .tx-pane-head-main{padding:6px 12px 6px;align-items:center;}
+.tx-layout-horizontal.has-detail .tx-pane-bottom .pane-detail-body,
+.tx-layout-horizontal.has-detail .tx-pane-bottom .tx-pane-detail-inner .aside-body{
+  padding:8px 12px 10px;
+}
+.tx-layout-horizontal.has-detail .ai-create-explainer{margin:0 0 8px;padding:8px 10px;}
 .pane-detail-shell .tx-pane-dims{display:none;}
 .dismiss-type-badge{font-size:11px;font-weight:600;padding:2px 7px;border-radius:var(--r4);background:var(--stone20);color:var(--muted);white-space:nowrap;}
 
@@ -2021,11 +2256,6 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .dim-section-hd{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--stone20);border-bottom:1px solid var(--border);cursor:pointer;}
 .dim-section-hd:hover{background:var(--mauve);}
 .dim-section-title{font-size:14px;font-weight:600;flex:1;}
-.dim-badge{font-size:12px;font-weight:600;padding:2px 7px;border-radius:var(--r4);}
-.dim-badge-ready{background:var(--success-bg);color:var(--success);}
-.dim-badge-pending{background:var(--ai-bg);color:var(--ai-text);}
-.dim-badge-changed{background:var(--warning-bg);color:var(--warning);}
-.dim-badge-blocked{background:var(--danger-bg);color:var(--danger);}
 .dim-section-body{padding:12px 14px;font-size:14px;line-height:1.55;}
 .dim-changed-banner{background:var(--warning-bg);border:1px solid var(--warning-border);border-radius:var(--r8);padding:12px 14px;margin-bottom:12px;font-size:14px;line-height:1.55;}
 .dim-changed-banner strong{color:var(--warning);display:block;margin-bottom:4px;}
@@ -2047,10 +2277,68 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .activity-title{font-size:15px;font-weight:600;margin-bottom:2px;}
 .activity-sub{font-size:14px;color:var(--muted);line-height:1.45;}
 .activity-time{font-size:13px;color:var(--muted);flex-shrink:0;}
-.prebas-banner{background:var(--warning-bg);border:1px solid var(--warning-border);border-radius:var(--r8);padding:14px 18px;margin-bottom:16px;}
-.prebas-banner-title{font-size:16px;font-weight:600;color:var(--warning);margin-bottom:4px;}
-.prebas-banner-sub{font-size:14px;color:var(--muted);line-height:1.5;}
-
+/* ── MONTHLY CHECK — guided wizard replacing the old Pre-BAS transaction table ── */
+.mc-page{max-width:760px;margin:0 auto;padding-bottom:40px;}
+.mc-hero{text-align:center;padding:32px 16px 28px;}
+.mc-hero-kicker{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--purple);background:var(--brand-subtle);padding:4px 12px;border-radius:999px;margin-bottom:14px;}
+.mc-hero-title{font-family:var(--font-heading);font-size:26px;font-weight:700;color:var(--text);margin:0 0 10px;}
+.mc-hero-sub{font-size:15px;color:var(--muted);line-height:1.55;max-width:560px;margin:0 auto 20px;}
+.mc-start-btn{padding:11px 22px;background:var(--purple);color:#fff;border:none;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.mc-start-btn:hover{background:#5a0cb5;}
+.mc-alldone{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--success-bg);color:var(--success);font-weight:600;font-size:14px;}
+.mc-summary-grid{display:flex;flex-direction:column;gap:10px;}
+.mc-summary-card{display:flex;align-items:center;gap:14px;padding:16px 18px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);cursor:pointer;transition:box-shadow .12s,border-color .12s;text-align:left;}
+.mc-summary-card:hover{border-color:var(--lavender);box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.mc-summary-card.is-clear{opacity:.62;}
+.mc-summary-ico{font-size:20px;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--stone20);border-radius:var(--r8);}
+.mc-summary-body{flex:1;min-width:0;}
+.mc-summary-title{font-size:15px;font-weight:700;color:var(--text);}
+.mc-summary-desc{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4;}
+.mc-summary-count{flex-shrink:0;min-width:32px;height:32px;padding:0 8px;border-radius:16px;background:var(--warning-bg);color:var(--warning);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.mc-summary-count.ok{background:var(--success-bg);color:var(--success);}
+.mc-flow-hd{display:flex;align-items:center;gap:16px;padding:16px 0 8px;}
+.mc-exit-btn{border:none;background:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);padding:4px 6px;flex-shrink:0;}
+.mc-exit-btn:hover{color:var(--red);}
+.mc-stepper{flex:1;display:flex;justify-content:center;align-items:center;gap:8px;}
+.mc-step-dot{width:9px;height:9px;border-radius:50%;background:var(--border);border:none;padding:0;cursor:pointer;transition:width .15s,border-radius .15s;}
+.mc-step-dot.done{background:var(--success);}
+.mc-step-dot.cur{background:var(--purple);width:22px;border-radius:5px;}
+.mc-flow-count{flex-shrink:0;font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap;}
+.mc-flow-body{padding:24px 0 12px;text-align:center;}
+.mc-flow-icon{font-size:30px;margin-bottom:10px;}
+.mc-flow-title{font-family:var(--font-heading);font-size:21px;font-weight:700;color:var(--text);margin:0 0 6px;}
+.mc-flow-desc{font-size:14px;color:var(--muted);max-width:480px;margin:0 auto 22px;line-height:1.5;}
+.mc-row-list{display:flex;flex-direction:column;gap:8px;text-align:left;}
+.mc-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);cursor:pointer;}
+.mc-row:hover{border-color:var(--lavender);}
+.mc-row-main{min-width:0;flex:1;}
+.mc-row-title{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mc-row-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.mc-row-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.mc-row-sug{font-size:13px;color:var(--text);white-space:nowrap;}
+.mc-row-sug.muted{color:var(--muted);}
+.mc-row-btn{padding:6px 14px;border-radius:var(--r4);border:1px solid var(--lavender);background:#fff;color:var(--purple);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap;}
+.mc-row-btn:hover{background:var(--brand-subtle);}
+.mc-row-btn.success{border-color:var(--success);color:var(--success);}
+.mc-row-btn.success:hover{background:var(--success-bg);}
+.mc-empty{padding:48px 16px;text-align:center;color:var(--muted);font-size:15px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);}
+.mc-flow-foot{display:flex;align-items:center;padding-top:20px;border-top:1px solid var(--border);margin-top:8px;}
+.mc-flow-sp{flex:1;}
+.mc-nav-btn{padding:9px 20px;border-radius:999px;border:1px solid var(--purple);background:var(--purple);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.mc-nav-btn:hover{background:#5a0cb5;}
+.mc-nav-btn.ghost{background:#fff;color:var(--text);border-color:var(--border);}
+.mc-nav-btn.ghost:hover{border-color:var(--lavender);}
+.mc-nav-btn:disabled{opacity:.4;cursor:not-allowed;}
+.mc-recon-note{font-size:13px;color:var(--muted);background:var(--stone20);border-radius:var(--r8);padding:12px 14px;margin-bottom:14px;text-align:left;line-height:1.5;}
+.mc-recon-accounts{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.mc-recon-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);text-align:left;font-size:14px;flex-wrap:wrap;}
+.mc-recon-acct{display:flex;align-items:center;gap:8px;font-weight:600;flex:0 0 160px;}
+.mc-recon-vals{flex:1;color:var(--muted);font-size:13px;}
+.mc-recon-sep{margin:0 6px;color:var(--border);}
+.mc-recon-status{flex-shrink:0;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px;}
+.mc-recon-status.ok{background:var(--success-bg);color:var(--success);}
+.mc-recon-status.warn{background:var(--warning-bg);color:var(--warning);}
+.mc-recon-causes-hd{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;text-align:left;}
 
 /* ── Feelix v8.17 component primitives (from MCP) ── */
 .fx-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:var(--r4);padding:8px 16px;font-size:16px;font-weight:500;font-family:var(--font);cursor:pointer;border:1px solid transparent;line-height:1.4;white-space:nowrap;}
@@ -2184,6 +2472,55 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .ctx-banner-body,.dim-section-body,.ai-split-banner-body,.ar-card-body,
 thead th,.inp,.sel,.acct-menu-meta,.tab-ct,.tab-ct-m,.src,.chip{line-height:1.45;}
 .scroll-ctx-page-kicker,.aitd-pct,.btn-aitd-ok,.btn-aitd-ed{line-height:1.35;}
+
+/* ── SIMPLE MODE — single-glance review cards (Settings › General › Simple mode) ── */
+.spl-page{max-width:900px;margin:0 auto;}
+.spl-hd{position:relative;display:flex;align-items:center;justify-content:center;margin:12px 0 24px;}
+.spl-title{font-family:var(--font-heading);font-size:28px;font-weight:700;color:var(--text);margin:0;text-align:center;}
+.spl-mode-link{position:absolute;right:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--lavender);border-radius:999px;background:#fff;color:var(--purple);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;white-space:nowrap;}
+.spl-mode-link:hover{background:var(--brand-subtle);}
+.spl-pills{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.spl-pill{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;font-family:var(--font);}
+.spl-pill:hover{border-color:var(--lavender);}
+.spl-pill.act{background:var(--purple);border-color:var(--purple);color:#fff;}
+.spl-pill-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--brand-subtle);color:var(--purple);font-size:12px;font-weight:700;}
+.spl-pill.act .spl-pill-badge{background:rgba(255,255,255,.25);color:#fff;}
+.spl-pill-saved{color:var(--muted);}
+.spl-list{display:flex;flex-direction:column;gap:16px;padding-bottom:40px;}
+.spl-card{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);padding:18px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.spl-card-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.spl-card-headtext{min-width:0;}
+.spl-card-title{font-size:15px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.spl-card-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.spl-card-amtbox{background:var(--stone20);border-radius:var(--r8);padding:12px 14px;}
+.spl-card-amt{font-size:15px;font-weight:700;color:var(--text);}
+.spl-card-amtsub{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:6px;}
+.spl-card-right{min-width:0;}
+.spl-card-cat-title,.spl-card-match-name{font-size:15px;font-weight:700;color:var(--text);}
+.spl-card-cat-sub,.spl-card-match-ref{font-size:13px;color:var(--muted);margin-top:2px;}
+.spl-card-match-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.spl-avatar-sm{width:32px;height:32px;border-radius:50%;background:var(--brand-subtle);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.spl-why-btn{margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--lavender);background:#fff;color:var(--purple);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.spl-why-btn:hover{background:var(--brand-subtle);}
+.spl-ai-banner{margin-top:10px;background:var(--purple);color:#fff;border-radius:var(--r8);padding:12px 14px;font-size:13px;line-height:1.5;}
+.spl-ai-spark{margin-right:4px;}
+.spl-card-actions{grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:2px;padding-top:14px;margin-top:2px;border-top:1px solid var(--border);}
+.spl-act-btn{width:32px;height:32px;border:none;background:none;border-radius:var(--r4);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.spl-act-btn:hover{background:var(--stone20);}
+.spl-act-btn.act{color:var(--purple);background:var(--brand-subtle);}
+.spl-more-wrap{position:relative;}
+.spl-more-menu{position:absolute;bottom:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.14);padding:4px;min-width:180px;z-index:20;}
+.spl-more-menu button{display:block;width:100%;text-align:left;padding:8px 10px;border:none;background:none;border-radius:6px;font-size:13px;font-family:var(--font);cursor:pointer;color:var(--text);}
+.spl-more-menu button:hover{background:var(--stone20);}
+.spl-empty{padding:72px 16px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--border);border-radius:var(--r8);}
+.spl-empty-ico{font-size:28px;margin-bottom:10px;color:var(--green);}
+.spl-empty-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.spl-empty-sub{font-size:14px;}
+@media (max-width:760px){
+  .spl-card{grid-template-columns:1fr;}
+  .spl-hd{flex-direction:column;gap:12px;}
+  .spl-mode-link{position:static;transform:none;}
+}
 </style>
 </head>
 <body>
@@ -2204,10 +2541,10 @@ thead th,.inp,.sel,.acct-menu-meta,.tab-ct,.tab-ct-m,.src,.chip{line-height:1.45
    DATA
 ═══════════════════════════════════════════════ */
 const BANKS = [
-  {id:'all',   label:'All accounts', dot:'var(--purple)', bal:29578.80},
-  {id:'anz',   label:'ANZ Business', dot:'#1A6EBE',       bal:25235.20},
-  {id:'cba',   label:'CommBank CC',  dot:'#E8A800',       bal:3503.60},
-  {id:'petty', label:'Petty Cash',   dot:'#0D7D4E',       bal:840.00},
+  {id:'all',   label:'All accounts', dot:'var(--purple)', bal:29578.80, myobBal:29578.00},
+  {id:'anz',   label:'ANZ Business', dot:'#1A6EBE',       bal:25235.20, myobBal:25235.00},
+  {id:'cba',   label:'CommBank CC',  dot:'#E8A800',       bal:3503.60,  myobBal:3503.40},
+  {id:'petty', label:'Petty Cash',   dot:'#0D7D4E',       bal:840.00,   myobBal:840.00},
 ];
 
 const TX = [
@@ -2555,6 +2892,10 @@ const ALL_RECORDS = [
 
 // AI-detected multi-line splits (simulates receipt parsing)
 const AI_SPLITS = {
+  1: {detected:true, lines:[
+    {id:1, desc:'Switchboard parts',  cat:'Electrical supplies', tax:'GST', amount:-210.00, job:'ECO-0234', discount:''},
+    {id:2, desc:'Conduit & fittings', cat:'Electrical supplies', tax:'GST', amount:-49.60,  job:'ECO-0234', discount:''},
+  ]},
   3: {detected:true, lines:[
     {id:1, desc:'Timber & framing', cat:'Materials',           tax:'GST', amount:-180.00, job:'ECO-0231', discount:''},
     {id:2, desc:'Safety equipment', cat:'Safety & workwear',   tax:'GST', amount:-67.20, job:'ECO-0231', discount:''},
@@ -2612,6 +2953,10 @@ const AI_ASIDE_HINTS={
 ═══════════════════════════════════════════════ */
 const S = {
   page:'main', tab:'all',
+  allTxView:'all',        // all | unmatched | matched
+  revQueue:'all',         // all | automatch | suggestions | ready
+  revMatchFilters:null,   // Set: all | matched | unmatched
+  revMatchFilterMenuOpen:false,
   bankFilter:'all',
   acctMenuOpen:false,
   acctMenuFrom:null,   // 'page' | 'scroll'
@@ -2627,7 +2972,12 @@ const S = {
   revFilter: 'all',  // legacy single-filter key for deep links
   revFilters: null,  // Set of active filter keys; null → derive from revFilter
   revFilterMenuOpen: false,
+  revFilterMenuFrom: null,   // 'page' | 'scroll'
+  revSourceMenuOpen: false,
+  revSourceMenuFrom: null,
   revAiFilter: 'all',      // all | ai | manual | revisions
+  pendingPageFilterFocus: null, // scroll-to-edit: open filter after scroll to top
+  txSearch: '',
   todoReviewOrigin: false, // true when review opened from to-do feed
   reconReceiptFocus: false, // true when navigated from receipt to-do Review
   preBasMode: false, // legacy; use S.tab==='prebas'
@@ -2635,7 +2985,6 @@ const S = {
   attachExpanded:false,   // attachment panel open state
   previewFile:null,       // {name, txId} for preview overlay
   splitLines:{},          // {txId: [{id,desc,cat,tax,amount,job,discount}]}
-  splitLineOpts:{},       // {'txId:lineId': true} — optional fields expanded in split view
   txNotes:{},             // {txId: note text}
   txNoteOpenId:null,       // tx id when note field expanded (horizontal compact)
   recordTypes:{},         // {txId: 'spend'|'receive'|'transfer'|...}
@@ -2678,12 +3027,22 @@ const S = {
   toastUndo:{},
   colWidths:null,
   allFilterMenu:null,
+  allFilterMenuFrom:null,
   allFilters:null,
-  filterOptionsMenu:false,
   colSortMenuOpen:false,
   layoutSplitMenuOpen:false,
   colSort:{all:{col:'date',dir:'desc'},review:{col:'date',dir:'desc'}},
   txTableExpanded:false,
+  allSel: new Set(),      // selected tx ids in the "All" table — drives the floating bulk actions pill
+  allBulkMenu:null,       // null | 'cat' — open popover in the bulk actions pill
+  recentFilters:[],       // recently-applied date/source/type filter presets — {id,label,snapshot}
+  uiMode:'detailed',      // 'detailed' (accountant view) | 'simple' — set in Settings › General
+  simpleFilter:'unmatched', // 'unmatched' | 'review' | 'all' | 'saved' — Simple mode pill filter
+  snoozed:new Set(),      // tx ids "saved for later" in Simple mode
+  simpleWhy:{},           // txId -> bool, whether the "why this suggestion" explainer is expanded
+  simpleMoreOpen:null,    // txId whose "more actions" menu is open in Simple mode, or null
+  mcActive:false,         // Monthly check — whether the guided step-by-step flow is open (vs. the summary screen)
+  mcStep:0,               // Monthly check — current step index into MC_STEPS while mcActive
 };
 initAttachments();
 
@@ -2896,17 +3255,11 @@ function srcIconTitle(key,bankId){
   }
   return m.title;
 }
-function srcIcon(src,{legend=false,bankId}={}){
+function srcIcon(src,{bankId}={}){
   const key=srcKey(src);
   const m=SRC_META[key];
   const title=srcIconTitle(key,bankId);
-  if(legend&&key==='bank'){
-    const bankLegend=['anz','cba','petty'].map(id=>`<span class="src-ico src-bank" title="${BANKS.find(b=>b.id===id)?.label||id}">${bankLogoImg(id)}</span>`).join('');
-    return `<span class="all-src-legend-item"><span class="src-bank-logo-row">${bankLegend}</span><span class="all-src-legend-text">${m.label}</span></span>`;
-  }
-  const icon=`<span class="src-ico ${m.cls}" title="${title}" aria-label="${m.label}">${srcIconInner(key,bankId)}</span>`;
-  if(legend) return `<span class="all-src-legend-item">${icon}<span class="all-src-legend-text">${m.label}</span></span>`;
-  return icon;
+  return `<span class="src-ico ${m.cls}" title="${title}" aria-label="${m.label}">${srcIconInner(key,bankId)}</span>`;
 }
 function txRevisionValues(tx,field){
   if(!txHasChanged(tx)||!tx.ctxOld||!tx.ctxNew) return null;
@@ -2960,7 +3313,141 @@ function pendingList(){return TX.filter(t=>t.status==='pending'&&(S.bankFilter==
 function ctxList(){return TX.filter(t=>t.newContext&&!S.dismissedCtx.has(t.id)&&(S.bankFilter==='all'||t.bank===S.bankFilter));}
 function allPending(){return TX.filter(t=>t.status==='pending').length;}
 function ctxCount(){return TX.filter(t=>t.newContext&&!S.dismissedCtx.has(t.id)).length;}
-function reviewCount(){return pendingList().length + ctxList().length;}
+function reviewCount(){return reviewModeCount();}
+function txIsMatched(tx){
+  return tx.source==='both'||tx.status==='accepted'||tx.status==='coded'||tx.ai.match?.st==='accepted';
+}
+function txReviewIsMatched(tx){return txIsMatched(tx);}
+function reviewInboxActive(){
+  return reviewInboxList().filter(t=>!txReviewDone(t));
+}
+function txIsAutomatchReview(tx){
+  if(txReviewDone(tx)||txIsHidden(tx)) return false;
+  if(txIsReadyForBulk(tx)) return true;
+  if(S.automatch&&txIsMatched(tx)&&tx.status==='pending') return true;
+  return false;
+}
+function txIsSuggestionReview(tx){
+  if(txReviewDone(tx)||txIsHidden(tx)) return false;
+  if(txIsAutomatchReview(tx)) return false;
+  return txHasAiSuggestion(tx)||!!(MATCHES[tx.id]?.length&&dimStatus(tx,'match')==='pending');
+}
+function automatchReviewCount(){return reviewInboxActive().filter(txIsAutomatchReview).length;}
+function suggestionReviewCount(){return reviewInboxActive().filter(txIsSuggestionReview).length;}
+function readyToVerifyCount(){
+  const inbox=reviewInboxActive();
+  const ready=inbox.filter(txIsReadyForBulk);
+  if(ready.length) return ready.length;
+  return inbox.filter(t=>txTopMatchConf(t)>=85).length;
+}
+function reviewModeCount(){
+  const active=reviewInboxActive();
+  return active.filter(t=>txIsAutomatchReview(t)||txIsSuggestionReview(t)).length;
+}
+function reconcileModeCount(){return 0;}
+function matchedCount(){return bankFilteredTx().filter(txIsMatched).length;}
+function unmatchedCount(){return bankFilteredTx().filter(t=>!txIsMatched(t)).length;}
+function filterReviewQueue(list){
+  if(S.revQueue==='automatch') return list.filter(txIsAutomatchReview);
+  if(S.revQueue==='suggestions') return list.filter(txIsSuggestionReview);
+  if(S.revQueue==='ready') return list.filter(t=>!txReviewDone(t)&&txIsReadyForBulk(t));
+  return list.filter(t=>txIsAutomatchReview(t)||txIsSuggestionReview(t));
+}
+function filterReviewMatchStatus(list){
+  const f=getRevMatchFilters();
+  if(f.has('all')||!f.size) return list;
+  const showMatched=f.has('matched');
+  const showUnmatched=f.has('unmatched');
+  if(showMatched&&showUnmatched) return list;
+  if(showMatched) return list.filter(txReviewIsMatched);
+  if(showUnmatched) return list.filter(t=>!txReviewIsMatched(t));
+  return list;
+}
+function getRevMatchFilters(){
+  if(!S.revMatchFilters) S.revMatchFilters=new Set(['all']);
+  return S.revMatchFilters;
+}
+function revMatchFilterIsChecked(v){
+  const f=getRevMatchFilters();
+  return f.has('all')?v==='all':f.has(v);
+}
+function revMatchFilterDefs(inbox){
+  const matchedCt=inbox.filter(txReviewIsMatched).length;
+  const unmatchedCt=inbox.filter(t=>!txReviewIsMatched(t)).length;
+  return [
+    {v:'all',l:'All',ct:inbox.length},
+    {v:'matched',l:'Matched',ct:matchedCt},
+    {v:'unmatched',l:'Not matched',ct:unmatchedCt},
+  ];
+}
+function revMatchFilterPillLabel(defs){
+  const f=getRevMatchFilters();
+  if(f.has('all')||!f.size) return 'All';
+  const active=[...f];
+  if(active.length===1){
+    const d=defs.find(x=>x.v===active[0]);
+    return d?d.l:'Filtered';
+  }
+  if(active.length===2){
+    const a=defs.find(x=>x.v===active[0])?.l||active[0];
+    const b=defs.find(x=>x.v===active[1])?.l||active[1];
+    return `${a}, ${b}`;
+  }
+  return `${active.length} selected`;
+}
+function revMatchFilterActive(){
+  return !getRevMatchFilters().has('all');
+}
+function toggleRevMatchFilter(v){
+  if(!S.revMatchFilters) S.revMatchFilters=new Set(['all']);
+  if(v==='all'){
+    S.revMatchFilters=new Set(['all']);
+  }else{
+    S.revMatchFilters.delete('all');
+    if(S.revMatchFilters.has(v)) S.revMatchFilters.delete(v);
+    else S.revMatchFilters.add(v);
+    if(!S.revMatchFilters.size) S.revMatchFilters.add('all');
+  }
+  S.reviewSel=new Set();
+  render();
+}
+function toggleRevMatchFilterMenu(ev){
+  if(ev) ev.stopPropagation();
+  if(S.revMatchFilterMenuOpen) closeRevMatchFilterMenu();
+  else{
+    S.revMatchFilterMenuOpen=true;
+    closeAllFilterMenu(false);
+    closeRevFilterMenu(false);
+    closeRevSourceMenu(false);
+    render();
+  }
+}
+function closeRevMatchFilterMenu(rerender=true){
+  if(S.revMatchFilterMenuOpen){
+    S.revMatchFilterMenuOpen=false;
+    if(rerender) render();
+  }
+}
+function setTxMode(mode){
+  if(mode==='reconcile') return;
+  if(mode==='review'&&!reviewModeCount()) return;
+  setTab(mode==='review'?'review':'all');
+}
+function setAllTxView(view){
+  S.allTxView=view;
+  render();
+}
+function setRevQueue(queue){
+  S.revQueue=queue;
+  S.tab='review';
+  S.revMatchFilters=new Set(['all']);
+  S.reviewSel=new Set();
+  render();
+  reconTodoScrollTo('review-list');
+}
+function ensureReviewTabValid(){
+  if(S.tab==='review'&&!reviewModeCount()) S.tab='all';
+}
 function reviewInboxList(){
   const ctx=ctxList();
   const pending=pendingList();
@@ -3062,14 +3549,23 @@ function goTodoReview(dimFilter,aiFilter){
   S.reviewSel=new Set();
   S.revFilterMenuOpen=false;
   closeAside();
+  if(dimFilter==='receipt'||dimFilter==='receiptmatch'){
+    S.revQueue='suggestions';
+    S.reconReceiptFocus=true;
+  }else if(aiFilter==='ai'||dimFilter==='match'){
+    S.revQueue='suggestions';
+    S.reconReceiptFocus=false;
+  }else{
+    S.revQueue='automatch';
+    S.reconReceiptFocus=false;
+  }
+  S.revMatchFilters=new Set(['all']);
   if(!dimFilter||dimFilter==='all'){
     S.revFilters=new Set(['all']);
     S.revFilter='all';
-    S.reconReceiptFocus=false;
   }else{
     S.revFilters=new Set([dimFilter]);
     S.revFilter=dimFilter;
-    S.reconReceiptFocus=(dimFilter==='receipt');
   }
   S.revAiFilter=aiFilter||'all';
   render();
@@ -3194,33 +3690,46 @@ function toggleRevFilter(v){
   S.reviewSel=new Set();
   render();
 }
-function toggleRevFilterMenu(ev){
+function toggleRevFilterMenu(ev,from='page'){
   if(ev) ev.stopPropagation();
-  S.revFilterMenuOpen=!S.revFilterMenuOpen;
-  render();
-}
-function closeRevFilterMenu(){
-  if(S.revFilterMenuOpen){
-    S.revFilterMenuOpen=false;
+  if(S.revFilterMenuOpen&&S.revFilterMenuFrom===from) closeRevFilterMenu();
+  else{
+    S.revFilterMenuOpen=true;
+    S.revFilterMenuFrom=from;
+    closeRevSourceMenu(false);
+    S.acctMenuOpen=false;
+    S.acctMenuFrom=null;
     render();
   }
 }
-function setRevAiFilter(v){
-  S.revAiFilter=v;
-  S.reviewSel=new Set();
-  render();
+function closeRevFilterMenu(rerender=true){
+  if(S.revFilterMenuOpen){
+    S.revFilterMenuOpen=false;
+    S.revFilterMenuFrom=null;
+    if(rerender) render();
+  }
 }
-function buildRevNeedsDropdown(inbox,defs){
-  const f=getRevFilters();
-  const label=revFilterPillLabel(defs);
-  const isAll=f.has('all')||!f.size;
+function toggleRevSourceMenu(ev,from='scroll'){
+  if(ev) ev.stopPropagation();
+  if(S.revSourceMenuOpen&&S.revSourceMenuFrom===from) closeRevSourceMenu();
+  else{
+    S.revSourceMenuOpen=true;
+    S.revSourceMenuFrom=from;
+    closeRevFilterMenu(false);
+    S.acctMenuOpen=false;
+    S.acctMenuFrom=null;
+    render();
+  }
+}
+function closeRevSourceMenu(rerender=true){
+  if(S.revSourceMenuOpen){
+    S.revSourceMenuOpen=false;
+    S.revSourceMenuFrom=null;
+    if(rerender) render();
+  }
+}
+function buildRevFilterMenuContent(defs){
   return `
-  <div class="fx-ms-pill-wrap">
-    <button type="button" class="fx-ms-pill fx-pill${!isAll?' fx-pill-checked':''}" onclick="toggleRevFilterMenu(event)" aria-expanded="${S.revFilterMenuOpen?'true':'false'}" aria-haspopup="listbox">
-      <span class="fx-pill-label">${label}</span>
-      <span class="fx-ms-pill-chev" aria-hidden="true">▾</span>
-    </button>
-    ${S.revFilterMenuOpen?`
     <div class="fx-ms-menu" role="listbox" aria-multiselectable="true" onclick="event.stopPropagation()">
       ${defs.map(d=>`
       <label class="fx-ms-opt" role="option" aria-selected="${revFilterIsChecked(d.v)}">
@@ -3232,7 +3741,36 @@ function buildRevNeedsDropdown(inbox,defs){
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><line x1="1" y1="3.5" x2="12" y2="3.5"/><line x1="3" y1="6.5" x2="10" y2="6.5"/><line x1="5" y1="9.5" x2="8" y2="9.5"/></svg>
         Pre-BAS review…
       </button>
-    </div>`:''}
+    </div>`;
+}
+function buildRevSourceMenuContent(defs){
+  return `
+    <div class="all-filter-menu scroll-ctx-rev-source-menu" role="listbox" onclick="event.stopPropagation()">
+      ${defs.map(d=>{
+        const on=S.revAiFilter===d.v;
+        return `<button type="button" class="${on?'act':''}" onclick="setRevAiFilter('${d.v}');closeRevSourceMenu()" aria-pressed="${on}">
+          <span>${d.l}</span><span class="fx-badge">${d.ct}</span>
+        </button>`;
+      }).join('')}
+    </div>`;
+}
+function setRevAiFilter(v){
+  S.revAiFilter=v;
+  S.reviewSel=new Set();
+  render();
+}
+function buildRevNeedsDropdown(inbox,defs,from='page'){
+  const f=getRevFilters();
+  const label=revFilterPillLabel(defs);
+  const isAll=f.has('all')||!f.size;
+  const menuOpen=S.revFilterMenuOpen&&S.revFilterMenuFrom===from;
+  return `
+  <div class="fx-ms-pill-wrap">
+    <button type="button" class="fx-ms-pill fx-pill${!isAll?' fx-pill-checked':''}" onclick="toggleRevFilterMenu(event,'${from}')" aria-expanded="${menuOpen?'true':'false'}" aria-haspopup="listbox">
+      <span class="fx-pill-label">${label}</span>
+      <span class="fx-ms-pill-chev" aria-hidden="true">▾</span>
+    </button>
+    ${menuOpen?buildRevFilterMenuContent(defs):''}
   </div>`;
 }
 function buildRevFilterComposer(inbox){
@@ -3241,14 +3779,14 @@ function buildRevFilterComposer(inbox){
   const filtered=filterReviewInbox(inbox);
   const active=revFilterActive();
   return `
-  <div class="rev-filter-composer" role="region" aria-label="Review filters">
+  <div class="rev-filter-composer" data-page-filter="review-filters" role="region" aria-label="Review filters">
     <div class="rev-filter-composer-row">
-      <div class="rev-filter-needs">
+      <div class="rev-filter-needs" data-page-filter="rev-needs">
         <span class="rev-filter-composer-label">Needs</span>
         ${buildRevNeedsDropdown(inbox,dimDefs)}
       </div>
       <div class="rev-filter-composer-divider" aria-hidden="true"></div>
-      <div class="rev-filter-source">
+      <div class="rev-filter-source" data-page-filter="rev-source">
         <span class="rev-filter-composer-label">Source</span>
         <div class="rev-filter-segment" role="group" aria-label="Suggestion source">
           ${ctxDefs.map(d=>{
@@ -3279,8 +3817,9 @@ function buildRevFilterDropdown(inbox){
 if(!window._allFilterMenuBound){
   window._allFilterMenuBound=true;
   document.addEventListener('click',(e)=>{
-    if(e.target.closest('.all-filter-wrap')) return;
+    if(e.target.closest('.all-filter-wrap')||e.target.closest('.scroll-ctx-menu-wrap')) return;
     closeAllFilterMenu();
+    closeAllBulkMenu();
     if(!e.target.closest('.all-filter-views-wrap')) closeViewToolbarMenus(false);
   });
 }
@@ -3288,17 +3827,27 @@ if(!window._txTableExpandKeyBound){
   window._txTableExpandKeyBound=true;
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'&&S.txTableExpanded){S.txTableExpanded=false;render();}
+    if(e.key==='Escape'&&S.allFilterMenu==='txfilters') closeAllFilterMenu();
   });
 }
 if(!window._dismissMenuBound){
   window._dismissMenuBound=true;
   document.addEventListener('click',()=>{if(S.dismissMenuOpen){S.dismissMenuOpen=null;render();}});
 }
+if(!window._simpleMoreMenuBound){
+  window._simpleMoreMenuBound=true;
+  document.addEventListener('click',(e)=>{
+    if(e.target.closest('.spl-more-wrap')) return;
+    if(S.simpleMoreOpen){S.simpleMoreOpen=null;render();}
+  });
+}
 if(!window._revFilterMenuBound){
   window._revFilterMenuBound=true;
   document.addEventListener('click',(e)=>{
-    if(e.target.closest('.fx-ms-pill-wrap')) return;
+    if(e.target.closest('.fx-ms-pill-wrap')||e.target.closest('.scroll-ctx-menu-wrap')) return;
     closeRevFilterMenu();
+    closeRevSourceMenu();
+    closeRevMatchFilterMenu();
   });
 }
 function sortReviewList(list){
@@ -3334,7 +3883,11 @@ function setRevFilter(f){
 }
 function setReviewView(v){S.reviewView=v;render();}
 function goActivity(){S.page='activity';S.tab='all';closeAside();render();}
-function goPreBas(){S.page='main';S.tab='prebas';S.revFilters=new Set(['gst']);S.revFilter='gst';S.reconReceiptFocus=false;S.reviewSel=new Set();S.revFilterMenuOpen=false;closeAside();render();}
+function goPreBas(stepId){
+  S.page='main';S.tab='prebas';
+  if(stepId){S.mcActive=true;S.mcStep=mcStepIndex(stepId);}
+  closeAside();render();
+}
 function goTransactions(){S.page='main';S.tab='all';closeAside();render();}
 
 
@@ -3421,7 +3974,14 @@ function saveRule(){
   showToast(`✓ Rule "${newRule.name}" saved`);
   render();
 }
-function setTab(t){S.tab=t;S.asideId=null;S.acctMenuOpen=false;S.acctMenuFrom=null;closeAside();render();}
+function setTab(t){
+  S.tab=t;S.asideId=null;
+  S.acctMenuOpen=false;S.acctMenuFrom=null;
+  closeRevFilterMenu(false);
+  closeRevSourceMenu(false);
+  if(t==='all'){S.revQueue='all';S.revMatchFilters=new Set(['all']);}
+  closeAside();render();
+}
 function buildAcctMenuDropdown(){
   return `
   <div class="acct-menu" role="listbox">
@@ -3436,9 +3996,14 @@ function buildAcctMenuDropdown(){
   </div>`;
 }
 function toggleAcctMenu(e,from='page'){
-  e.stopPropagation();
+  if(e) e.stopPropagation();
   if(S.acctMenuOpen&&S.acctMenuFrom===from){S.acctMenuOpen=false;S.acctMenuFrom=null;}
-  else{S.acctMenuOpen=true;S.acctMenuFrom=from;}
+  else{
+    S.acctMenuOpen=true;S.acctMenuFrom=from;
+    closeAllFilterMenu(false);
+    closeRevFilterMenu(false);
+    closeRevSourceMenu(false);
+  }
   render();
 }
 function setBankFilter(b){
@@ -3645,20 +4210,6 @@ function buildDismissMenu(txId){
       <div class="dismiss-menu-sep"></div>
       <button type="button" class="dismiss-menu-opt" onclick="dismissSuggestion(${txId},'hide')">Hide transaction<small>Remove from matching pool</small></button>
     </div>
-  </div>`;
-}
-function buildReadyVerifyBanner(filtered){
-  const ready=filtered.filter(t=>!txReviewDone(t)&&txIsReadyForBulk(t));
-  const high=filtered.filter(t=>!txReviewDone(t)&&txTopMatchConf(t)>=85);
-  if(!ready.length&&!high.length) return '';
-  const n=ready.length||high.length;
-  return `<div class="rev-ready-banner" role="status">
-    <div class="rev-ready-banner-main">
-      <p class="rev-ready-banner-title">${ready.length?ready.length:high.length} ready to verify</p>
-      <p class="rev-ready-banner-sub">Pre-scored matches ranked by confidence — verify exceptions first, then work through the rest.</p>
-    </div>
-    ${ready.length?`<button type="button" class="fx-btn fx-btn-success" onclick="setRevFilter('ready')">Show ready (${ready.length})</button>`:''}
-    ${S.hiddenTx.size?`<button type="button" class="fx-btn fx-btn-neutral-ghost" onclick="S.showHiddenReview=!S.showHiddenReview;render()">${S.showHiddenReview?'Hide':'Show'} hidden (${S.hiddenTx.size})</button>`:''}
   </div>`;
 }
 function buildDismissedLogSection(){
@@ -4190,7 +4741,11 @@ function shouldShowReadingPane(){return useTxPaneForMain()&&S.txLayout==='vertic
 function shouldShowFullList(){return useTxPaneForMain()&&!S.asideId;}
 function shouldShowFullDetail(){return useTxPaneForMain()&&S.txLayout==='none'&&!!S.asideId;}
 function getReviewFilteredList(){
-  return sortTableList(filterReviewInbox(reviewInboxList()).filter(t=>!txReviewDone(t)),'review');
+  const inbox=reviewInboxActive();
+  return applyTxSearch(
+    sortTableList(filterReviewMatchStatus(filterReviewQueue(inbox)),'review'),
+    'review'
+  );
 }
 function getTxNavList(){
   if(S.tab==='review') return getReviewFilteredList();
@@ -4233,6 +4788,20 @@ function navTxPane(delta){
   if(!next) return;
   openAside(next.id,S.asideFrom||S.tab,S.asideTab||'matches');
 }
+function txLayoutToolbarTitle(layout=S.txLayout){
+  if(layout==='vertical') return 'Vertical split';
+  if(layout==='horizontal') return 'Horizontal split';
+  return 'List view';
+}
+function txLayoutToolbarIcon(layout=S.txLayout){
+  if(layout==='vertical'){
+    return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="3" width="5.5" height="12" rx="1"/><path d="M9 3v12" stroke-dasharray="2 2"/><rect x="9.5" y="3" width="5.5" height="12" rx="1"/></svg>`;
+  }
+  if(layout==='horizontal'){
+    return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="2.5" width="14" height="5.5" rx="1"/><path d="M2 9h14" stroke-dasharray="2 2"/><rect x="2" y="9.5" width="14" height="5.5" rx="1"/></svg>`;
+  }
+  return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="14" height="3" rx="1"/><rect x="2" y="8" width="14" height="3" rx="1"/><rect x="2" y="13" width="14" height="3" rx="1"/></svg>`;
+}
 function setTxLayout(mode){
   if(!['none','vertical','horizontal'].includes(mode)) return;
   S.txLayout=mode;
@@ -4261,7 +4830,7 @@ function selectTxPaneRow(id,from,tab,ev){
 }
 function handleTxPaneListClickOff(ev){
   if(S.txLayout!=='horizontal'||!S.asideId) return;
-  if(ev.target.closest('[data-tx-pane-id],button,input,select,textarea,a,label,thead,.rev-mod-head,.rev-mod-date-hd,.tx-pane-list-hd')) return;
+  if(ev.target.closest('[data-tx-pane-id],button,input,select,textarea,a,label,thead,.rev-mod-head,.rev-mod-date-hd,.tx-pane-nav-toolbar')) return;
   S.asideId=null;
   render();
 }
@@ -4270,16 +4839,17 @@ function buildTxPaneListToolbar(count){
   const idx=S.asideId?list.findIndex(t=>t.id===S.asideId):-1;
   const range=idx>=0?`${idx+1} of ${count}`:`1–${count} of ${count}`;
   return `
-  <div class="tx-pane-list-hd">
+  <div class="tx-pane-nav-toolbar">
     <span class="tx-pane-list-title">${range}</span>
     <div class="tx-pane-list-nav">
-      <button type="button" class="tx-pane-nav-btn" ${idx>0?'':'disabled'} onclick="navTxPane(-1)" title="Previous">‹</button>
-      <button type="button" class="tx-pane-nav-btn" ${idx>=0&&idx<list.length-1?'':'disabled'} onclick="navTxPane(1)" title="Next">›</button>
+      <button type="button" class="tx-pane-nav-btn" ${idx>0?'':'disabled'} onclick="navTxPane(-1)" title="Previous transaction">‹</button>
+      <button type="button" class="tx-pane-nav-btn" ${idx>=0&&idx<list.length-1?'':'disabled'} onclick="navTxPane(1)" title="Next transaction">›</button>
     </div>
+    ${S.asideId?`<button type="button" class="tx-pane-nav-deselect" onclick="S.asideId=null;render()" title="Deselect">✕</button>`:''}
   </div>`;
 }
 function refreshTxPaneListToolbar(){
-  const hd=document.querySelector('.tx-pane-list-hd');
+  const hd=document.querySelector('.tx-pane-nav-toolbar');
   if(!hd) return;
   const count=getTxNavList().length;
   const wrap=document.createElement('div');
@@ -4298,9 +4868,10 @@ function startTxPaneResize(e){
   function onMove(ev){
     const delta=horizontal?(ev.clientY-startY):(ev.clientX-startX);
     if(horizontal){
-      const next=Math.min(0.75,Math.max(0.18,startRatio+delta/window.innerHeight));
+      const size=rect.height||1;
+      const next=Math.min(0.68,Math.max(0.22,startRatio+delta/size));
       S.txPaneRatioH=next;
-      wrap.style.setProperty('--tx-pane-top-h',(next*100).toFixed(1)+'vh');
+      wrap.style.setProperty('--tx-pane-top-h',(next*100).toFixed(1)+'%');
     }else{
       const size=rect.width;
       const next=Math.min(0.72,Math.max(0.22,startRatio+delta/size));
@@ -4431,9 +5002,9 @@ function buildTxPaneShell({listHtml,count,title='transactions'}){
   const pctH=topH;
   if(horiz){
     return `
-    <div class="tx-pane-wrap tx-layout-horizontal${hasDetail?' has-detail':''}" id="tx-pane-wrap" style="${hasDetail?`--tx-pane-top-h:${topH}vh`:''}">
+    <div class="tx-pane-wrap tx-layout-horizontal${hasDetail?' has-detail':''}" id="tx-pane-wrap" style="${hasDetail?`--tx-pane-top-h:${topH}%`:''}">
+      ${buildTxPaneListToolbar(count)}
       <div class="tx-pane-top-card" id="tx-pane-top">
-        ${buildTxPaneListToolbar(count)}
         <div class="tx-pane-list-scroll" onclick="handleTxPaneListClickOff(event)">${listHtml}</div>
       </div>
       ${hasDetail?`
@@ -4443,12 +5014,14 @@ function buildTxPaneShell({listHtml,count,title='transactions'}){
   }
   return `
   <div class="tx-pane-wrap tx-layout-${layout}" id="tx-pane-wrap" style="--tx-pane-list-pct:${pctV}%;--tx-pane-list-pct-v:${pctH}%">
-    <div class="tx-pane-list">
-      ${buildTxPaneListToolbar(count)}
-      <div class="tx-pane-list-scroll">${listHtml}</div>
+    ${buildTxPaneListToolbar(count)}
+    <div class="tx-pane-body">
+      <div class="tx-pane-list">
+        <div class="tx-pane-list-scroll">${listHtml}</div>
+      </div>
+      <div class="tx-pane-resizer" onmousedown="startTxPaneResize(event)" ondblclick="setTxLayout('none')" title="Drag to resize · double-click for no split"></div>
+      ${buildTxPaneDetail()}
     </div>
-    <div class="tx-pane-resizer" onmousedown="startTxPaneResize(event)" ondblclick="setTxLayout('none')" title="Drag to resize · double-click for no split"></div>
-    ${buildTxPaneDetail()}
   </div>`;
 }
 function buildAsideHeadReceipt(tx,{compact=false}={}){
@@ -4487,14 +5060,14 @@ function buildTxPaneHead(tx){
   const navIdx=navList.findIndex(t=>t.id===tx.id);
   const fullScreen=isTxFullScreenDetail();
   const horizontalDetail=isHorizontalSplitLayout()&&!fullScreen;
-  const toolbar=horizontalDetail?'':`
+  // Prev/next/deselect live once in the shared toolbar above both panes (buildTxPaneListToolbar)
+  // for split layouts — only full-screen detail (no list pane visible) needs its own here.
+  const toolbar=fullScreen?`
     <div class="tx-pane-toolbar">
-      ${fullScreen?`<button type="button" class="tx-pane-tool-btn" onclick="closeAside()" title="Back to list">← Back</button>`:''}
+      <button type="button" class="tx-pane-tool-btn" onclick="closeAside()" title="Back to list">← Back</button>
       <button type="button" class="tx-pane-tool-btn" ${navIdx>0?'':'disabled'} onclick="navTxPane(-1)" title="Previous transaction">‹</button>
       <button type="button" class="tx-pane-tool-btn" ${navIdx<navList.length-1?'':'disabled'} onclick="navTxPane(1)" title="Next transaction">›</button>
-      <span class="tx-pane-tool-sp"></span>
-      ${fullScreen?'':`<button type="button" class="tx-pane-tool-btn" onclick="S.asideId=null;render()" title="Deselect">✕</button>`}
-    </div>`;
+    </div>`:'';
   const openNewWindow=horizontalDetail?`
       <button type="button" class="tx-pane-head-open" onclick="setTxLayout('none')" title="Open in new window" aria-label="Open in new window">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 1h4v4"/><path d="M5 13H1V9"/><path d="M13 1L6 8"/><path d="M8 1h5v5"/></svg>
@@ -4860,6 +5433,8 @@ function buildSidebar(){
   <div class="sb-av" title="Eco Electrical Co">EE</div>`;
 }
 function render(){
+  ensureReviewTabValid();
+  if(S.pendingPageFilterFocus) applyPendingPageFilterFocus();
   document.getElementById('sb').innerHTML=buildSidebar();
   if(S.page==='hub') document.getElementById('content').innerHTML=buildHub();
   else if(S.page==='settings') document.getElementById('content').innerHTML=buildSettings();
@@ -4875,50 +5450,266 @@ function render(){
     document.body.appendChild(div);
   }
   updateScrollCtxBar();
+  if(window._scrollCtxDemo){
+    window._scrollCtxDemo=false;
+    setTimeout(()=>{
+      const main=document.querySelector('.main');
+      if(main){main.scrollTop=160;updateScrollCtxPhase(main);}
+    },350);
+  }
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     syncReviewTableHeadWidths();
+    syncAllTableHeadWidths();
     initResizableTables();
   }));
 }
 
-function scrollCtxTaskLabel(){
-  if(S.tab==='all') return {primary:'All transactions',detail:''};
-  if(S.tab==='prebas') return {primary:'Pre-BAS review',detail:''};
-  const filterLabels={
-    all:{primary:'Review inbox',detail:''},
-    ready:{primary:'Review',detail:'Ready to accept'},
-    newcontext:{primary:'Review',detail:'AI updated'},
-    receipt:{primary:'Review',detail:'Receipt'},
-    receiptmatch:{primary:'Review',detail:'Receipt matches'},
-    match:{primary:'Review',detail:'Matches'},
-    gst:{primary:'Review',detail:'GST'},
-    blocked:{primary:'Review',detail:'Blocked'},
-    multi:{primary:'Review',detail:'Filtered'},
-  };
-  const f=getRevFilters();
-  if(f.has('all')||!f.size) return filterLabels.all;
-  if(f.size===1) return filterLabels[[...f][0]]||filterLabels.all;
-  const parts=[...f].map(k=>filterLabels[k]?.detail||k);
-  return {primary:'Review',detail:parts.join(', ')};
+function bankBalanceInfo(){
+  const active=BANKS.find(b=>b.id===S.bankFilter)||BANKS[0];
+  if(active.id==='all'){
+    const accounts=BANKS.filter(b=>b.id!=='all');
+    const amount=accounts.reduce((s,b)=>s+b.bal,0);
+    const myobAmount=accounts.reduce((s,b)=>s+(b.myobBal??b.bal),0);
+    return {label:'Bank balance',amount,myobAmount,accounts};
+  }
+  const myobAmount=active.myobBal??active.bal;
+  return {label:'Bank balance',amount:active.bal,myobAmount,accounts:[active]};
+}
+function fmtBalVariance(bank,myob){
+  const diff=bank-myob;
+  if(Math.abs(diff)<0.01) return '';
+  const s=fmtBankBal(Math.abs(diff));
+  return diff<0?`(${s})`:`+${s}`;
+}
+function fmtBalVarianceHtml(bank,myob){
+  const diff=bank-myob;
+  if(Math.abs(diff)<0.01) return '';
+  const s=fmtBankBal(Math.abs(diff));
+  if(diff<0) return `<span class="scroll-ctx-bal-var">(${s})</span>`;
+  return `<span class="scroll-ctx-bal-var scroll-ctx-bal-var-pos">+${s}</span>`;
+}
+const SCROLL_CTX_CHEV=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 7l4.5 4 4.5-4"/></svg>`;
+const SCROLL_CTX_FLOW=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="2,3 5,6 8,3"/></svg>`;
+const SCROLL_CTX_ARROW=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><line x1="3" y1="9" x2="13" y2="9"/><polyline points="10,6 13,9 10,12"/></svg>`;
+const SCROLL_CTX_CAL=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="12" height="11" rx="1.5"/><line x1="3" y1="7" x2="15" y2="7"/><line x1="6" y1="2.5" x2="6" y2="5"/><line x1="12" y1="2.5" x2="12" y2="5"/></svg>`;
+const SCROLL_CTX_SEARCH_ICO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>`;
+const SCROLL_CTX_FILTER_ICO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4h14l-5 5v4l-3-1.5V9L2 4z"/></svg>`;
+const SCROLL_CTX_INFO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="9" r="7"/><line x1="9" y1="8" x2="9" y2="12"/><circle cx="9" cy="6" r=".8" fill="currentColor" stroke="none"/></svg>`;
+function setTxSearch(v){
+  S.txSearch=v;
+  render();
+}
+function matchesTxSearch(tx,q){
+  if(!q) return true;
+  const s=q.toLowerCase();
+  const hay=(tx.desc+' '+tx.ref+' '+revModPartyName(tx)).toLowerCase();
+  return hay.includes(s);
+}
+function applyTxSearch(list){
+  const q=(S.txSearch||'').trim();
+  if(!q) return list;
+  return list.filter(tx=>matchesTxSearch(tx,q));
+}
+function allFiltersActive(){
+  ensureAllFilters();
+  const def=defaultAllFilters();
+  const f=S.allFilters;
+  if(f.dateFrom!==def.dateFrom||f.dateTo!==def.dateTo) return true;
+  if(f.sources.size<ALL_SOURCE_OPTS.length) return true;
+  if(f.types.size<ALL_TYPE_OPTS.length) return true;
+  return false;
+}
+function scrollCtxFiltersActive(){
+  if((S.txSearch||'').trim()) return true;
+  if(S.tab==='all') return allFiltersActive();
+  if(S.tab==='review') return revFilterActive();
+  return false;
+}
+function scrollCtxActiveFilterLabels(){
+  const labels=[];
+  const q=(S.txSearch||'').trim();
+  if(q) labels.push(`Search “${q}”`);
+  if(S.tab==='all'&&allFiltersActive()){
+    ensureAllFilters();
+    const def=defaultAllFilters();
+    const f=S.allFilters;
+    if(f.dateFrom!==def.dateFrom||f.dateTo!==def.dateTo)
+      labels.push(`${f.dateFrom} – ${f.dateTo}`);
+    if(f.sources.size<ALL_SOURCE_OPTS.length)
+      labels.push(allFilterSourceLabel());
+    if(f.types.size<ALL_TYPE_OPTS.length)
+      labels.push(allFilterTypeLabel());
+  }
+  if(S.tab==='review'&&revFilterActive()){
+    const inbox=reviewInboxList();
+    const f=getRevFilters();
+    if(!f.has('all')&&f.size)
+      labels.push(revFilterPillLabel(revFilterDefs(inbox)));
+    if(S.revAiFilter!=='all'){
+      const ctx=revAiFilterDefs(inbox).find(d=>d.v===S.revAiFilter);
+      labels.push(ctx?.l||S.revAiFilter);
+    }
+  }
+  return labels;
+}
+function allSourceTypeActiveCount(){
+  ensureAllFilters();
+  let n=0;
+  if(S.allFilters.sources.size<ALL_SOURCE_OPTS.length) n++;
+  if(S.allFilters.types.size<ALL_TYPE_OPTS.length) n++;
+  return n;
+}
+function scrollCtxFilterBadgeCount(){
+  let n=0;
+  if(S.tab==='all'){
+    n=allSourceTypeActiveCount();
+  }else if(S.tab==='review'){
+    const f=getRevFilters();
+    if(!f.has('all')&&f.size) n++;
+    if(S.revAiFilter!=='all') n++;
+  }
+  return n;
+}
+function fmtBankBal(n){
+  return '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function buildScrollCtxDatePill(){
+  ensureAllFilters();
+  const menuOpen=S.allFilterMenu==='date'&&S.allFilterMenuFrom==='scroll';
+  return `
+  <div class="scroll-ctx-menu-wrap">
+    <button type="button" class="scroll-ctx-pill scroll-ctx-date-pill${menuOpen?' open':''}" onclick="toggleAllFilterMenu('date',event,'scroll')" title="Change date range" aria-expanded="${menuOpen}">
+      <span class="scroll-ctx-date-inner">
+        <span>${S.allFilters.dateFrom}</span>
+        ${SCROLL_CTX_ARROW}
+        <span>${S.allFilters.dateTo}</span>
+      </span>
+      ${SCROLL_CTX_CAL}
+    </button>
+    ${menuOpen?buildAllFilterDateMenu():''}
+  </div>`;
+}
+function buildScrollCtxSearchChip(q){
+  const safe=q.replace(/"/g,'&quot;');
+  const display=q.length>20?q.slice(0,20)+'…':q;
+  return `
+  <button type="button" class="scroll-ctx-pill scroll-ctx-search-chip" onclick="scrollToPageFilters('search')" title="Search: ${safe}" aria-label="Search active: ${safe}">
+    <span class="scroll-ctx-search-chip-ico">${SCROLL_CTX_SEARCH_ICO}</span>
+    <span class="scroll-ctx-pill-val">${display}</span>
+  </button>`;
+}
+function buildScrollCtxFilterBtn(count){
+  const labels=scrollCtxActiveFilterLabels();
+  const title=labels.length?labels.join(' · '):'View filters';
+  const safeTitle=title.replace(/"/g,'&quot;');
+  const badge=count>0?`<span class="scroll-ctx-filter-count">${count}</span>`:'';
+  return `
+  <button type="button" class="scroll-ctx-filter-btn" onclick="scrollToPageFilters('filters')" title="${safeTitle}" aria-label="${count>0?count+' filters applied':'View filters'}">
+    ${SCROLL_CTX_FILTER_ICO}
+    ${badge}
+  </button>`;
+}
+function buildScrollCtxToolbarLeft(){
+  let html=buildScrollCtxAcctBtn();
+  if(S.tab==='all'){
+    html+=`<span class="scroll-ctx-flow-chev">${SCROLL_CTX_FLOW}</span>`;
+    html+=buildScrollCtxDatePill();
+  }
+  const q=(S.txSearch||'').trim();
+  if(q) html+=buildScrollCtxSearchChip(q);
+  html+=buildScrollCtxFilterBtn(scrollCtxFilterBadgeCount());
+  return html;
+}
+function buildScrollCtxAcctBtn(){
+  const active=BANKS.find(b=>b.id===S.bankFilter)||BANKS[0];
+  const dot=active.id==='all'
+    ?`<span class="scroll-ctx-acct-dot scroll-ctx-acct-dot-all" aria-hidden="true"></span>`
+    :`<span class="scroll-ctx-acct-dot" style="background:${active.dot}" aria-hidden="true"></span>`;
+  const menuOpen=S.acctMenuOpen&&S.acctMenuFrom==='scroll';
+  return `
+  <div class="scroll-ctx-menu-wrap">
+    <button type="button" class="scroll-ctx-acct${menuOpen?' open':''}" onclick="toggleAcctMenu(event,'scroll')" title="Change account" aria-expanded="${menuOpen}" aria-haspopup="listbox">
+      ${dot}<span class="scroll-ctx-acct-label">${active.label}</span>
+      <span class="scroll-ctx-acct-chev">${SCROLL_CTX_CHEV}</span>
+    </button>
+    ${menuOpen?buildAcctMenuDropdown():''}
+  </div>`;
+}
+function buildScrollCtxBalances(){
+  const bal=bankBalanceInfo();
+  const varianceHtml=fmtBalVarianceHtml(bal.amount,bal.myobAmount);
+  return `
+  <div class="scroll-ctx-balances" data-page-filter="balance">
+    <div class="scroll-ctx-bal-item">
+      <span class="scroll-ctx-bal-label">Bank balance</span>
+      <span class="scroll-ctx-bal-val">${fmtBankBal(bal.amount)}</span>
+    </div>
+    <span class="scroll-ctx-vdiv" aria-hidden="true"></span>
+    <div class="scroll-ctx-bal-item scroll-ctx-bal-myob">
+      <span class="scroll-ctx-bal-label">MYOB balance</span>
+      <span class="scroll-ctx-bal-val">${fmtBankBal(bal.myobAmount)}</span>
+      ${varianceHtml}
+      <span class="scroll-ctx-bal-info" title="Difference between bank feed and MYOB">${SCROLL_CTX_INFO}</span>
+    </div>
+  </div>`;
+}
+function buildScrollCtxToolbar(){
+  return `
+  <div class="scroll-ctx-toolbar">
+    <div class="scroll-ctx-toolbar-left">
+      ${buildScrollCtxToolbarLeft()}
+    </div>
+    ${buildScrollCtxBalances()}
+  </div>
+  <div class="scroll-ctx-toolbar-divider" aria-hidden="true"></div>`;
+}
+function scrollToPageFilters(target){
+  window._scrollCtxEditing=true;
+  setScrollCtxVisible(false);
+  closeRevFilterMenu(false);
+  closeRevSourceMenu(false);
+  closeAllFilterMenu(false);
+  S.acctMenuOpen=false;
+  S.acctMenuFrom=null;
+  closeViewToolbarMenus(false);
+  const main=document.querySelector('.main');
+  if(!main){
+    window._scrollCtxEditing=false;
+    return;
+  }
+  S.pendingPageFilterFocus=target;
+  main.scrollTo({top:0,behavior:'smooth'});
+  clearTimeout(window._scrollFilterFocusTimer);
+  window._scrollFilterFocusTimer=setTimeout(()=>{
+    window._scrollCtxEditing=false;
+    const root=document.querySelector('.main');
+    if(root) root.scrollTop=0;
+    setScrollCtxVisible(false);
+    render();
+  },420);
+}
+function applyPendingPageFilterFocus(){
+  const target=S.pendingPageFilterFocus;
+  S.pendingPageFilterFocus=null;
+  if(!target) return;
+  if(target==='account'){S.acctMenuOpen=true;S.acctMenuFrom='page';}
+  else if(target==='rev-needs'){S.revFilterMenuOpen=true;S.revFilterMenuFrom='page';}
+  else if(target==='rev-source'){S.revSourceMenuOpen=true;S.revSourceMenuFrom='page';}
+  else if(target==='all-date'){S.allFilterMenu='date';S.allFilterMenuFrom='page';}
+  else if(target==='search'){
+    requestAnimationFrame(()=>{
+      const inp=document.getElementById('tx-search');
+      if(inp){inp.focus();if(inp.select) inp.select();}
+    });
+    return;
+  }
+  else if(target==='filters'){S.allFilterMenu='txfilters';S.allFilterMenuFrom='page';}
 }
 function showTxnSourceCol(){
   return S.bankFilter==='all';
 }
-function buildTxnSourceLegend(){
-  if(!showTxnSourceCol()) return '';
-  return `
-  <div class="all-src-legend" role="note" aria-label="Transaction sources">
-    <span class="all-src-legend-label">Source</span>
-    ${srcIcon('bank',{legend:true})}
-    ${srcIcon('myob',{legend:true})}
-    ${srcIcon('both',{legend:true})}
-  </div>`;
-}
 function showReviewSourceCol(){
   return showTxnSourceCol();
-}
-function buildReviewSourceLegend(){
-  return buildTxnSourceLegend();
 }
 function buildRevModHeadHtml(){
   const srcH=showReviewSourceCol()?`<div class="rev-mod-src-h" title="Source">Source</div>`:'';
@@ -5030,51 +5821,21 @@ function bindReviewTableHeadSync(){
   },{passive:true});
 }
 function scrollCtxTableHeadHtml(){
-  if(S.tab!=='review') return '';
   if(isTxDetailOpen()||shouldShowReadingPane()) return '';
+  if(S.tab==='all') return `<div class="scroll-ctx-table-head">${buildAllTableHeadHtml(tableFilteredTx())}</div>`;
+  if(S.tab!=='review') return '';
   if(S.reviewView==='modern') return `
-    <div class="scroll-ctx-table">
+    <div class="scroll-ctx-table-head scroll-ctx-table">
       <div class="rev-mod-head scroll-ctx-mod-head${showReviewSourceCol()?' show-src':''}">${buildRevModHeadHtml()}</div>
     </div>`;
-  if(S.reviewView==='table') return buildReviewTableHeadHtml();
+  if(S.reviewView==='table') return `<div class="scroll-ctx-table-head">${buildReviewTableHeadHtml()}</div>`;
   return '';
-}
-function buildScrollCtxInner(){
-  const active=BANKS.find(b=>b.id===S.bankFilter)||BANKS[0];
-  const task=scrollCtxTaskLabel();
-  const scrollMenuOpen=S.acctMenuOpen&&S.acctMenuFrom==='scroll';
-  const dot=active.id==='all'
-    ?`<span class="scroll-ctx-dot scroll-ctx-dot-all" aria-hidden="true"></span>`
-    :`<span class="scroll-ctx-dot" style="background:${active.dot}" aria-hidden="true"></span>`;
-  const taskPill=task.detail
-    ?`<span class="scroll-ctx-task-pill"><span class="scroll-ctx-task-primary">${task.primary}</span><span class="scroll-ctx-task-sep">·</span><span class="scroll-ctx-task-sub">${task.detail}</span></span>`
-    :`<span class="scroll-ctx-task-pill"><span class="scroll-ctx-task-primary">${task.primary}</span></span>`;
-  return `
-    <div class="scroll-ctx-brand">
-      <span class="scroll-ctx-logo" aria-hidden="true">MYOB</span>
-      <div class="scroll-ctx-page">
-        <span class="scroll-ctx-page-kicker">Banking</span>
-        <span class="scroll-ctx-page-title">Transactions</span>
-      </div>
-    </div>
-    <span class="scroll-ctx-vrule" aria-hidden="true"></span>
-    <div class="scroll-ctx-meta">
-      <div class="acct-pill-wrap scroll-ctx-acct-wrap">
-        <button type="button" class="scroll-ctx-acct-pill${scrollMenuOpen?' open':''}" onclick="toggleAcctMenu(event,'scroll')" aria-haspopup="listbox" aria-expanded="${scrollMenuOpen}">
-          ${dot}${active.label}
-          <span class="scroll-ctx-acct-chev" aria-hidden="true"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l4 4 4-4"/></svg></span>
-        </button>
-        ${scrollMenuOpen?buildAcctMenuDropdown():''}
-      </div>
-      <span class="scroll-ctx-path-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3l4 4-4 4"/></svg></span>
-      ${taskPill}
-    </div>`;
 }
 function buildScrollCtxBar(){
   const tableHead=scrollCtxTableHeadHtml();
   return `
   <div class="scroll-ctx-stack${tableHead?' scroll-ctx-has-table':''}">
-    <div class="scroll-ctx-inner">${buildScrollCtxInner()}</div>
+    ${buildScrollCtxToolbar()}
     ${tableHead}
   </div>`;
 }
@@ -5088,33 +5849,39 @@ function setScrollCtxVisible(show){
   bar.classList.toggle('is-visible',!!show);
   bar.setAttribute('aria-hidden',show?'false':'true');
 }
+function updateScrollCtxPhase(scrollRoot){
+  if(!scrollRoot||S.page!=='main'||window._scrollCtxEditing||isSimpleReviewMode()){
+    setScrollCtxVisible(false);
+    return;
+  }
+  /* Show the sticky bar only once the real header has fully scrolled past —
+     measured live so it never overlaps the tail of the full-size header
+     (a fixed 64px threshold went stale as the header grew rows). */
+  const navBar=document.querySelector('.tx-nav-bar');
+  const passedHeader=navBar
+    ?navBar.getBoundingClientRect().bottom<=scrollRoot.getBoundingClientRect().top
+    :scrollRoot.scrollTop>=64;
+  setScrollCtxVisible(passedHeader);
+  window._scrollCtxLastTop=scrollRoot.scrollTop;
+}
 function setupScrollCtxWatch(){
   const scrollRoot=document.querySelector('.main');
   const content=document.getElementById('content');
   const bar=document.getElementById('scroll-ctx');
   if(!scrollRoot||!content||!bar) return;
   if(window._scrollCtxObs){window._scrollCtxObs.disconnect();window._scrollCtxObs=null;}
-  const anchor=content.querySelector('[data-scroll-table-head]')||content.querySelector('[data-scroll-ctx-anchor]');
-  if(!anchor) return;
-  const apply=show=>{if(S.page==='main') setScrollCtxVisible(show);};
-  window._scrollCtxObs=new IntersectionObserver(([entry])=>{
-    apply(!entry.isIntersecting);
-  },{root:scrollRoot,threshold:0});
-  window._scrollCtxObs.observe(anchor);
   if(!scrollRoot.dataset.scrollCtxScrollBound){
     scrollRoot.dataset.scrollCtxScrollBound='1';
-    scrollRoot.addEventListener('scroll',()=>{
-      if(S.page!=='main') return;
-      apply(scrollRoot.scrollTop>48);
-    },{passive:true});
+    scrollRoot.addEventListener('scroll',()=>updateScrollCtxPhase(scrollRoot),{passive:true});
   }
-  apply(scrollRoot.scrollTop>48);
+  window._scrollCtxLastTop=scrollRoot.scrollTop;
+  updateScrollCtxPhase(scrollRoot);
 }
 function updateScrollCtxBar(){
   const bar=document.getElementById('scroll-ctx');
   const content=document.getElementById('content');
   if(!bar||!content) return;
-  if(S.page!=='main'){
+  if(S.page!=='main'||isSimpleReviewMode()){
     setScrollCtxVisible(false);
     bar.innerHTML='';
     if(window._scrollCtxObs){window._scrollCtxObs.disconnect();window._scrollCtxObs=null;}
@@ -5124,10 +5891,16 @@ function updateScrollCtxBar(){
   syncScrollCtxAside(content.classList.contains('aside-open'));
   setupScrollCtxWatch();
   bindReviewTableHeadSync();
-  requestAnimationFrame(()=>requestAnimationFrame(syncReviewTableHeadWidths));
+  bindAllTableHeadSync();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    syncReviewTableHeadWidths();
+    syncAllTableHeadWidths();
+  }));
 }
 
+function isSimpleReviewMode(){return S.uiMode==='simple'&&S.tab==='review';}
 function buildMain(){
+  if(isSimpleReviewMode()) return buildSimpleReviewPage();
   return `
     <div class="scroll-ctx-anchor" data-scroll-ctx-anchor aria-hidden="true"></div>
     ${buildTxNavBar()}
@@ -5135,41 +5908,268 @@ function buildMain(){
   `;
 }
 
+function buildTxNavSearch(){
+  return `
+  <div class="tx-nav-search" data-page-filter="search">
+    <span class="tx-nav-search-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7.5" cy="7.5" r="5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg></span>
+    <input id="tx-search" type="search" placeholder="Search all transactions" autocomplete="off" aria-label="Search all transactions" value="${(S.txSearch||'').replace(/"/g,'&quot;')}" oninput="setTxSearch(this.value)">
+  </div>`;
+}
+function buildTxNavTabs(){
+  const rc=reviewCount();
+  const pbc=preBasCount();
+  const tab=(id,label,count)=>`<button type="button" role="tab" class="tx-nav-tab${S.tab===id?' act':''}" aria-selected="${S.tab===id}" onclick="setTab('${id}')">${label}${count?`<span class="fx-tab-count">${count}</span>`:''}</button>`;
+  return `<div class="tx-nav-tabs" role="tablist" aria-label="Transaction views">${tab('all','All')}${tab('review','To Review',rc)}${tab('prebas','Monthly check',pbc)}</div>`;
+}
+function buildAllFilterViewsWrap(){
+  return `
+    <div class="all-filter-views-wrap">
+      <div class="all-filter-views" role="toolbar" aria-label="Table view options">
+        <button type="button" class="${S.layoutSplitMenuOpen||S.txLayout==='none'||S.txLayout==='vertical'||S.txLayout==='horizontal'?'act':''}" title="${txLayoutToolbarTitle()}" aria-label="${txLayoutToolbarTitle()}" aria-expanded="${S.layoutSplitMenuOpen}" aria-haspopup="menu" onclick="toggleLayoutSplitMenu(event)">${txLayoutToolbarIcon()}</button>
+      </div>
+      ${S.layoutSplitMenuOpen?buildLayoutSplitMenu():''}
+    </div>`;
+}
+function allSourceTypeFiltersActive(){
+  return allSourceTypeActiveCount()>0;
+}
+function buildTxFiltersModal(){
+  ensureAllFilters();
+  return `
+  <div class="txf-modal-overlay" role="dialog" aria-modal="true" aria-label="Filter transactions" onclick="if(event.target===this) closeAllFilterMenu()">
+    <div class="txf-modal" onclick="event.stopPropagation()">
+      <div class="txf-modal-head">
+        <h2 class="txf-modal-title">Filters</h2>
+        <button type="button" class="rdm-close" onclick="closeAllFilterMenu()" aria-label="Close">✕</button>
+      </div>
+      <div class="txf-modal-body">
+        <div class="txf-modal-section">
+          <div class="txf-modal-section-hd">Source</div>
+          <div class="txf-modal-opts">
+            ${ALL_SOURCE_OPTS.map(o=>`<label class="txf-modal-opt"><input type="checkbox" ${S.allFilters.sources.has(o.k)?'checked':''} onchange="toggleAllFilterSource('${o.k}',event)">${o.l}</label>`).join('')}
+          </div>
+        </div>
+        <div class="txf-modal-section">
+          <div class="txf-modal-section-hd">Type</div>
+          <div class="txf-modal-opts">
+            ${ALL_TYPE_OPTS.map(o=>`<label class="txf-modal-opt"><input type="checkbox" ${S.allFilters.types.has(o.k)?'checked':''} onchange="toggleAllFilterType('${o.k}',event)">${o.l}</label>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="txf-modal-foot">
+        <button type="button" class="all-filter-reset" onclick="resetAllFilters(event)">Reset filters</button>
+        <button type="button" class="fx-btn fx-btn-success fx-btn-sm" onclick="closeAllFilterMenu()">Done</button>
+      </div>
+    </div>
+  </div>`;
+}
+function recentFilterLabelCurrent(){
+  ensureAllFilters();
+  const def=defaultAllFilters();
+  const f=S.allFilters;
+  const parts=[];
+  if(f.dateFrom!==def.dateFrom||f.dateTo!==def.dateTo) parts.push(`${f.dateFrom} – ${f.dateTo}`);
+  if(f.sources.size<ALL_SOURCE_OPTS.length) parts.push(allFilterSourceLabel());
+  if(f.types.size<ALL_TYPE_OPTS.length) parts.push(allFilterTypeLabel());
+  return parts.join(' · ');
+}
+function pushRecentFilter(){
+  if(!S.recentFilters) S.recentFilters=[];
+  if(!allFiltersActive()) return;
+  const label=recentFilterLabelCurrent();
+  if(!label) return;
+  const f=S.allFilters;
+  const snapshot={dateFrom:f.dateFrom,dateTo:f.dateTo,sources:new Set(f.sources),types:new Set(f.types)};
+  S.recentFilters=S.recentFilters.filter(r=>r.label!==label);
+  S.recentFilters.unshift({id:Date.now()+Math.random(),label,snapshot});
+  S.recentFilters=S.recentFilters.slice(0,4);
+}
+function applyRecentFilter(id){
+  if(!S.recentFilters) return;
+  const r=S.recentFilters.find(x=>x.id===id);
+  if(!r) return;
+  S.allFilters={dateFrom:r.snapshot.dateFrom,dateTo:r.snapshot.dateTo,sources:new Set(r.snapshot.sources),types:new Set(r.snapshot.types)};
+  S.allFilterMenu=null;S.allFilterMenuFrom=null;
+  render();
+  showToast(`✓ Filter applied: ${r.label}`,2600);
+}
+function clearRecentFilters(ev){
+  if(ev) ev.stopPropagation();
+  S.recentFilters=[];
+  render();
+}
+function buildRecentFiltersMenu(){
+  if(!S.recentFilters) S.recentFilters=[];
+  if(!S.recentFilters.length){
+    return `<div class="all-filter-menu" role="menu" onclick="event.stopPropagation()">
+      <div class="all-filter-more-hd">Recent filters</div>
+      <div style="padding:6px 10px 10px;font-size:13px;color:var(--fx2-text-muted);max-width:220px">No recent filters yet — changes to date, source, or type will show up here.</div>
+    </div>`;
+  }
+  return `<div class="all-filter-menu" role="menu" onclick="event.stopPropagation()">
+    <div class="all-filter-more-hd">Recent filters</div>
+    ${S.recentFilters.map(r=>`<button type="button" class="all-filter-menu-item" role="menuitem" onclick="applyRecentFilter(${JSON.stringify(r.id)})">${r.label}</button>`).join('')}
+    <hr>
+    <button type="button" class="all-filter-reset" onclick="clearRecentFilters(event)">Clear recent</button>
+  </div>`;
+}
+function refreshTxData(ev){
+  const btn=ev?.currentTarget;
+  if(btn){btn.classList.add('spinning');setTimeout(()=>btn.classList.remove('spinning'),620);}
+  showToast('✓ Transactions refreshed',2200);
+}
+function buildTxFilterRow(){
+  ensureAllFilters();
+  const dateOpen=S.allFilterMenu==='date'&&S.allFilterMenuFrom==='page';
+  const filtersOpen=S.allFilterMenu==='txfilters'&&S.allFilterMenuFrom==='page';
+  const recentOpen=S.allFilterMenu==='recent'&&S.allFilterMenuFrom==='page';
+  const showReset=allFiltersActive()||(S.tab==='review'&&(revFilterActive()||revMatchFilterActive()));
+  const reviewMatchFilters=S.tab==='review'?buildReviewMatchFilters():'';
+  return `
+  <div class="all-filter-row" data-page-filter="all-filters" role="search">
+    ${buildTxNavSearch()}
+    <div class="all-filter-wrap" data-page-filter="all-date">
+      <button type="button" class="all-filter-date${dateOpen?' open':''}" aria-label="Date range" aria-expanded="${dateOpen}" onclick="toggleAllFilterMenu('date',event)">
+        <span>${S.allFilters.dateFrom}</span>
+        <span class="all-date-sep" aria-hidden="true"><svg width="14" height="12" viewBox="0 0 14 12" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="1" y1="6" x2="12" y2="6"/><polyline points="8,2 12,6 8,10"/></svg></span>
+        <span>${S.allFilters.dateTo}</span>
+        <span class="all-cal-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="2" y1="6.5" x2="14" y2="6.5"/><line x1="5" y1="1.5" x2="5" y2="4"/><line x1="11" y1="1.5" x2="11" y2="4"/></svg></span>
+      </button>
+      ${dateOpen?buildAllFilterDateMenu():''}
+    </div>
+    ${reviewMatchFilters}
+    <div class="all-filter-wrap" data-page-filter="all-filters-btn">
+      <button type="button" class="all-filter-icon-btn${allSourceTypeFiltersActive()?' has-active':''}${filtersOpen?' open':''}" title="Filters" aria-label="Filters${allSourceTypeFiltersActive()?' ('+allSourceTypeActiveCount()+' active)':''}" aria-expanded="${filtersOpen}" aria-haspopup="dialog" onclick="toggleAllFilterMenu('txfilters',event)">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1.5 2.5h11l-4 4.5v4l-3 1.5v-5.5l-4-4.5z"/></svg>
+        ${allSourceTypeFiltersActive()?`<span class="all-filter-more-badge" aria-hidden="true">${allSourceTypeActiveCount()}</span>`:''}
+      </button>
+      ${filtersOpen?buildTxFiltersModal():''}
+    </div>
+    <div class="all-filter-wrap" data-page-filter="recent-filters">
+      <button type="button" class="all-filter-icon-btn${recentOpen?' open':''}" title="Recent filters" aria-label="Recent filters" aria-expanded="${recentOpen}" aria-haspopup="menu" onclick="toggleAllFilterMenu('recent',event)">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3.2l2.2 1.3"/></svg>
+      </button>
+      ${recentOpen?buildRecentFiltersMenu():''}
+    </div>
+    ${showReset?`<button type="button" class="fx-textlink all-filter-reset" onclick="resetTxFilters(event)">Reset</button>`:''}
+    <span class="tx-nav-sp" aria-hidden="true"></span>
+    ${buildAllFilterViewsWrap()}
+    <button type="button" class="tx-refresh-btn" title="Refresh transactions" aria-label="Refresh transactions" onclick="refreshTxData(event)">
+      <svg class="tx-refresh-ico" width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12.8 7.5a5.3 5.3 0 11-1.5-3.7"/><polyline points="12.8,2.2 12.8,5.6 9.4,5.6"/></svg>
+    </button>
+  </div>`;
+}
+function buildReviewAttentionPanel(){
+  const autoCt=automatchReviewCount();
+  const sugCt=suggestionReviewCount();
+  const readyCt=readyToVerifyCount();
+  if(!autoCt&&!sugCt&&!readyCt) return '';
+  const card=(count,title,sub,queue)=>!count?'':`
+    <button type="button" class="tx-attn-card${S.revQueue===queue?' act':''}" onclick="setRevQueue('${queue}')">
+      <span class="tx-attn-badge">${count}</span>
+      <span class="tx-attn-body">
+        <span class="tx-attn-title">${title}</span>
+        <span class="tx-attn-sub">${sub}</span>
+      </span>
+      <span class="tx-attn-chev" aria-hidden="true">›</span>
+    </button>`;
+  return `
+  <section class="tx-attn-panel" data-recon-target="review-attention" aria-label="Needs your attention">
+    <h2 class="tx-attn-hd">Needs your attention</h2>
+    <div class="tx-attn-cards">
+      ${card(readyCt,'Ready to verify','Pre-scored matches ranked by confidence — verify exceptions first, then work through the rest.','ready')}
+      ${card(autoCt,'Auto matched transactions','Review and verify these transactions','automatch')}
+      ${card(sugCt,'Transactions with match suggestions','Review and verify these transactions','suggestions')}
+    </div>
+  </section>`;
+}
+function buildRevMatchFilterMenuContent(defs){
+  return `
+    <div class="fx-ms-menu" role="listbox" aria-label="Review match status" aria-multiselectable="true" onclick="event.stopPropagation()">
+      ${defs.map(d=>`
+      <label class="fx-ms-opt" role="option" aria-selected="${revMatchFilterIsChecked(d.v)}">
+        <input type="checkbox" ${revMatchFilterIsChecked(d.v)?'checked':''} onchange="toggleRevMatchFilter('${d.v}')">
+        <span class="fx-ms-opt-label">${d.l}</span>
+        <span class="fx-badge">${d.ct}</span>
+      </label>`).join('')}
+    </div>`;
+}
+function buildReviewMatchFilters(){
+  const inbox=filterReviewQueue(reviewInboxActive());
+  const defs=revMatchFilterDefs(inbox);
+  const menuOpen=S.revMatchFilterMenuOpen;
+  const isAll=!revMatchFilterActive();
+  return `
+  <div class="all-filter-wrap rev-match-filter-wrap" data-page-filter="review-filters">
+    <div class="fx-ms-pill-wrap">
+      <button type="button" class="fx-ms-pill fx-pill rev-match-ms-pill${!isAll?' fx-pill-checked':''}${menuOpen?' open':''}" onclick="toggleRevMatchFilterMenu(event)" aria-expanded="${menuOpen}" aria-haspopup="listbox" aria-label="Review match status">
+        <span class="fx-pill-label">${revMatchFilterPillLabel(defs)}</span>
+        <span class="fx-ms-pill-chev" aria-hidden="true">▾</span>
+      </button>
+      ${menuOpen?buildRevMatchFilterMenuContent(defs):''}
+    </div>
+  </div>`;
+}
+function buildTxNavBalance(){
+  const bal=bankBalanceInfo();
+  const varianceHtml=fmtBalVarianceHtml(bal.amount,bal.myobAmount);
+  return `
+  <div class="tx-nav-balance" data-page-filter="balance">
+    <span class="tx-nav-bal-label">Bank balance</span>
+    <span class="tx-nav-bal-val">${fmtBankBal(bal.amount)}</span>
+    <span class="tx-nav-vrule" aria-hidden="true"></span>
+    <span class="tx-nav-bal-label">MYOB balance</span>
+    <span class="tx-nav-bal-val">${fmtBankBal(bal.myobAmount)}</span>
+    ${varianceHtml}
+  </div>`;
+}
+function buildTxMoreMenu(){
+  return `<div class="all-filter-menu tx-nav-more-menu" role="menu" onclick="event.stopPropagation()">
+    <button type="button" class="all-filter-menu-item" role="menuitem" onclick="S.allFilterMenu=null;S.allFilterMenuFrom=null;toggleColSortMenu(event)">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3v10"/><path d="M3 5l2-2 2 2"/><path d="M11 13V3"/><path d="M9 11l2 2 2-2"/></svg>
+      Sort columns
+    </button>
+    <button type="button" class="all-filter-menu-item" role="menuitem" onclick="S.allFilterMenu=null;S.allFilterMenuFrom=null;toggleTxTableExpanded(event)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 5V1h4M13 9v4H9M13 5V1H9M1 9v4h4"/></svg>
+      ${S.txTableExpanded?'Collapse table':'Expand table'}
+    </button>
+  </div>`;
+}
 function buildTxNavBar(){
   const active=BANKS.find(b=>b.id===S.bankFilter)||BANKS[0];
   const badgeCount=S.bankFilter==='all'?BANKS.length-1:TX.filter(t=>t.bank===S.bankFilter).length;
   const icoHtml=active.id==='all'?'▾':`<span class="acct-ico-dot" style="background:${active.dot}"></span>`;
   const pageMenuOpen=S.acctMenuOpen&&S.acctMenuFrom==='page';
-  const rc=reviewCount();
-  const pbc=preBasCount();
-  const tabBtn=(id,label,extra='')=>`<button type="button" role="tab" class="tx-nav-tab${S.tab===id?' act':''}" aria-selected="${S.tab===id}" onclick="setTab('${id}')">${label}${extra}</button>`;
+  const moreOpen=S.allFilterMenu==='more'&&S.allFilterMenuFrom==='page';
   return `
   <div class="tx-nav-bar">
-    <div class="tx-nav-primary">
-      <h1 class="tx-nav-title">Transactions</h1>
-      <div class="tx-nav-acct acct-pill-wrap">
-        <div class="acct-pill${pageMenuOpen?' open':''}" onclick="toggleAcctMenu(event,'page')" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="${pageMenuOpen}">
-          <div class="acct-ico">${icoHtml}</div>
-          ${active.label}
-          <span class="acct-count">${badgeCount}</span>
+    <div class="tx-nav-row tx-nav-row-primary">
+      <div class="tx-nav-title-row">
+        <h1 class="tx-nav-title">Transactions</h1>
+        <div class="acct-pill-wrap" data-page-filter="account">
+          <div class="acct-pill${pageMenuOpen?' open':''}" onclick="toggleAcctMenu(event,'page')" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="${pageMenuOpen}">
+            <div class="acct-ico">${icoHtml}</div>
+            ${active.label}
+            <span class="acct-count">${badgeCount}</span>
+          </div>
+          ${pageMenuOpen?buildAcctMenuDropdown():''}
         </div>
-        ${pageMenuOpen?buildAcctMenuDropdown():''}
       </div>
-      <span class="tx-nav-vrule" aria-hidden="true"></span>
-      <div class="tx-nav-tabs" role="tablist">
-        ${tabBtn('all','All')}
-        ${tabBtn('review','To Review',rc?`<span class="fx-tab-count">${rc}</span>`:'')}
-        ${tabBtn('prebas','Pre-Bas',pbc?`<span class="fx-tab-count">${pbc}</span>`:'')}
+      ${buildTxNavTabs()}
+      <span class="tx-nav-sp" aria-hidden="true"></span>
+      ${buildTxNavBalance()}
+      <div class="all-filter-wrap tx-nav-more-wrap">
+        <button type="button" class="tx-nav-more${moreOpen?' open':''}" aria-label="More actions" aria-haspopup="menu" aria-expanded="${moreOpen}" onclick="toggleAllFilterMenu('more',event)">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><circle cx="2" cy="6.5" r="1.2"/><circle cx="6.5" cy="6.5" r="1.2"/><circle cx="11" cy="6.5" r="1.2"/></svg>
+        </button>
+        ${moreOpen?buildTxMoreMenu():''}
+        ${S.colSortMenuOpen?buildColSortMenu():''}
       </div>
-      <span class="tx-nav-sp"></span>
-      <div class="tx-nav-search">
-        <span class="tx-nav-search-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7.5" cy="7.5" r="5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg></span>
-        <input id="tx-search" type="search" placeholder="Search all transactions" autocomplete="off" aria-label="Search all transactions">
-      </div>
-      <button type="button" class="tx-nav-more" aria-label="More actions">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><circle cx="2" cy="6.5" r="1.2"/><circle cx="6.5" cy="6.5" r="1.2"/><circle cx="11" cy="6.5" r="1.2"/></svg>
-      </button>
     </div>
+    ${S.tab==='prebas'?'':`
+    <div class="tx-nav-row tx-nav-row-filters">
+      ${buildTxFilterRow()}
+    </div>`}
   </div>`;
 }
 
@@ -5206,8 +6206,7 @@ function buildPageHeader(){
 
 /* ── tabs ────────────────────────────────────── */
 function preBasCount(){
-  const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
-  return preBasList().filter(bankOk).length;
+  return mcTotalCount();
 }
 function buildTabs(){
   const rc=reviewCount();
@@ -5258,12 +6257,11 @@ function reconTodoScrollToFirstRow(){
 }
 function reconTodoReview(kind){
   if(kind==='receipts'){
-    S.page='main';S.tab='review';S.revFilters=new Set(['receiptmatch']);S.revFilter='receiptmatch';S.reviewView='modern';S.reconReceiptFocus=true;S.reviewSel=new Set();S.revFilterMenuOpen=false;closeAside();render();
+    S.page='main';S.tab='review';S.revFilters=new Set(['receiptmatch']);S.revFilter='receiptmatch';S.reviewView='modern';S.reconReceiptFocus=true;S.reviewSel=new Set();S.revFilterMenuOpen=false;S.revQueue='suggestions';S.revMatchFilters=new Set(['all']);closeAside();render();
     reconTodoScrollTo('review-list');
     reconTodoScrollToFirstRow();
   }else if(kind==='bas'){
-    goPreBas();
-    reconTodoScrollTo('prebas-list');
+    goPreBas('adjustments');
   }else if(kind==='patterns'){
     S.memFilter='all';
     S.page='settings';S.stgSection='all';S.ruleWiz=null;S.asideId=null;S.hubSection=null;closeAside();render();
@@ -5300,8 +6298,8 @@ function buildReconTodo(){
     cards.push(buildReconTodoCard({
       icoCls:'recon-todo-ico--bas',
       icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>',
-      title:`${bas} transaction${bas!==1?'s':''} look BAS-claimable`,
-      sub:'Review GST coding before your next BAS.',
+      title:`${bas} tax code${bas!==1?'s':''} the AI wants you to confirm`,
+      sub:'Part of this month\'s guided check-in before BAS.',
       action:'bas',
     }));
   }
@@ -5363,6 +6361,7 @@ function bankFilteredTx(){
 }
 const ALL_SOURCE_OPTS=[{k:'bank',l:'Bank feed'},{k:'myob',l:'MYOB Records'}];
 const ALL_TYPE_OPTS=[{k:'deposit',l:'Deposit'},{k:'transfer',l:'Transfer'},{k:'withdrawal',l:'Withdrawals'}];
+const ALL_BULK_CATS=['Advertising','Bank charges','Computer expenses','Consulting fees','Entertainment','Freight & delivery','Insurance','Interest expense','Legal fees','Materials','Motor vehicle','Office supplies','Power & gas','Printing & stationery','Rent & occupancy','Repairs & maintenance','Safety & workwear','Staff meals','Subscriptions','Telephone & internet','Travel','Wages & salaries'];
 function parseAusDate(s){
   const p=s.split('/');
   return new Date(+p[2],+p[1]-1,+p[0]);
@@ -5428,7 +6427,10 @@ function applyAllFilters(list){
   );
 }
 function tableFilteredTx(){
-  return sortTableList(applyAllFilters(bankFilteredTx()),'all');
+  let list=applyTxSearch(sortTableList(applyAllFilters(bankFilteredTx()),'all'));
+  if(S.allTxView==='matched') list=list.filter(txIsMatched);
+  else if(S.allTxView==='unmatched') list=list.filter(t=>!txIsMatched(t));
+  return list;
 }
 const ALL_SORT_COLS=[
   {k:'date',l:'Date'},{k:'tx',l:'Transaction'},{k:'amt',l:'Amount ($)'},
@@ -5488,15 +6490,23 @@ function allFilterTypeLabel(){
   if(!t.size) return 'None selected';
   return ALL_TYPE_OPTS.filter(o=>t.has(o.k)).map(o=>o.l).join(', ');
 }
-function toggleAllFilterMenu(menu,ev){
+function toggleAllFilterMenu(menu,ev,from='page'){
   if(ev){ev.stopPropagation();ev.preventDefault();}
-  S.allFilterMenu=S.allFilterMenu===menu?null:menu;
-  if(S.allFilterMenu) closeViewToolbarMenus(false);
-  render();
+  if(S.allFilterMenu===menu&&S.allFilterMenuFrom===from) closeAllFilterMenu();
+  else{
+    S.allFilterMenu=menu;
+    S.allFilterMenuFrom=from;
+    S.acctMenuOpen=false;
+    S.acctMenuFrom=null;
+    closeRevFilterMenu(false);
+    closeRevSourceMenu(false);
+    closeRevMatchFilterMenu(false);
+    closeViewToolbarMenus(false);
+    render();
+  }
 }
 function closeViewToolbarMenus(rerender=true){
   let changed=false;
-  if(S.filterOptionsMenu){S.filterOptionsMenu=false;changed=true;}
   if(S.colSortMenuOpen){S.colSortMenuOpen=false;changed=true;}
   if(S.layoutSplitMenuOpen){S.layoutSplitMenuOpen=false;changed=true;}
   if(changed&&rerender) render();
@@ -5505,9 +6515,9 @@ function toggleLayoutSplitMenu(ev){
   if(ev){ev.stopPropagation();ev.preventDefault();}
   S.layoutSplitMenuOpen=!S.layoutSplitMenuOpen;
   if(S.layoutSplitMenuOpen){
-    S.filterOptionsMenu=false;
     S.colSortMenuOpen=false;
     S.allFilterMenu=null;
+    S.allFilterMenuFrom=null;
   }
   render();
 }
@@ -5522,30 +6532,6 @@ function buildLayoutSplitMenu(){
     ${opts.map(o=>`<button type="button" role="menuitem" class="${S.txLayout===o.v?'act':''}" onclick="setTxLayout('${o.v}')">${o.l}</button>`).join('')}
   </div>`;
 }
-function toggleFilterOptionsMenu(ev){
-  if(ev){ev.stopPropagation();ev.preventDefault();}
-  S.filterOptionsMenu=!S.filterOptionsMenu;
-  if(S.filterOptionsMenu){
-    S.colSortMenuOpen=false;
-    S.layoutSplitMenuOpen=false;
-    S.allFilterMenu=null;
-  }
-  render();
-}
-function openAllFilterFromViews(menu){
-  S.filterOptionsMenu=false;
-  S.allFilterMenu=menu;
-  render();
-}
-function buildFilterOptionsMenu(){
-  return `<div class="all-filter-views-menu" role="menu" onclick="event.stopPropagation()">
-    <button type="button" role="menuitem" onclick="openAllFilterFromViews('date')">Edit date range</button>
-    <button type="button" role="menuitem" onclick="openAllFilterFromViews('source')">Edit sources</button>
-    <button type="button" role="menuitem" onclick="openAllFilterFromViews('type')">Edit types</button>
-    <hr>
-    <button type="button" role="menuitem" onclick="resetAllFilters(event)">Reset all filters</button>
-  </div>`;
-}
 function closeColSortMenu(rerender=true){
   if(S.colSortMenuOpen){S.colSortMenuOpen=false;if(rerender) render();}
 }
@@ -5553,9 +6539,9 @@ function toggleColSortMenu(ev){
   if(ev){ev.stopPropagation();ev.preventDefault();}
   S.colSortMenuOpen=!S.colSortMenuOpen;
   if(S.colSortMenuOpen){
-    S.filterOptionsMenu=false;
     S.layoutSplitMenuOpen=false;
     S.allFilterMenu=null;
+    S.allFilterMenuFrom=null;
   }
   render();
 }
@@ -5578,8 +6564,13 @@ function resetColSort(ev){
   S.colSortMenuOpen=false;
   render();
 }
-function closeAllFilterMenu(){
-  if(S.allFilterMenu){S.allFilterMenu=null;render();}
+function closeAllFilterMenu(rerender=true){
+  if(S.allFilterMenu){
+    if(S.allFilterMenu==='txfilters'||S.allFilterMenu==='date') pushRecentFilter();
+    S.allFilterMenu=null;
+    S.allFilterMenuFrom=null;
+    if(rerender) render();
+  }
 }
 function toggleAllFilterSource(key,ev){
   if(ev) ev.stopPropagation();
@@ -5615,6 +6606,25 @@ function resetAllFilters(ev){
   if(ev){ev.stopPropagation();ev.preventDefault();}
   S.allFilters=defaultAllFilters();
   S.allFilterMenu=null;
+  S.allFilterMenuFrom=null;
+  render();
+}
+function resetTxFilters(ev){
+  if(ev){ev.stopPropagation();ev.preventDefault();}
+  S.allFilters=defaultAllFilters();
+  S.allFilterMenu=null;
+  S.allFilterMenuFrom=null;
+  if(S.tab==='review'){
+    S.revFilters=new Set(['all']);
+    S.revFilter='all';
+    S.revAiFilter='all';
+    S.reconReceiptFocus=false;
+    S.reviewSel=new Set();
+    S.revFilterMenuOpen=false;
+    S.revMatchFilterMenuOpen=false;
+    S.revQueue='all';
+    S.revMatchFilters=new Set(['all']);
+  }
   render();
 }
 function toggleTxTableExpanded(ev){
@@ -5643,18 +6653,6 @@ function buildColSortMenu(){
     <button type="button" role="menuitem" onclick="resetColSort(event)">Reset to date (newest first)</button>
   </div>`;
 }
-function buildAllFilterSourceMenu(){
-  ensureAllFilters();
-  return `<div class="all-filter-menu" role="listbox" onclick="event.stopPropagation()">
-    ${ALL_SOURCE_OPTS.map(o=>`<label class="all-filter-menu-item"><input type="checkbox" ${S.allFilters.sources.has(o.k)?'checked':''} onchange="toggleAllFilterSource('${o.k}',event)">${o.l}</label>`).join('')}
-  </div>`;
-}
-function buildAllFilterTypeMenu(){
-  ensureAllFilters();
-  return `<div class="all-filter-menu" role="listbox" onclick="event.stopPropagation()">
-    ${ALL_TYPE_OPTS.map(o=>`<label class="all-filter-menu-item"><input type="checkbox" ${S.allFilters.types.has(o.k)?'checked':''} onchange="toggleAllFilterType('${o.k}',event)">${o.l}</label>`).join('')}
-  </div>`;
-}
 function buildAllFilterDateMenu(){
   ensureAllFilters();
   return `<div class="all-filter-menu all-filter-date-menu" onclick="event.stopPropagation()">
@@ -5666,44 +6664,6 @@ function buildAllFilterDateMenu(){
     </label>
     <div class="all-filter-date-actions">
       <button type="button" class="all-filter-date-cancel" onclick="closeAllFilterMenu()">Close</button>
-    </div>
-  </div>`;
-}
-function buildAllFilterRow(){
-  ensureAllFilters();
-  const dateOpen=S.allFilterMenu==='date';
-  const srcOpen=S.allFilterMenu==='source';
-  const typeOpen=S.allFilterMenu==='type';
-  return `
-  <div class="all-filter-row" role="search">
-    <div class="all-filter-wrap">
-      <button type="button" class="all-filter-date${dateOpen?' open':''}" aria-label="Date range" aria-expanded="${dateOpen}" onclick="toggleAllFilterMenu('date',event)">
-        <span>${S.allFilters.dateFrom}</span>
-        <span class="all-date-sep" aria-hidden="true"><svg width="14" height="12" viewBox="0 0 14 12" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="1" y1="6" x2="12" y2="6"/><polyline points="8,2 12,6 8,10"/></svg></span>
-        <span>${S.allFilters.dateTo}</span>
-        <span class="all-cal-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="2" y1="6.5" x2="14" y2="6.5"/><line x1="5" y1="1.5" x2="5" y2="4"/><line x1="11" y1="1.5" x2="11" y2="4"/></svg></span>
-      </button>
-      ${dateOpen?buildAllFilterDateMenu():''}
-    </div>
-    <div class="all-filter-wrap">
-      <button type="button" class="all-filter-pill${srcOpen?' open':''}" aria-expanded="${srcOpen}" onclick="toggleAllFilterMenu('source',event)"><span class="fpl-label">Source:</span> <span class="fpl-val">${allFilterSourceLabel()}</span> <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3.5 5.5l3.5 3.5 3.5-3.5"/></svg></button>
-      ${srcOpen?buildAllFilterSourceMenu():''}
-    </div>
-    <div class="all-filter-wrap">
-      <button type="button" class="all-filter-pill${typeOpen?' open':''}" aria-expanded="${typeOpen}" onclick="toggleAllFilterMenu('type',event)"><span class="fpl-label">Type:</span> <span class="fpl-val">${allFilterTypeLabel()}</span> <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3.5 5.5l3.5 3.5 3.5-3.5"/></svg></button>
-      ${typeOpen?buildAllFilterTypeMenu():''}
-    </div>
-    <button type="button" class="fx-textlink all-filter-reset" onclick="resetAllFilters(event)">Reset</button>
-    <div class="all-filter-views-wrap">
-      <div class="all-filter-views" role="toolbar" aria-label="Table view options">
-        <button type="button" class="${S.filterOptionsMenu?'act':''}" title="Filter options" aria-expanded="${S.filterOptionsMenu}" onclick="toggleFilterOptionsMenu(event)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="2" y1="4" x2="14" y2="4"/><line x1="4" y1="8" x2="12" y2="8"/><line x1="6" y1="12" x2="10" y2="12"/></svg></button>
-        <button type="button" class="${S.colSortMenuOpen?'act':''}" title="Sort columns" aria-expanded="${S.colSortMenuOpen}" onclick="toggleColSortMenu(event)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3v10"/><path d="M3 5l2-2 2 2"/><path d="M11 13V3"/><path d="M9 11l2 2 2-2"/></svg></button>
-        <button type="button" class="${S.layoutSplitMenuOpen||(S.txLayout==='vertical'||S.txLayout==='horizontal')?'act':''}" title="List view" aria-expanded="${S.layoutSplitMenuOpen}" aria-haspopup="menu" onclick="toggleLayoutSplitMenu(event)"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="14" height="3" rx="1"/><rect x="2" y="8" width="14" height="3" rx="1"/><rect x="2" y="13" width="14" height="3" rx="1"/></svg></button>
-        <button type="button" class="${S.txTableExpanded?'act':''}" title="Expand" aria-pressed="${S.txTableExpanded}" onclick="toggleTxTableExpanded(event)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 5V1h4M13 9v4H9M13 5V1H9M1 9v4h4"/></svg></button>
-      </div>
-      ${S.filterOptionsMenu?buildFilterOptionsMenu():''}
-      ${S.colSortMenuOpen?buildColSortMenu():''}
-      ${S.layoutSplitMenuOpen?buildLayoutSplitMenu():''}
     </div>
   </div>`;
 }
@@ -5771,13 +6731,13 @@ function buildAllTxCell(tx){
     </div>
   </div>`;
 }
-function buildAllTableRow(tx){
+function buildAllTableRow(tx,sel=S.allSel){
   const amtCls=tx.amount<0?'amt-neg':'amt-pos';
   const selected=S.asideId===tx.id;
   const rowCls=[tx.source==='myob'?'tr-myob':'',txIsFullyComplete(tx)?'tr-done':'',selected?'sel':''].filter(Boolean).join(' ');
   return `
   <tr class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="selectTxPaneRow(${tx.id},'all','matches',event)">
-    <td class="col-chk" data-col="chk" onclick="event.stopPropagation()"><input type="checkbox"></td>
+    <td class="col-chk" data-col="chk" onclick="event.stopPropagation()"><input type="checkbox" ${sel.has(tx.id)?'checked':''} onclick="event.stopPropagation();toggleAllSel(${tx.id})"></td>
     <td class="col-date" data-col="date">${tx.date}</td>
     <td class="col-tx" data-col="tx">${buildAllTxCell(tx)}</td>
     <td class="col-amt r" data-col="amt"><span class="all-amt-main ${amtCls}">${fmt(tx.amount)}</span></td>
@@ -5787,6 +6747,55 @@ function buildAllTableRow(tx){
     <td class="col-match" data-col="match">${buildAllMatchCell(tx)}</td>
     <td class="col-left c" data-col="left">${buildAllWhatsLeftCell(tx)}</td>
   </tr>`;
+}
+function buildAllTableHeadCells(list=[]){
+  const ids=list.map(t=>t.id);
+  const chk=ids.length?`<input type="checkbox" ${ids.every(id=>S.allSel.has(id))?'checked':''} onclick="toggleAllSelAll(${JSON.stringify(ids)},event)">`:`<input type="checkbox" disabled>`;
+  return `
+    ${thResize('all','chk',chk,'col-chk')}
+    ${thResize('all','date',`Date${colSortIndicator('all','date')}`,'col-date')}
+    ${thResize('all','tx',`Bank transaction${colSortIndicator('all','tx')}`,'col-tx')}
+    ${thResize('all','amt',`Amount ($)${colSortIndicator('all','amt')}`,'col-amt r')}
+    ${thResize('all','gst',`GST${colSortIndicator('all','gst')}`,'col-gst r')}
+    ${thResize('all','job',`Job${colSortIndicator('all','job')}`,'col-job')}
+    ${thResize('all','att','File','col-att r')}
+    ${thResize('all','match',`Match${colSortIndicator('all','match')}`,'col-match')}
+    ${thResize('all','left',`What's left${colSortIndicator('all','left')}`,'col-left r')}`;
+}
+function buildAllTableHeadRow({sticky=false,list=[]}={}){
+  return `<tr${sticky?'':' data-scroll-table-head'}>${buildAllTableHeadCells(list)}</tr>`;
+}
+function buildAllTableHeadHtml(list=[]){
+  const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
+  return `
+  <div class="scroll-ctx-tbl-wrap scroll-ctx-all-tbl-wrap all-tbl-v2-wrap">
+    <table class="all-tbl-v2 scroll-ctx-all-tbl">
+      ${buildTableColgroup('all',allCols)}
+      <thead>${buildAllTableHeadRow({sticky:true,list})}</thead>
+    </table>
+  </div>`;
+}
+function syncAllTableHeadWidths(){
+  if(S.tab!=='all') return;
+  const bodyTable=document.querySelector('.tx-table-shell .all-tbl-v2:not(.scroll-ctx-all-tbl)');
+  const headWrap=document.querySelector('.scroll-ctx-all-tbl-wrap');
+  const headTable=document.querySelector('.scroll-ctx-all-tbl');
+  if(!bodyTable||!headWrap||!headTable) return;
+  headTable.style.width=bodyTable.getBoundingClientRect().width+'px';
+  const srcCells=bodyTable.querySelectorAll('thead tr:first-child > *');
+  const dstCells=headTable.querySelectorAll('thead tr:first-child > *');
+  srcCells.forEach((cell,i)=>{
+    if(!dstCells[i]) return;
+    const w=Math.round(cell.getBoundingClientRect().width);
+    dstCells[i].style.width=w+'px';
+    dstCells[i].style.minWidth=w+'px';
+    dstCells[i].style.maxWidth=w+'px';
+  });
+}
+function bindAllTableHeadSync(){
+  if(window._allHeadSyncBound) return;
+  window._allHeadSyncBound=true;
+  window.addEventListener('resize',()=>syncAllTableHeadWidths(),{passive:true});
 }
 function buildAllTableBodyRows(list){
   if(!list.length){
@@ -5800,45 +6809,142 @@ function buildAllTablePaneHtml(list){
     <div class="all-tbl-v2-wrap">
       <table class="all-tbl-v2">
         ${buildTableColgroup('all',allCols)}
-        <thead data-scroll-table-head>
-          <tr>
-            ${thResize('all','chk','<input type="checkbox">','col-chk')}
-            ${thResize('all','date',`Date${colSortIndicator('all','date')}`,'col-date')}
-            ${thResize('all','tx',`Transaction${colSortIndicator('all','tx')}`,'col-tx')}
-            ${thResize('all','amt',`Amount ($)${colSortIndicator('all','amt')}`,'col-amt r')}
-            ${thResize('all','gst',`GST${colSortIndicator('all','gst')}`,'col-gst r')}
-            ${thResize('all','job',`Job${colSortIndicator('all','job')}`,'col-job')}
-            ${thResize('all','att','File','col-att r')}
-            ${thResize('all','match',`Match${colSortIndicator('all','match')}`,'col-match')}
-            ${thResize('all','left',`What's left${colSortIndicator('all','left')}`,'col-left r')}
-          </tr>
-        </thead>
+        <thead>${buildAllTableHeadRow({list})}</thead>
         <tbody>${buildAllTableBodyRows(list)}</tbody>
       </table>
     </div>`;
 }
+/* ── "All" table bulk selection — swaps the filter row for a bulk actions bar ── */
+function toggleAllSel(id,ev){
+  if(ev) ev.stopPropagation();
+  if(S.allSel.has(id)) S.allSel.delete(id); else S.allSel.add(id);
+  render();
+}
+function toggleAllSelAll(ids,ev){
+  if(ev) ev.stopPropagation();
+  const all=ids.length>0&&ids.every(id=>S.allSel.has(id));
+  ids.forEach(id=>all?S.allSel.delete(id):S.allSel.add(id));
+  render();
+}
+function clearAllSel(){
+  S.allSel=new Set();
+  S.allBulkMenu=null;
+  render();
+}
+function toggleAllBulkMenu(menu,ev){
+  if(ev){ev.stopPropagation();ev.preventDefault();}
+  S.allBulkMenu=S.allBulkMenu===menu?null:menu;
+  render();
+}
+function closeAllBulkMenu(rerender=true){
+  if(S.allBulkMenu){S.allBulkMenu=null;if(rerender) render();}
+}
+function bulkAllAccept(){
+  const ids=Array.from(S.allSel);
+  if(!ids.length) return;
+  const snapshots=ids.map(id=>{const tx=ftx(id);return tx?snapshotTx(tx):null;}).filter(Boolean);
+  ids.forEach(id=>{if(ftx(id)) applyAcceptAll(id);});
+  const n=ids.length;
+  S.allSel=new Set();
+  S.allBulkMenu=null;
+  render();
+  showSuccessToast({
+    title:`${n} transaction${n>1?'s':''} accepted`,
+    message:'AI suggestions applied for the selected transactions.',
+    undo:()=>{snapshots.forEach(s=>restoreTx(s));render();},
+  });
+}
+function bulkAllSetCategory(cat){
+  const ids=Array.from(S.allSel);
+  if(!ids.length) return;
+  const snapshots=ids.map(id=>{const tx=ftx(id);return tx?snapshotTx(tx):null;}).filter(Boolean);
+  ids.forEach(id=>{
+    const tx=ftx(id); if(!tx) return;
+    tx.ai.cat.val=cat; tx.ai.cat.st='accepted';
+  });
+  const n=ids.length;
+  S.allSel=new Set();
+  S.allBulkMenu=null;
+  render();
+  showSuccessToast({
+    title:`${n} transaction${n>1?'s':''} categorised`,
+    message:`Set to "${cat}".`,
+    undo:()=>{snapshots.forEach(s=>restoreTx(s));render();},
+  });
+}
+function bulkAllSetTax(code){
+  const ids=Array.from(S.allSel);
+  if(!ids.length) return;
+  const snapshots=ids.map(id=>{const tx=ftx(id);return tx?snapshotTx(tx):null;}).filter(Boolean);
+  ids.forEach(id=>{
+    const tx=ftx(id); if(!tx) return;
+    tx.ai.tax.val=code; tx.ai.tax.st='accepted';
+  });
+  const n=ids.length;
+  S.allSel=new Set();
+  render();
+  showSuccessToast({
+    title:`${n} transaction${n>1?'s':''} coded to ${code}`,
+    undo:()=>{snapshots.forEach(s=>restoreTx(s));render();},
+  });
+}
+function bulkAllRejectSuggestions(){
+  const ids=Array.from(S.allSel);
+  if(!ids.length) return;
+  const snapshots=ids.map(id=>{const tx=ftx(id);return tx?snapshotTx(tx):null;}).filter(Boolean);
+  ids.forEach(id=>{
+    const tx=ftx(id); if(!tx) return;
+    ['match','cat','tax','job'].forEach(field=>{
+      const f=tx.ai[field];
+      if(f&&f.val&&f.st!=='rejected'){ f.rejectedVal=f.val; f.st='rejected'; }
+    });
+  });
+  const n=ids.length;
+  S.allSel=new Set();
+  render();
+  showSuccessToast({
+    title:`Suggestions rejected for ${n} transaction${n>1?'s':''}`,
+    undo:()=>{snapshots.forEach(s=>restoreTx(s));render();},
+  });
+}
+function buildAllBulkCatMenu(){
+  return `<div class="all-filter-menu all-bulk-cat-menu" role="listbox" onclick="event.stopPropagation()">
+    ${ALL_BULK_CATS.map(c=>`<button type="button" class="all-filter-menu-item" role="option" onclick="bulkAllSetCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('')}
+  </div>`;
+}
+function buildAllBulkPill(){
+  const n=S.allSel.size;
+  const catOpen=S.allBulkMenu==='cat';
+  return `
+  <div class="all-bulk-pill" role="region" aria-label="Bulk actions" onclick="event.stopPropagation()">
+    <span class="all-bulk-count">${n} selected</span>
+    <div class="all-bulk-sep" aria-hidden="true"></div>
+    <div class="all-bulk-actions">
+      <button type="button" class="fx-btn fx-btn-success fx-btn-sm" onclick="bulkAllAccept()">✓ Accept all</button>
+      <div class="all-filter-wrap">
+        <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" aria-expanded="${catOpen}" aria-haspopup="listbox" onclick="toggleAllBulkMenu('cat',event)">
+          Categorise to… <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.5 5.5l3.5 3.5 3.5-3.5"/></svg>
+        </button>
+        ${catOpen?buildAllBulkCatMenu():''}
+      </div>
+      <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="bulkAllSetTax('GST')">Code to GST</button>
+      <button type="button" class="btn-rev-reject" onclick="bulkAllRejectSuggestions()">Reject all</button>
+    </div>
+    <div class="all-bulk-sep" aria-hidden="true"></div>
+    <button type="button" class="all-bulk-pill-close" onclick="clearAllSel()" aria-label="Clear selection">✕</button>
+  </div>`;
+}
 function buildAllTab(){
   const list=tableFilteredTx();
+  const sel=S.allSel;
   const paneOpen=shouldShowTxPaneSplit();
   const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
   const fullTable=`
     <div class="all-tbl-v2-wrap">
       <table class="all-tbl-v2">
         ${buildTableColgroup('all',allCols)}
-        <thead data-scroll-table-head>
-          <tr>
-            ${thResize('all','chk','<input type="checkbox">','col-chk')}
-            ${thResize('all','date',`Date${colSortIndicator('all','date')}`,'col-date')}
-            ${thResize('all','tx',`Transaction${colSortIndicator('all','tx')}`,'col-tx')}
-            ${thResize('all','amt',`Amount ($)${colSortIndicator('all','amt')}`,'col-amt r')}
-            ${thResize('all','gst',`GST${colSortIndicator('all','gst')}`,'col-gst r')}
-            ${thResize('all','job',`Job${colSortIndicator('all','job')}`,'col-job')}
-            ${thResize('all','att','File','col-att r')}
-            ${thResize('all','match',`Match${colSortIndicator('all','match')}`,'col-match')}
-            ${thResize('all','left',`What's left${colSortIndicator('all','left')}`,'col-left r')}
-          </tr>
-        </thead>
-        <tbody>${list.length?list.map(buildAllTableRow).join(''):`<tr><td colspan="9" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`}</tbody>
+        <thead>${buildAllTableHeadRow({list})}</thead>
+        <tbody>${list.length?list.map(tx=>buildAllTableRow(tx,sel)).join(''):`<tr><td colspan="9" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`}</tbody>
       </table>
     </div>`;
   const listPanel=paneOpen?buildTxPaneShell({
@@ -5847,11 +6953,11 @@ function buildAllTab(){
   }):fullTable;
   return `
   <div class="fade-in${S.txTableExpanded?' is-table-expanded':''}">
-    ${buildAllFilterRow()}
     <div class="tx-table-shell${paneOpen?' tx-pane-mode':''}${S.txTableExpanded?' is-expanded':''}">
       ${listPanel}
     </div>
-  </div>`;
+  </div>
+  ${S.allSel.size?buildAllBulkPill():''}`;
 }
 
 function buildFilters(){
@@ -6248,9 +7354,209 @@ function buildHorizontalReviewListHtml(filtered,sel){
   if(S.reviewView==='modern') return buildModernReviewList(filtered,sel);
   return buildReviewTableWithAccordion(filtered,sel);
 }
+
+/* ═══════════════════════════════════════════════
+   SIMPLE MODE — a single-glance card view of the review queue,
+   swapped in for the whole Review tab from Settings › General.
+═══════════════════════════════════════════════ */
+function simpleQueue(){
+  return reviewInboxActive().filter(t=>!S.snoozed.has(t.id));
+}
+function simpleSavedList(){
+  return TX.filter(t=>S.snoozed.has(t.id)&&(S.bankFilter==='all'||t.bank===S.bankFilter));
+}
+function simpleFilteredList(){
+  if(S.simpleFilter==='unmatched') return simpleQueue().filter(t=>!txReviewIsMatched(t));
+  if(S.simpleFilter==='all') return bankFilteredTx();
+  if(S.simpleFilter==='saved') return simpleSavedList();
+  return simpleQueue();
+}
+function setSimpleFilter(id){S.simpleFilter=id;render();}
+function toggleSimpleWhy(txId,ev){
+  if(ev) ev.stopPropagation();
+  S.simpleWhy[txId]=!S.simpleWhy[txId];
+  render();
+}
+function toggleSimpleMore(txId,ev){
+  if(ev) ev.stopPropagation();
+  S.simpleMoreOpen=S.simpleMoreOpen===txId?null:txId;
+  render();
+}
+function simpleSnooze(txId,ev){
+  if(ev) ev.stopPropagation();
+  if(S.snoozed.has(txId)) S.snoozed.delete(txId); else S.snoozed.add(txId);
+  S.simpleMoreOpen=null;
+  render();
+}
+function simpleOpenDetailed(txId,ev){
+  if(ev) ev.stopPropagation();
+  S.simpleMoreOpen=null;
+  S.uiMode='detailed';
+  S.tab='review';
+  openAside(txId,'review','matches');
+}
+function simpleAccept(txId,ev){
+  if(ev) ev.stopPropagation();
+  const tx=ftx(txId); if(!tx) return;
+  const snapshot=snapshotTx(tx);
+  applyAcceptAll(txId);
+  render();
+  showSuccessToast({
+    title:'Transaction accepted',
+    message:`${revModPartyName(tx)} verified`,
+    undo:()=>{restoreTx(snapshot);render();},
+  });
+}
+function simpleReject(txId,ev){
+  if(ev) ev.stopPropagation();
+  const tx=ftx(txId); if(!tx) return;
+  const snapshot=snapshotTx(tx);
+  ['match','cat','tax','job'].forEach(field=>{
+    const f=tx.ai[field];
+    if(f&&f.val&&f.st!=='rejected'){f.rejectedVal=f.val;f.st='rejected';}
+  });
+  render();
+  showSuccessToast({
+    title:'Suggestion rejected',
+    message:`${revModPartyName(tx)} — needs manual review`,
+    undo:()=>{restoreTx(snapshot);render();},
+  });
+}
+function simpleTxTitle(tx){
+  const name=revModPartyName(tx);
+  return tx.amount<0?`Payment to ${name}`:`Money in from ${name}`;
+}
+function simpleTxWhy(tx){
+  const match=tx.ai.match, cat=tx.ai.cat;
+  if(match?.val&&match.st!=='rejected'){
+    return `Matched on reference and amount — ${match.conf||90}% confidence based on similar transactions from ${revModPartyName(tx)}.`;
+  }
+  if(cat?.val&&cat.st!=='rejected'){
+    return `${cat.conf||90}% confidence based on how you've coded ${revModPartyName(tx)} before.`;
+  }
+  return 'No prior pattern found for this transaction yet.';
+}
+function buildSimpleCardRight(tx){
+  const match=tx.ai.match, cat=tx.ai.cat;
+  const whyBtn=`<button type="button" class="spl-why-btn" onclick="toggleSimpleWhy(${tx.id},event)">✦ Why this suggestion?</button>`;
+  const whyBanner=`<div class="spl-ai-banner"><span class="spl-ai-spark" aria-hidden="true">✦</span>${simpleTxWhy(tx)}</div>`;
+  const whyOpen=!!S.simpleWhy[tx.id];
+  if(match?.val&&match.st!=='rejected'){
+    const parts=match.val.split(' · ');
+    const ref=parts.length>1?parts[0]:tx.ref;
+    const name=parts.length>1?parts[1]:match.val;
+    return `
+    <div class="spl-card-match">
+      <div class="spl-card-match-top">
+        <div class="spl-card-headtext">
+          <div class="spl-card-match-name">${name}</div>
+          <div class="spl-card-match-ref">${ref}</div>
+        </div>
+        <div class="spl-avatar-sm" aria-hidden="true">${revModPartyInitial(name)}</div>
+      </div>
+      ${whyOpen?whyBanner:whyBtn}
+    </div>`;
+  }
+  if(cat?.val&&cat.st!=='rejected'){
+    const subParts=[tx.ai.tax?.val,tx.ai.job?.val].filter(Boolean);
+    return `
+    <div class="spl-card-cat">
+      <div class="spl-card-cat-title">Categorise as: ${cat.val}</div>
+      ${subParts.length?`<div class="spl-card-cat-sub">${subParts.join(' · ')}</div>`:''}
+      ${whyOpen?whyBanner:whyBtn}
+    </div>`;
+  }
+  return `<div class="spl-card-cat"><div class="spl-card-cat-sub">No suggestion yet — review manually.</div></div>`;
+}
+function buildSimpleCard(tx){
+  const amtLabel=tx.amount<0?'Spent':'Total received';
+  const moreOpen=S.simpleMoreOpen===tx.id;
+  const saved=S.snoozed.has(tx.id);
+  return `
+  <div class="spl-card" data-tx-id="${tx.id}">
+    <div class="spl-card-left">
+      <div class="spl-card-head">
+        ${revModVendorLogo(tx)}
+        <div class="spl-card-headtext">
+          <div class="spl-card-title">${simpleTxTitle(tx)}</div>
+          <div class="spl-card-sub">${tx.date} · ${BANKS.find(b=>b.id===tx.bank)?.label||''}</div>
+        </div>
+      </div>
+      <div class="spl-card-amtbox">
+        <div class="spl-card-amt">${amtLabel} ${fmtAbs(tx.amount)}</div>
+        <div class="spl-card-amtsub">${srcIcon(tx.source,{bankId:tx.bank})}${tx.ref?` ${tx.ref}`:''}</div>
+      </div>
+    </div>
+    <div class="spl-card-right">${buildSimpleCardRight(tx)}</div>
+    <div class="spl-card-actions">
+      <button type="button" class="spl-act-btn" title="Accept" aria-label="Accept" onclick="simpleAccept(${tx.id},event)">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2.5,7.5 6,11 12.5,3.5"/></svg>
+      </button>
+      <button type="button" class="spl-act-btn" title="Reject" aria-label="Reject" onclick="simpleReject(${tx.id},event)">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="11" y2="11"/><line x1="11" y1="2" x2="2" y2="11"/></svg>
+      </button>
+      <button type="button" class="spl-act-btn${saved?' act':''}" title="${saved?'Remove from saved':'Save for later'}" aria-label="${saved?'Remove from saved':'Save for later'}" onclick="simpleSnooze(${tx.id},event)">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12.8 7.5a5.3 5.3 0 11-1.5-3.7"/><polyline points="12.8,2.2 12.8,5.6 9.4,5.6"/></svg>
+      </button>
+      <div class="spl-more-wrap">
+        <button type="button" class="spl-act-btn" title="More actions" aria-label="More actions" aria-haspopup="menu" aria-expanded="${moreOpen}" onclick="toggleSimpleMore(${tx.id},event)">
+          <svg width="14" height="14" viewBox="0 0 13 13" fill="currentColor"><circle cx="2" cy="6.5" r="1.2"/><circle cx="6.5" cy="6.5" r="1.2"/><circle cx="11" cy="6.5" r="1.2"/></svg>
+        </button>
+        ${moreOpen?`<div class="spl-more-menu" role="menu" onclick="event.stopPropagation()">
+          <button type="button" role="menuitem" onclick="simpleOpenDetailed(${tx.id},event)">Open in detailed view</button>
+        </div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+function buildSimpleReviewPage(){
+  const list=simpleFilteredList();
+  const unmatchedCt=simpleQueue().filter(t=>!txReviewIsMatched(t)).length;
+  const reviewCt=simpleQueue().length;
+  const savedCt=simpleSavedList().length;
+  const pill=(id,label,count)=>`<button type="button" class="spl-pill${S.simpleFilter===id?' act':''}" role="tab" aria-selected="${S.simpleFilter===id}" onclick="setSimpleFilter('${id}')">${label}${count?`<span class="spl-pill-badge">${count}</span>`:''}</button>`;
+  const emptyCopy={
+    unmatched:{title:'All matched',sub:'Every transaction here already has a match or category.'},
+    review:{title:'All caught up',sub:'Nothing needs review right now.'},
+    all:{title:'No transactions',sub:'There are no transactions for this account.'},
+    saved:{title:'Nothing saved',sub:'Transactions you save for later will show up here.'},
+  }[S.simpleFilter]||{title:'All caught up',sub:'Nothing to show right now.'};
+  return `
+  <div class="spl-page fade-in">
+    <div class="spl-hd">
+      <h1 class="spl-title">Bank Transactions</h1>
+      <button type="button" class="spl-mode-link" onclick="S.uiMode='detailed';render()">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="1" y="1" width="11" height="11" rx="1.5"/><line x1="5" y1="1" x2="5" y2="12"/></svg>
+        Switch to detailed view
+      </button>
+    </div>
+    <div class="spl-pills" role="tablist" aria-label="Bank transaction filters">
+      ${pill('unmatched','Unmatched',unmatchedCt)}
+      ${pill('review','To review',reviewCt)}
+      ${pill('all','All transactions',0)}
+      <button type="button" class="spl-pill spl-pill-saved${S.simpleFilter==='saved'?' act':''}" role="tab" aria-selected="${S.simpleFilter==='saved'}" onclick="setSimpleFilter('saved')">
+        <svg width="13" height="13" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12.8 7.5a5.3 5.3 0 11-1.5-3.7"/><polyline points="12.8,2.2 12.8,5.6 9.4,5.6"/></svg>
+        Saved for later${savedCt?`<span class="spl-pill-badge">${savedCt}</span>`:''}
+      </button>
+    </div>
+    <div class="spl-list">
+      ${list.length?list.map(buildSimpleCard).join(''):`
+      <div class="spl-empty">
+        <div class="spl-empty-ico" aria-hidden="true">✓</div>
+        <div class="spl-empty-title">${emptyCopy.title}</div>
+        <div class="spl-empty-sub">${emptyCopy.sub}</div>
+      </div>`}
+    </div>
+  </div>`;
+}
+
 function buildReviewTab(){
-  const inbox=reviewInboxList();
-  const filtered=sortTableList(filterReviewInbox(inbox).filter(t=>!txReviewDone(t)),'review');
+  const inbox=reviewInboxActive();
+  let filtered=sortTableList(
+    applyTxSearch(
+      filterReviewMatchStatus(filterReviewQueue(inbox)),
+      'review'
+    ),'review');
   const readyCount=filterCount('ready');
   const sel=S.reviewSel;
   const bulkBar=sel.size>0?`
@@ -6329,7 +7635,7 @@ function buildReviewTab(){
 
   return `
   <div class="fade-in${S.txTableExpanded?' is-table-expanded':''}">
-    ${buildReadyVerifyBanner(filtered)}
+    ${buildReviewAttentionPanel()}
     ${bulkBar}
     ${revFilterIsReceiptMatchFocus()&&filtered.length?`
     <div class="rev-focus-banner" role="status">
@@ -6338,10 +7644,10 @@ function buildReviewTab(){
       AI has suggested coding for each — accept, reject, or review row by row. Hover a row for quick actions.</div>
     </div>`:''}
     <div class="tx-table-shell${paneOpen?' tx-pane-mode':''}${S.txTableExpanded?' is-expanded':''}">
-      ${buildAllFilterRow()}
-      ${buildRevFilterDropdown(inbox)}
-      ${buildReviewSourceLegend()}
-      ${listPanel}
+      <div data-recon-target="review-list">
+        ${S.todoReviewOrigin?`<div class="rev-origin-bar"><button type="button" onclick="goActivity()">← Back to to-do</button><span>Pick a task type and source to narrow the list.</span></div>`:''}
+        ${listPanel}
+      </div>
     </div>
     ${readyCount&&!paneOpen?`
     <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:8px">
@@ -6910,6 +8216,12 @@ function buildAsideTabButtons(tx){
   ].map(t=>`<button type="button" class="at${cur===t.id?' act':''}${hint.tab===t.id?' at-ai-suggest':''}" onclick="setAsideTab('${t.id}');S.asideSearch='';renderAside()">${t.label}${hint.tab===t.id?TAB_SPARKLE:''}</button>`).join('');
 }
 function splitFieldAiClass(tx,field,line){
+  if(line._aiSnap&&field in line._aiSnap){
+    const raw=line._aiSnap[field];
+    const snapVal=field==='amount'?Math.abs(parseFloat(raw)||0):(raw||'');
+    const curVal=field==='amount'?Math.abs(parseFloat(line.amount)||0):(line[field]||'');
+    return (snapVal!==''&&snapVal===curVal)?'split-inp-ai':'';
+  }
   const hint=getAiAsideHint(tx);
   if(hint.tab!=='create') return '';
   const pre=hint.codePrefill||{};
@@ -6921,15 +8233,6 @@ function splitFieldAiClass(tx,field,line){
   const cur=line[field]||'';
   if(!cur||cur===aiVal) return 'split-inp-ai';
   return '';
-}
-function splitOptsOpen(txId,lineId){
-  return !!S.splitLineOpts?.[`${txId}:${lineId}`];
-}
-function toggleSplitLineOpts(txId,lineId){
-  const key=`${txId}:${lineId}`;
-  if(!S.splitLineOpts) S.splitLineOpts={};
-  S.splitLineOpts[key]=!S.splitLineOpts[key];
-  renderAside();
 }
 function defaultSplitLine(tx){
   const hint=getAiAsideHint(tx);
@@ -6946,83 +8249,110 @@ function defaultSplitLine(tx){
 }
 function buildSplitLineJobSelect(tx,line){
   const cls=splitFieldAiClass(tx,'job',line);
-  return `<select class="split-inp ${cls}" onchange="updateSplitLine(${tx.id},${line.id},'job',this.value)"><option value="">– Job –</option>${SPLIT_JOBS.map(j=>`<option${line.job===j?' selected':''}>${j}</option>`).join('')}</select>`;
+  return `<select class="split-cell-sel ${cls}" onchange="updateSplitLine(${tx.id},${line.id},'job',this.value)"><option value="">– Job –</option>${SPLIT_JOBS.map(j=>`<option${line.job===j?' selected':''}>${j}</option>`).join('')}</select>`;
 }
 function buildSplitLineDiscountSelect(tx,line){
   const cls=splitFieldAiClass(tx,'discount',line);
-  return `<select class="split-inp ${cls}" onchange="updateSplitLine(${tx.id},${line.id},'discount',this.value)"><option value="">– Discount –</option>${SPLIT_DISCOUNTS.map(d=>`<option${line.discount===d?' selected':''}>${d}</option>`).join('')}</select>`;
-}
-function buildSplitLineExtras(tx,line,compact){
-  if(compact){
-    const open=splitOptsOpen(tx.id,line.id);
-    return `
-    <button type="button" class="split-more-btn" onclick="toggleSplitLineOpts(${tx.id},${line.id})">${open?'Hide options':'More options'}</button>
-    ${open?`<div class="split-row-extras">${buildSplitLineJobSelect(tx,line)}${buildSplitLineDiscountSelect(tx,line)}</div>`:''}`;
-  }
-  return '';
-}
-function buildSplitLineCard(tx,line,i,lines){
-  const catCls=splitFieldAiClass(tx,'cat',line);
-  const taxCls=splitFieldAiClass(tx,'tax',line);
-  return `
-  <div class="split-row" id="srow-${tx.id}-${line.id}">
-    <div class="split-row-num">
-      Line ${i+1}
-      ${lines.length>1?`<button type="button" class="split-del" title="Remove line" onclick="removeSplitLine(${tx.id},${line.id})">✕</button>`:''}
-    </div>
-    <input class="split-inp full" placeholder="Description" value="${line.desc.replace(/"/g,'&quot;')}"
-      oninput="updateSplitLine(${tx.id},${line.id},'desc',this.value)">
-    <select class="split-inp ${catCls}" onchange="updateSplitLine(${tx.id},${line.id},'cat',this.value)">
-      <option value="">– Category –</option>
-      ${SPLIT_CATS.map(c=>`<option${line.cat===c?' selected':''}>${c}</option>`).join('')}
-    </select>
-    <select class="split-inp ${taxCls}" onchange="updateSplitLine(${tx.id},${line.id},'tax',this.value)">
-      ${SPLIT_TAXES.map(t=>`<option${line.tax===t?' selected':''}>${t}</option>`).join('')}
-    </select>
-    <input class="split-inp" type="number" step="0.01" placeholder="0.00" value="${Math.abs(line.amount)||''}"
-      oninput="updateSplitLine(${tx.id},${line.id},'amount',this.value);updateRemaining(${tx.id})">
-    ${buildSplitLineExtras(tx,line,true)}
-  </div>`;
+  return `<select class="split-cell-sel ${cls}" onchange="updateSplitLine(${tx.id},${line.id},'discount',this.value)"><option value="">– Discount –</option>${SPLIT_DISCOUNTS.map(d=>`<option${line.discount===d?' selected':''}>${d}</option>`).join('')}</select>`;
 }
 function buildSplitLinesTable(tx,lines){
+  const n=lines.length;
   return `
   <table class="split-tbl">
+    <colgroup>
+      <col style="width:22px"><col style="width:26%"><col><col style="width:64px"><col style="width:84px"><col style="width:92px"><col style="width:92px"><col style="width:24px">
+    </colgroup>
     <thead><tr>
-      <th style="width:28%">Description</th>
+      <th></th>
+      <th>Description</th>
       <th>Category</th>
-      <th style="width:72px">Tax</th>
-      <th style="width:88px">Amount</th>
-      <th style="width:96px">Job</th>
-      <th style="width:96px">Discount</th>
-      <th style="width:28px"></th>
+      <th>Tax</th>
+      <th class="split-th-amt">Amount</th>
+      <th>Job</th>
+      <th>Discount</th>
+      <th></th>
     </tr></thead>
     <tbody>
-      ${lines.map((line,i)=>`
-      <tr id="srow-${tx.id}-${line.id}">
-        <td><input class="split-inp full" placeholder="Description" value="${line.desc.replace(/"/g,'&quot;')}"
+      ${lines.map(line=>`
+      <tr id="srow-${tx.id}-${line.id}" draggable="false" data-line-id="${line.id}"
+          ondragstart="splitRowDragStart(event,${tx.id},${line.id})"
+          ondragover="splitRowDragOver(event)"
+          ondragleave="splitRowDragLeave(event)"
+          ondrop="splitRowDrop(event,${tx.id},${line.id})"
+          ondragend="splitRowDragEnd(event)">
+        <td class="split-drag-cell">
+          <span class="split-drag-handle" title="Drag to reorder"
+            onmousedown="this.closest('tr').draggable=true"
+            onmouseup="this.closest('tr').draggable=false">
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor" aria-hidden="true"><circle cx="2.5" cy="2.5" r="1.3"/><circle cx="7.5" cy="2.5" r="1.3"/><circle cx="2.5" cy="8" r="1.3"/><circle cx="7.5" cy="8" r="1.3"/><circle cx="2.5" cy="13.5" r="1.3"/><circle cx="7.5" cy="13.5" r="1.3"/></svg>
+          </span>
+        </td>
+        <td><input class="split-cell-inp ${splitFieldAiClass(tx,'desc',line)}" placeholder="Description" value="${line.desc.replace(/"/g,'&quot;')}"
           oninput="updateSplitLine(${tx.id},${line.id},'desc',this.value)"></td>
-        <td><select class="split-inp ${splitFieldAiClass(tx,'cat',line)}" onchange="updateSplitLine(${tx.id},${line.id},'cat',this.value)">
+        <td><select class="split-cell-sel ${splitFieldAiClass(tx,'cat',line)}" onchange="updateSplitLine(${tx.id},${line.id},'cat',this.value)">
           <option value="">– Category –</option>
           ${SPLIT_CATS.map(c=>`<option${line.cat===c?' selected':''}>${c}</option>`).join('')}
         </select></td>
-        <td><select class="split-inp ${splitFieldAiClass(tx,'tax',line)}" onchange="updateSplitLine(${tx.id},${line.id},'tax',this.value)">
+        <td><select class="split-cell-sel ${splitFieldAiClass(tx,'tax',line)}" onchange="updateSplitLine(${tx.id},${line.id},'tax',this.value)">
           ${SPLIT_TAXES.map(t=>`<option${line.tax===t?' selected':''}>${t}</option>`).join('')}
         </select></td>
-        <td><input class="split-inp" type="number" step="0.01" placeholder="0.00" value="${Math.abs(line.amount)||''}"
+        <td><input class="split-cell-inp split-cell-amt ${splitFieldAiClass(tx,'amount',line)}" type="number" step="0.01" placeholder="0.00" value="${Math.abs(line.amount)||''}"
           oninput="updateSplitLine(${tx.id},${line.id},'amount',this.value);updateRemaining(${tx.id})"></td>
         <td>${buildSplitLineJobSelect(tx,line)}</td>
         <td>${buildSplitLineDiscountSelect(tx,line)}</td>
-        <td>${lines.length>1?`<button type="button" class="split-del" title="Remove line" onclick="removeSplitLine(${tx.id},${line.id})">✕</button>`:''}</td>
+        <td class="split-del-cell">${n>1?`<button type="button" class="split-del" title="Remove line" onclick="removeSplitLine(${tx.id},${line.id})">✕</button>`:''}</td>
       </tr>`).join('')}
+      <tr class="split-add-row">
+        <td colspan="8"><button type="button" class="split-add-btn" onclick="addSplitLine(${tx.id})">+ Add line</button></td>
+      </tr>
     </tbody>
   </table>`;
+}
+let splitDragState=null;
+function splitRowDragStart(e,txId,lineId){
+  splitDragState={txId,lineId};
+  e.dataTransfer.effectAllowed='move';
+  try{e.dataTransfer.setData('text/plain',String(lineId));}catch(err){}
+  e.currentTarget.classList.add('split-row-dragging');
+}
+function splitRowDragOver(e){
+  e.preventDefault();
+  e.dataTransfer.dropEffect='move';
+  e.currentTarget.classList.add('split-row-dragover');
+}
+function splitRowDragLeave(e){
+  e.currentTarget.classList.remove('split-row-dragover');
+}
+function splitRowDrop(e,txId,targetLineId){
+  e.preventDefault();
+  e.currentTarget.classList.remove('split-row-dragover');
+  const drag=splitDragState;
+  splitDragState=null;
+  if(!drag||drag.txId!==txId) return;
+  const lines=S.splitLines[txId]; if(!lines) return;
+  const fromIdx=lines.findIndex(l=>l.id===drag.lineId);
+  const toIdx=lines.findIndex(l=>l.id===targetLineId);
+  if(fromIdx<0||toIdx<0||fromIdx===toIdx) return;
+  const [moved]=lines.splice(fromIdx,1);
+  lines.splice(toIdx,0,moved);
+  render();
+}
+function splitRowDragEnd(e){
+  e.currentTarget.classList.remove('split-row-dragging');
+  e.currentTarget.draggable=false;
+  document.querySelectorAll('.split-row-dragover').forEach(el=>el.classList.remove('split-row-dragover'));
+  splitDragState=null;
 }
 function initSplitLines(txId){
   if(S.splitLines[txId]) return;
   const tx=ftx(txId);
   const aiSplit=AI_SPLITS[txId];
   if(aiSplit){
-    S.splitLines[txId]=aiSplit.lines.map(l=>({job:'',discount:'',...l}));
+    S.splitLines[txId]=aiSplit.lines.map(l=>{
+      const line={job:'',discount:'',...l};
+      line._aiSnap={desc:l.desc,cat:l.cat,tax:l.tax,amount:l.amount,job:l.job||''};
+      return line;
+    });
   }else{
     S.splitLines[txId]=[{...defaultSplitLine(tx)}];
   }
@@ -7357,7 +8687,7 @@ function buildAsideMatches(tx,compact){
   <div style="height:8px"></div>`;
 }
 
-function buildAsideLineItems(tx,compact){
+function buildAsideLineItems(tx){
   initSplitLines(tx.id);
   const lines=S.splitLines[tx.id];
   const total=Math.abs(tx.amount);
@@ -7369,8 +8699,7 @@ function buildAsideLineItems(tx,compact){
   <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:8px 0">
     Line items <span style="font-weight:400;font-size:12px">(total: ${fmt(tx.amount)})</span>
   </div>
-  ${compact?lines.map((line,i)=>buildSplitLineCard(tx,line,i,lines)).join(''):buildSplitLinesTable(tx,lines)}
-  <button class="btn-add-line" onclick="addSplitLine(${tx.id})">+ Add line</button>
+  <div class="split-tbl-wrap">${buildSplitLinesTable(tx,lines)}</div>
   <div class="split-total-bar">
     <span style="color:var(--muted)">Remaining to allocate</span>
     <span class="split-rem ${remOk?'ok':parseFloat(rem)<0?'over':''}" id="split-rem-${tx.id}">
@@ -7392,7 +8721,7 @@ function buildAsideCreate(tx,compact){
     </select>
   </div>
   ${buildAiCreateExplainer(tx)}
-  ${buildAsideLineItems(tx,compact)}`;
+  ${buildAsideLineItems(tx)}`;
 }
 
 /* ═══════════════════════════════════════════════
@@ -7880,7 +9209,7 @@ function buildActivityPage(){
     {unread:true,ico:'⚡',title:'Receipt updated Bunnings coding',sub:'AI revised category Materials and GST after receipt arrived · TXN-00230',time:'2m ago',txId:5,filter:'newcontext'},
     {unread:true,ico:'✦',title:'8 transactions ready to accept',sub:'Voltex, Naomi Wilson deposit, and 6 more have full AI suggestions',time:'15m ago',action:'review',filter:'ready'},
     {unread:false,ico:'📎',title:'2 receipts matched automatically',sub:'Voltex Electrical attachments extracted and linked',time:'1h ago',txId:1,filter:'receipt'},
-    {unread:false,ico:'📋',title:'Pre-BAS: 9 GST codes unconfirmed',sub:'Confirm tax codes before Q2 BAS lodgement (due 28 Oct)',time:'Today',action:'prebas'},
+    {unread:false,ico:'📋',title:'Monthly check: 9 tax codes unconfirmed',sub:'Part of your guided check-in before Q2 BAS lodgement (due 28 Oct)',time:'Today',action:'prebas'},
     {unread:false,ico:'✓',title:'Weekly batch complete',sub:'You accepted 12 transactions last Friday',time:'Fri',action:null},
   ];
   return `
@@ -7894,7 +9223,7 @@ function buildActivityPage(){
     </div>
     <div class="activity-list">
       ${items.map(it=>`
-      <div class="activity-item${it.unread?' unread':''}" onclick="${it.action==='prebas'?'goPreBas()':it.action==='review'?"goTransactions();setTab('review');setRevFilter('"+it.filter+"')":it.txId?"goTransactions();setTab('review');openAside("+it.txId+",'review','matches')":'void(0)'}">
+      <div class="activity-item${it.unread?' unread':''}" onclick="${it.action==='prebas'?"goPreBas('adjustments')":it.action==='review'?"goTransactions();setTab('review');setRevFilter('"+it.filter+"')":it.txId?"goTransactions();setTab('review');openAside("+it.txId+",'review','matches')":'void(0)'}">
         <div class="activity-ico">${it.ico}</div>
         <div class="activity-body">
           <div class="activity-title">${it.title}</div>
@@ -7906,65 +9235,220 @@ function buildActivityPage(){
   </div>`;
 }
 
-function buildPreBasTab(){
-  const list=preBasList().filter(t=>S.bankFilter==='all'||t.bank===S.bankFilter);
-  const unconfirmed=list.filter(t=>dimStatus(t,'gst')==='pending').length;
-  const changed=list.filter(t=>dimStatus(t,'gst')==='changed').length;
+/* ═══════════════════════════════════════════════
+   MONTHLY CHECK — a guided wizard that ladders unmatched transactions,
+   missing receipts, AI-flagged anomalies, and recommended tax adjustments
+   up to a bank reconciliation, so BAS/EOFY prep needs no separate pass.
+═══════════════════════════════════════════════ */
+const MC_STEPS=[
+  {id:'unmatched',   label:'Unmatched transactions',      icon:'🔗', desc:"Match these to an existing MYOB record, or create a new one, so the AI has the context it needs."},
+  {id:'receipts',    label:'Missing receipts',            icon:'🧾', desc:'Attach a receipt so the AI can extract the details and code it correctly.'},
+  {id:'anomalies',   label:'Anomalies',                   icon:'⚡', desc:'New information changed something the AI had already coded — give these a second look.'},
+  {id:'adjustments', label:'AI-recommended adjustments',  icon:'✦', desc:"Confirm the tax codes the AI is recommending before they flow into your BAS."},
+  {id:'reconcile',   label:'Reconciliation check',        icon:'⚖️', desc:'MYOB reconciles your bank feed automatically — you only need to look at genuine exceptions.'},
+];
+function mcStepIndex(id){const i=MC_STEPS.findIndex(s=>s.id===id);return i<0?0:i;}
+function mcListFor(stepId){
+  const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
+  if(stepId==='unmatched') return TX.filter(t=>bankOk(t)&&t.status!=='awaiting'&&!txReviewIsMatched(t)&&!txReviewDone(t));
+  if(stepId==='receipts') return TX.filter(t=>bankOk(t)&&t.amount<0&&t.status!=='accepted'&&dimStatus(t,'receipt')==='none');
+  if(stepId==='anomalies') return ctxList();
+  if(stepId==='adjustments') return preBasList().filter(bankOk);
+  return [];
+}
+function mcReconcileVarianceAccounts(){
+  return BANKS.filter(b=>b.id!=='all'&&Math.abs(b.bal-(b.myobBal??b.bal))>=0.01);
+}
+function mcCount(stepId){
+  return stepId==='reconcile'?mcReconcileVarianceAccounts().length:mcListFor(stepId).length;
+}
+function mcTotalCount(){return MC_STEPS.reduce((sum,s)=>sum+mcCount(s.id),0);}
+function mcStart(stepIndex){S.mcActive=true;S.mcStep=typeof stepIndex==='number'?stepIndex:0;render();}
+function mcExit(){S.mcActive=false;render();}
+function mcGoStep(i){S.mcStep=i;render();}
+function mcPrev(){if(S.mcStep>0){S.mcStep--;render();}}
+function mcNext(){
+  if(S.mcStep>=MC_STEPS.length-1){mcFinish();return;}
+  S.mcStep++;render();
+}
+function mcFinish(){
+  S.mcActive=false;
+  showToast('✓ Monthly check complete — nice work!',3200);
+  render();
+}
+function mcReviewTx(txId,tab,ev){
+  if(ev) ev.stopPropagation();
+  openAside(txId,'review',tab);
+}
+function mcAcceptTax(txId,ev){
+  if(ev) ev.stopPropagation();
+  const tx=ftx(txId); if(!tx) return;
+  const f=tx.ai.tax; if(!f?.val) return;
+  const snapshot=snapshotTx(tx);
+  f.st='accepted';
+  addToContext(txId,'tax');
+  render();
+  showSuccessToast({
+    title:'Tax code confirmed',
+    message:`${revModPartyName(tx)} — ${f.val}`,
+    undo:()=>{restoreTx(snapshot);render();},
+  });
+}
+function buildMcRow(tx,kind){
+  const amtCls=tx.amount<0?'amt-neg':'amt-pos';
+  const tab=kind==='unmatched'?'matches':'create';
+  let right='';
+  if(kind==='unmatched'){
+    right=tx.ai.match?.val
+      ?`<div class="mc-row-sug">Suggested: ${tx.ai.match.val}</div>`
+      :`<div class="mc-row-sug muted">No suggestion yet</div>`;
+    right+=`<button type="button" class="mc-row-btn" onclick="mcReviewTx(${tx.id},'${tab}',event)">Review</button>`;
+  }else if(kind==='receipts'){
+    right=`<button type="button" class="mc-row-btn" onclick="event.stopPropagation();openInlineAttach(${tx.id})">+ Add receipt</button>`;
+  }else if(kind==='anomalies'){
+    const rev=txRevisionValues(tx,'cat')||txRevisionValues(tx,'tax')||txRevisionValues(tx,'match');
+    right=rev?revRevisionHtml(rev.oldVal,rev.newVal):`<div class="mc-row-sug muted">Receipt just linked</div>`;
+    right+=`<button type="button" class="mc-row-btn" onclick="mcReviewTx(${tx.id},'${tab}',event)">Review</button>`;
+  }else if(kind==='adjustments'){
+    right=`<div class="mc-row-sug">AI suggests <strong>${tx.ai.tax.val||'—'}</strong> <span class="muted">${tx.ai.tax.conf||0}%</span></div>
+      <button type="button" class="mc-row-btn success" onclick="mcAcceptTax(${tx.id},event)">Accept</button>
+      <button type="button" class="mc-row-btn" onclick="mcReviewTx(${tx.id},'${tab}',event)">Review</button>`;
+  }
   return `
-  <div class="fade-in">
-    <div class="fx-alert fx-alert-warning">
-      <div class="fx-alert-body"><strong>Q2 BAS lodgement — 28 Oct 2025</strong>
-      ${unconfirmed} tax code${unconfirmed!==1?'s':''} unconfirmed · ${changed} updated after receipts · Confirm before lodgement to avoid amendments.</div>
+  <div class="mc-row" onclick="mcReviewTx(${tx.id},'${tab}',event)">
+    <div class="mc-row-main">
+      <div class="mc-row-title">${tx.desc}</div>
+      <div class="mc-row-sub">${tx.date} · <span class="${amtCls}">${fmt(tx.amount)}</span></div>
     </div>
-    <div class="tx-table-shell">
-      ${buildFilterBar()}
-      <div class="card" style="padding:0;overflow:hidden" data-recon-target="prebas-list">
-      <table class="all-tbl">
-        <thead>
-          <tr>
-            <th>Date</th><th>Transaction</th><th class="r">Amount</th><th>Current tax</th><th>AI suggestion</th><th>Status</th><th></th>
-          </tr>
-        </thead>
-        <tbody>
-          ${list.length?list.map(tx=>{
-            const gs=dimStatus(tx,'gst');
-            return `
-          <tr onclick="setTab('review');openAside(${tx.id},'review','create')" style="cursor:pointer">
-            <td style="color:var(--muted);font-size:14px">${tx.date}</td>
-            <td><div style="font-weight:500">${tx.desc}</div><div style="font-size:13px;color:var(--muted)">${tx.ref}</div></td>
-            <td class="r"><span class="${tx.amount<0?'amt-neg':'amt-pos'}">${fmt(tx.amount)}</span></td>
-            <td>${tx.ai.tax.val||'—'}</td>
-            <td>${tx.ai.tax.val||'—'} <span style="font-size:12px;color:var(--muted)">${tx.ai.tax.conf||0}%</span></td>
-            <td><span class="dim-badge ${dimBadgeClass(gs)}">${dimBadgeLabel(gs)}</span></td>
-            <td><button class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="event.stopPropagation();setTab('review');openAside(${tx.id},'review','create')">Review</button></td>
-          </tr>`;}).join(''):`<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">All GST codes confirmed ✓</td></tr>`}
-        </tbody>
-      </table>
+    <div class="mc-row-right" onclick="event.stopPropagation()">${right}</div>
+  </div>`;
+}
+function buildMcReconcileStep(){
+  const accounts=BANKS.filter(b=>b.id!=='all');
+  const rows=accounts.map(b=>{
+    const myob=b.myobBal??b.bal;
+    const ok=Math.abs(b.bal-myob)<0.01;
+    return `
+    <div class="mc-recon-row">
+      <div class="mc-recon-acct"><span class="acct-dot" style="background:${b.dot}"></span>${b.label}</div>
+      <div class="mc-recon-vals">Bank ${fmtBankBal(b.bal)} <span class="mc-recon-sep">·</span> MYOB ${fmtBankBal(myob)}</div>
+      <span class="mc-recon-status ${ok?'ok':'warn'}">${ok?'✓ Reconciled':`Off by ${fmtBalVariance(b.bal,myob)}`}</span>
+    </div>`;
+  }).join('');
+  const causes=mcListFor('unmatched').slice(0,3);
+  return `
+  <div class="mc-recon-wrap">
+    <div class="mc-recon-note">MYOB automatically matches and reconciles the vast majority of your bank activity. Once the items in the earlier steps are cleared, these balances should line up on their own — you're only checking for genuine exceptions here.</div>
+    <div class="mc-recon-accounts">${rows}</div>
+    ${causes.length?`
+    <div class="mc-recon-causes">
+      <div class="mc-recon-causes-hd">Likely causes of the difference</div>
+      <div class="mc-row-list">${causes.map(tx=>buildMcRow(tx,'unmatched')).join('')}</div>
+    </div>`:''}
+  </div>`;
+}
+function buildMcStepBody(step){
+  if(step.id==='reconcile') return buildMcReconcileStep();
+  const list=mcListFor(step.id);
+  if(!list.length) return `<div class="mc-empty">✓ Nothing here — all clear.</div>`;
+  return `<div class="mc-row-list">${list.map(tx=>buildMcRow(tx,step.id)).join('')}</div>`;
+}
+function buildMcFlow(){
+  const step=MC_STEPS[S.mcStep]||MC_STEPS[0];
+  const isLast=S.mcStep===MC_STEPS.length-1;
+  return `
+  <div class="mc-page fade-in">
+    <div class="mc-flow-hd">
+      <button type="button" class="mc-exit-btn" onclick="mcExit()">✕ Exit check</button>
+      <div class="mc-stepper" role="tablist" aria-label="Monthly check steps">
+        ${MC_STEPS.map((s,i)=>`<button type="button" class="mc-step-dot${i<S.mcStep?' done':''}${i===S.mcStep?' cur':''}" title="${s.label}" aria-current="${i===S.mcStep}" onclick="mcGoStep(${i})"></button>`).join('')}
       </div>
+      <span class="mc-flow-count">Step ${S.mcStep+1} of ${MC_STEPS.length}</span>
     </div>
-    <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:8px">
-      <button class="btn-bulk-ok" onclick="setTab('review');setRevFilter('gst')">Open GST filter in review inbox</button>
+    <div class="mc-flow-body">
+      <div class="mc-flow-icon" aria-hidden="true">${step.icon}</div>
+      <h2 class="mc-flow-title">${step.label}</h2>
+      <p class="mc-flow-desc">${step.desc}</p>
+      ${buildMcStepBody(step)}
+    </div>
+    <div class="mc-flow-foot">
+      <button type="button" class="mc-nav-btn ghost" ${S.mcStep===0?'disabled':''} onclick="mcPrev()">← Back</button>
+      <span class="mc-flow-sp"></span>
+      <button type="button" class="mc-nav-btn" onclick="mcNext()">${isLast?'Finish':'Next'} →</button>
     </div>
   </div>`;
 }
+function buildMcIntro(){
+  const steps=MC_STEPS.map(s=>({...s,count:mcCount(s.id)}));
+  const total=steps.reduce((sum,s)=>sum+s.count,0);
+  return `
+  <div class="mc-page fade-in">
+    <div class="mc-hero">
+      <div class="mc-hero-kicker">Monthly check</div>
+      <h1 class="mc-hero-title">${total?`${total} item${total!==1?'s':''} need a look before BAS`:"You're all caught up"}</h1>
+      <p class="mc-hero-sub">MYOB reconciles your bank feed and prepares your BAS and EOFY figures automatically behind the scenes. Once a month, spend a few minutes clearing the exceptions below — the AI has already done the rest.</p>
+      ${total?`<button type="button" class="mc-start-btn" onclick="mcStart(0)">Start monthly check →</button>`
+        :`<div class="mc-alldone">✓ Nothing outstanding this month</div>`}
+    </div>
+    <div class="mc-summary-grid">
+      ${steps.map((s,i)=>`
+      <div class="mc-summary-card${s.count?'':' is-clear'}" onclick="mcStart(${i})">
+        <div class="mc-summary-ico" aria-hidden="true">${s.icon}</div>
+        <div class="mc-summary-body">
+          <div class="mc-summary-title">${s.label}</div>
+          <div class="mc-summary-desc">${s.desc}</div>
+        </div>
+        <div class="mc-summary-count ${s.count?'':'ok'}">${s.count?s.count:'✓'}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+function buildPreBasTab(){
+  return S.mcActive?buildMcFlow():buildMcIntro();
+}
 function buildStgAiNav(){
+  const onGeneral=S.stgSection==='general';
   const items=[
-    {label:'General',ico:'⚙',chev:false},
+    {label:'General',ico:'⚙',chev:false,onclick:"goStgSection('general')",act:onGeneral},
     {label:'Your profile',ico:'👤',chev:true},
     {label:'Payroll',ico:'💰',chev:true},
     {label:'Sales',ico:'🧾',chev:true},
     {label:'Purchases',ico:'🛒',chev:true},
-    {label:'AI',ico:'✦',chev:false,act:true},
+    {label:'AI',ico:'✦',chev:false,onclick:'S.stgSection=null;render()',act:!onGeneral},
     {label:'Reports',ico:'📊',chev:false},
     {label:'Users and permissions',ico:'👥',chev:false},
     {label:'Data and security',ico:'🔒',chev:false},
   ];
   return items.map(it=>`
-    <button type="button" class="stg-ai-nav-item${it.act?' act':''}" ${it.act?'aria-current="page"':''}>
+    <button type="button" class="stg-ai-nav-item${it.act?' act':''}" ${it.onclick?`onclick="${it.onclick}"`:''} ${it.act?'aria-current="page"':''}>
       <span class="stg-ai-nav-ico" aria-hidden="true">${it.ico}</span>
       <span class="stg-ai-nav-label">${it.label}</span>
       ${it.chev?'<span class="stg-ai-nav-chev" aria-hidden="true">›</span>':''}
     </button>`).join('');
+}
+function buildStgGeneral(){
+  const simple=S.uiMode==='simple';
+  const content=`
+    <section class="stg-ai-section">
+      <h2 class="stg-ai-section-hd">Display</h2>
+      <p class="stg-ai-section-sub">Choose how much detail you see when reviewing bank transactions.</p>
+      <div class="stg-ai-card">
+        <div class="stg-ai-card-row">
+          <div class="stg-ai-card-left">
+            <div class="stg-ai-card-ico" aria-hidden="true">🧭</div>
+            <div>
+              <h3 class="stg-ai-card-title">Simple mode</h3>
+              <p class="stg-ai-card-desc">Review bank transactions one at a time with a simplified, single-glance card layout. Turn off for the full accountant view, with detailed tables and line-item coding.</p>
+            </div>
+          </div>
+          <div class="pref-sub-right">
+            <span class="pref-tog-label ${simple?'on':''}">${simple?'On':'Off'}</span>
+            <label class="tog-lg"><input type="checkbox" ${simple?'checked':''} onchange="S.uiMode=this.checked?'simple':'detailed';render()"><span class="tog-s"></span></label>
+          </div>
+        </div>
+      </div>
+    </section>`;
+  return buildStgAiShell([{label:'Settings',onclick:'goHub()'},{label:'General'}],content);
 }
 function buildStgBreadcrumb(parts){
   return `<div class="stg-ai-crumb">
@@ -8133,6 +9617,7 @@ function buildStgAiOverview(){
   return buildStgAiShell([{label:'Settings',onclick:'goHub()'},{label:'AI'}],content);
 }
 function buildSettings(){
+  if(S.stgSection==='general') return buildStgGeneral();
   if(!S.stgSection) return buildStgAiOverview();
   if(S.stgSection==='all'||S.stgSection==='transactions'||S.stgSection==='automatch') return buildStgTransactions();
   if(S.stgSection==='memory'||S.stgSection==='bizcxt') return buildStgMemorySummary();
@@ -8638,7 +10123,8 @@ function buildRuleWizard(){
 }
 
 initAttachments();
-document.addEventListener('click',()=>{
+document.addEventListener('click',(e)=>{
+  if(e.target.closest('.acct-pill-wrap')||e.target.closest('.scroll-ctx-menu-wrap')) return;
   if(S.acctMenuOpen){S.acctMenuOpen=false;S.acctMenuFrom=null;render();}
 });
 (function initFromUrl(){
@@ -8653,6 +10139,15 @@ document.addEventListener('click',()=>{
   }
   const bank=params.get('bank');
   if(bank&&BANKS.some(b=>b.id===bank)) S.bankFilter=bank;
+  const revNeeds=params.get('revNeeds');
+  if(revNeeds){
+    S.tab='review';
+    S.revFilters=new Set([revNeeds]);
+    S.revFilter=revNeeds;
+  }
+  const revAi=params.get('revAi');
+  if(revAi) S.revAiFilter=revAi;
+  if(params.get('sticky')==='1') window._scrollCtxDemo=true;
 })();
 render();
 </script>
