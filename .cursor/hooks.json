@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/ensure-prototype-server.sh"
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": ".cursor/hooks/ensure-prototype-server.sh",
+        "matcher": "UserPromptSubmit"
+      }
+    ]
+  }
+}

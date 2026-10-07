@@ -118,9 +118,14 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
   max-width:220px;overflow:hidden;
 }
 .scroll-ctx-pill:hover{border-color:var(--lavender);background:var(--brand-subtle);}
-.scroll-ctx-pill-key{color:var(--fx2-text-muted,#74767b);font-weight:500;}
 .scroll-ctx-pill-val{color:var(--fx2-text,#070708);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .scroll-ctx-pill-chev{color:var(--fx2-text-muted);display:flex;flex-shrink:0;}
+/* filled pill (account + view selectors) vs. plain bordered box (date + search) — Figma 11888:17571 */
+.scroll-ctx-fillpill{background:var(--fx2-avatar-bg,#f7f6f2);height:34px;padding:2px 10px 2px 12px;font-size:14px;line-height:1.3;letter-spacing:.235px;}
+.scroll-ctx-fillpill:hover{background:var(--mauve,#ece0fb);}
+.scroll-ctx-box,.scroll-ctx-pill.scroll-ctx-box{border-radius:4px;border-color:#ccc;background:#fff;height:34px;font-size:14px;line-height:1.3;letter-spacing:.235px;}
+.scroll-ctx-pill.scroll-ctx-box:hover{background:#fff;border-color:var(--lavender);}
+.scroll-ctx-pill.scroll-ctx-box.open{background:#fff;}
 .scroll-ctx-search{
   position:relative;width:216px;flex-shrink:0;
 }
@@ -129,27 +134,17 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
   color:var(--fx2-text-muted,#74767b);pointer-events:none;display:flex;
 }
 .scroll-ctx-search input{
-  width:100%;height:28px;padding:4px 12px 4px 34px;
-  border:1px solid var(--fx2-border,#e5e5e5);border-radius:34px;
-  font-family:var(--font);font-size:12px;font-weight:500;line-height:12px;
-  letter-spacing:.17px;color:var(--fx2-text,#070708);background:#fff;outline:none;
+  width:100%;height:34px;padding:4px 12px 4px 34px;
+  border:1px solid #ccc;border-radius:4px;
+  font-family:var(--font);font-size:14px;font-weight:500;line-height:14px;
+  letter-spacing:.235px;color:var(--fx2-text,#070708);background:#fff;outline:none;
 }
 .scroll-ctx-search input::placeholder{color:var(--fx2-text-muted,#74767b);}
 .scroll-ctx-search input:focus{border-color:var(--purple);box-shadow:0 0 0 2px var(--brand-subtle);}
 .scroll-ctx-date-pill{min-width:0;max-width:none;justify-content:space-between;gap:9px;}
 .scroll-ctx-date-inner{display:flex;align-items:center;gap:4px;}
-.scroll-ctx-search-chip{max-width:202px;gap:6px;}
-.scroll-ctx-search-chip-ico{display:flex;color:var(--fx2-text-muted);flex-shrink:0;}
-.scroll-ctx-balances{
-  display:flex;align-items:center;gap:12px;padding:4px 8px;flex-shrink:0;
-}
-.scroll-ctx-bal-item{display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;letter-spacing:.24px;}
-.scroll-ctx-bal-myob{gap:8px;}
-.scroll-ctx-bal-label{font-weight:400;color:var(--fx2-text,#070708);}
-.scroll-ctx-bal-val{font-weight:600;color:var(--fx2-text,#070708);font-variant-numeric:tabular-nums;}
 .scroll-ctx-bal-var{font-weight:600;color:#c00;font-variant-numeric:tabular-nums;}
 .scroll-ctx-bal-var-pos{color:#008536;}
-.scroll-ctx-bal-info{color:var(--fx2-text-muted);display:flex;flex-shrink:0;}
 .scroll-ctx-filter-btn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
   width:28px;height:28px;padding:2px;border:none;background:none;border-radius:20px;
@@ -207,6 +202,8 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
   border-bottom:1px solid var(--fx2-border,#e5e5e5);vertical-align:middle;
 }
 .review-tbl{table-layout:fixed;width:100%;}
+table.review-tbl td{padding:16px 12px;}
+table.review-tbl th{padding:14px 12px;}
 .review-tbl th.col-act,.review-tbl td.col-act{min-width:0;width:13%;max-width:168px;overflow:visible;vertical-align:middle;}
 .review-tbl td.col-act{padding:8px 8px!important;}
 .review-tbl .rev-row-actions{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px;}
@@ -223,7 +220,7 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
 .rev-asm-ai.rev-asm-left,.rev-asm-ai.rev-asm-right{background:var(--fx2-brand-weak,#f2e8fd);border-color:var(--fx2-brand,#a762f4)!important;}
 .rev-asm-manual-state.rev-asm-left,.rev-asm-manual-state.rev-asm-right{background:#fff;border-color:#ccc!important;}
 .rev-asm-done.rev-asm-left,.rev-asm-done.rev-asm-right{background:var(--fx2-avatar-bg,#f7f6f2);border-color:transparent!important;}
-.rev-asm-tax,.rev-asm-coding,.rev-asm-manual-wrap{box-sizing:border-box;padding:10px 12px;width:100%;}
+.rev-asm-tax,.rev-asm-coding,.rev-asm-manual-wrap{box-sizing:border-box;padding:18px 16px;width:100%;}
 .rev-asm-tax-code{font-size:14px;font-weight:600;line-height:20px;color:var(--fx2-text,#070708);display:flex;align-items:center;gap:4px;}
 .rev-asm-tax-amt{font-size:14px;font-weight:500;line-height:14px;color:var(--fx2-text-sub,#45464a);margin-top:2px;}
 .rev-asm-coding-title{font-size:14px;font-weight:600;line-height:20px;color:var(--fx2-text,#070708);display:flex;align-items:center;gap:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -231,9 +228,11 @@ h1,h2,h3,h4,h5,h6,.ph-title,.stg-title,.hub-title,.biz-ctx-title,.pref-master-ti
 .rev-asm-check{color:var(--fx2-success-text,#008536);flex-shrink:0;}
 .rev-asm-manual-wrap{width:100%;}
 .rev-asm-manual-wrap .rev-inline-sel,.rev-asm-manual-wrap .rev-inline-btn{width:100%;}
-.rev-asm-actions{position:absolute;top:0;right:0;bottom:0;display:flex;align-items:center;gap:5px;padding:0 8px 0 28px;border-radius:0 10px 10px 0;background:linear-gradient(to right,rgba(242,232,253,0),var(--fx2-brand-weak,#f2e8fd) 30%);z-index:2;}
+.rev-asm-actions{position:absolute;top:0;right:0;bottom:0;display:flex;align-items:center;gap:5px;padding:0 8px 0 28px;border-radius:0 10px 10px 0;background:linear-gradient(to right,rgba(242,232,253,0),var(--fx2-brand-weak,#f2e8fd) 30%);z-index:2;opacity:0;pointer-events:none;transition:opacity .12s;}
 .rev-asm-actions .rev-mod-act-verify,.rev-asm-actions .rev-mod-act-reject,.rev-asm-actions .rev-mod-act-review{padding:6px 8px;font-size:13px;min-width:52px;}
 .rev-asm-actions .dismiss-menu-wrap{display:inline-flex;}
+/* clean, chevron-like resting state (Figma 206:26825) — accept/reject reveal on hover instead of sitting on every row permanently */
+.all-tbl tbody tr:hover .rev-asm-actions,.review-tbl tbody tr:hover .rev-asm-actions{opacity:1;pointer-events:auto;}
 .rev-asm-right.rev-asm-ai{padding-right:220px!important;}
 .all-tbl-v2,.review-tbl{table-layout:fixed;}
 .all-tbl-v2 thead th,.review-tbl thead th{position:relative;}
@@ -398,6 +397,11 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .tx-attn-title{display:block;font-size:14px;font-weight:700;line-height:20px;color:var(--fx2-text);margin-bottom:4px;}
 .tx-attn-sub{display:block;font-size:14px;font-weight:500;line-height:20px;color:var(--fx2-text-muted);}
 .tx-attn-chev{color:var(--fx2-text-muted);font-size:20px;line-height:1;flex-shrink:0;margin-top:8px;}
+.tx-attn-card-new{flex-direction:column;align-items:stretch;padding:16px 16px 12px 20px;cursor:default;}
+.tx-attn-card-main{display:flex;align-items:flex-start;gap:12px;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font);text-align:left;width:100%;}
+.tx-attn-badge-pink{background:var(--pink);}
+.tx-attn-mark-seen{align-self:flex-end;margin-top:8px;border:none;background:none;color:var(--fx2-brand);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);padding:2px 4px;border-radius:4px;}
+.tx-attn-mark-seen:hover{background:var(--fx2-brand-weak);text-decoration:underline;}
 .rev-match-filter-wrap .fx-ms-pill-wrap{position:relative;z-index:221;}
 .all-filter-row .fx-ms-pill.fx-pill{
   height:32px;min-height:32px;padding:4px 12px;font-size:14px;font-weight:600;
@@ -451,28 +455,23 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .all-filter-reset{font-size:14px;font-weight:500;color:var(--fx2-brand);cursor:pointer;border:none;background:none;font-family:var(--font);padding:4px 8px;border-radius:4px;}
 .all-filter-reset:hover{background:var(--fx2-brand-weak);}
 .all-filter-wrap{position:relative;}
-/* floating bulk actions pill — appears bottom-center while "All" table rows are selected,
-   independent of the filter row so filters stay visible during bulk edits */
-.all-bulk-pill{
+/* floating bulk action bar — bottom-center bubble with drop shadow */
+.bulk-float-bar{
   position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:250;
-  display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:999px;
-  background:var(--fx2-text,#141416);color:#fff;box-shadow:0 14px 36px rgba(0,0,0,.3);
-  animation:bulkPillIn .18s ease;
+  display:flex;align-items:center;gap:12px;padding:10px 18px;
+  border-radius:12px;background:var(--surface);border:1px solid var(--fx2-border);
+  color:var(--fx2-text);box-shadow:0 16px 40px rgba(35,36,40,.16),0 6px 16px rgba(35,36,40,.1);
+  animation:bulkFloatIn .18s ease;max-width:min(960px,calc(100vw - 32px));
 }
-@keyframes bulkPillIn{from{opacity:0;transform:translateX(-50%) translateY(10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
-.all-bulk-count{font-size:14px;font-weight:700;color:var(--fx2-text);white-space:nowrap;}
-.all-bulk-pill .all-bulk-count{color:#fff;}
-.all-bulk-sep{width:1px;height:20px;background:var(--fx2-border);flex-shrink:0;}
-.all-bulk-pill .all-bulk-sep{background:rgba(255,255,255,.22);}
-.all-bulk-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+@keyframes bulkFloatIn{from{opacity:0;transform:translateX(-50%) translateY(10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+.bulk-float-count{font-size:14px;font-weight:600;white-space:nowrap;}
+.bulk-float-sp{flex:1;min-width:8px;}
+.bulk-float-sep{width:1px;height:22px;background:var(--fx2-border);flex-shrink:0;}
+.bulk-float-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.bulk-float-close{width:28px;height:28px;flex-shrink:0;border-radius:50%;border:none;background:var(--stone20);color:var(--muted);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.bulk-float-close:hover{background:var(--border);color:var(--fx2-text);}
+.bulk-float-bar .all-filter-menu{top:auto;bottom:calc(100% + 8px);}
 .all-bulk-cat-menu{max-height:280px;overflow-y:auto;min-width:200px;}
-.all-bulk-pill .fx-btn-neutral-ghost{background:rgba(255,255,255,.14)!important;color:#fff!important;border-color:rgba(255,255,255,.26)!important;}
-.all-bulk-pill .fx-btn-neutral-ghost:hover{background:rgba(255,255,255,.24)!important;}
-.all-bulk-pill .btn-rev-reject{background:transparent!important;border:none!important;color:#ffb0a6!important;}
-.all-bulk-pill .btn-rev-reject:hover{color:#fff!important;}
-.all-bulk-pill .all-filter-menu{top:auto;bottom:calc(100% + 8px);}
-.all-bulk-pill-close{width:24px;height:24px;flex-shrink:0;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.all-bulk-pill-close:hover{background:rgba(255,255,255,.3);}
 /* "Filters" modal — consolidates Source + Type into a single control on the table's filter row */
 .txf-modal-overlay{position:fixed;inset:0;background:rgba(7,7,8,.42);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;}
 .txf-modal{background:#fff;border-radius:14px;width:420px;max-width:100%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.24);overflow:hidden;}
@@ -582,6 +581,21 @@ body.col-resizing,body.col-resizing *{cursor:var(--cursor-col-resize, ew-resize)
 .all-tbl-v2 tbody tr:last-child td{border-bottom:none;}
 .all-tbl-v2 .col-chk{width:34px;padding-left:18px;padding-right:2px;}
 .all-tbl-v2 .col-chk input{width:18px;height:18px;accent-color:var(--fx2-brand);border-radius:4px;cursor:pointer;}
+.all-tbl-v2 .col-src{width:100px;max-width:none;overflow:visible;}
+.all-tbl-v2 thead th.col-src{max-width:none;}
+.all-src-de{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+.all-src-leg{display:flex;align-items:center;gap:6px;min-height:22px;}
+.all-src-ico-wrap{display:inline-flex;align-items:center;justify-content:center;width:24px;flex-shrink:0;}
+.all-src-ico-wrap .src-ico-img--bank{width:22px;height:16px;}
+.all-src-ico-wrap .src-ico-img--myob{width:15px;height:20px;}
+.all-src-ghost{display:block;width:18px;height:14px;border-radius:4px;background:var(--stone20);}
+.all-src-mark{display:inline-flex;align-items:center;justify-content:center;min-width:14px;font-size:11px;font-weight:700;line-height:1;}
+.all-src-mark.matched{color:var(--fx2-success-text);}
+.all-src-mark.open{color:var(--fx2-warning-text);}
+.all-src-mark.awaiting{color:var(--muted);}
+.all-src-mark.missing{color:#c8c8c8;}
+.all-src-de.is-linked{position:relative;padding-right:2px;}
+.all-src-link{position:absolute;right:-2px;top:50%;transform:translateY(-50%);opacity:.85;}
 .all-tbl-v2 .col-date{width:96px;color:var(--fx2-text-sub);font-size:14px;font-weight:500;letter-spacing:.235px;white-space:nowrap;}
 .all-tbl-v2 .col-tx{min-width:190px;}
 .all-tbl-v2 .col-amt{width:104px;}
@@ -751,11 +765,9 @@ td.aitd{padding:7px 10px!important;vertical-align:middle;min-width:130px;overflo
 .aitd-acc-wrap{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--green);}
 td.aitd.aitd-accepted{background:var(--green-bg);}
 td.aitd.aitd-empty{background:var(--stone20);}
-/* bulk bar */
-.bulk-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--info-bg);border-bottom:1px solid #B8DFEF;font-size:16px;font-weight:500;color:var(--text);}
+/* bulk actions — use .bulk-float-bar (fixed bottom bubble), not inline bars */
 .btn-bulk-ok{padding:6px 14px;background:var(--success);color:#fff;border:none;border-radius:var(--r4);font-size:16px;font-weight:500;cursor:pointer;font-family:var(--font);}
 .btn-bulk-ok:hover{background:var(--success-hover);}
-.bulk-sp{flex:1;}
 .btn-acc-sel{padding:8px 16px;background:var(--success);color:#fff;border:none;border-radius:var(--r4);font-size:16px;font-weight:500;cursor:pointer;font-family:var(--font);}
 .btn-acc-sel:hover{background:var(--success-hover);}
 
@@ -1507,6 +1519,10 @@ td.aitd.aitd-rejected{background:#fff8f8;}
 .tx-ref{font-size:15px;font-weight:600;color:var(--text);}
 .tx-bank{font-size:14px;color:var(--muted);margin-top:2px;line-height:1.4;max-width:360px;}
 .tx-icon{width:30px;height:30px;border-radius:8px;background:var(--mauve);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+/* "new auto-match, not yet seen" indicator — sits on the row's avatar/icon */
+.tx-icon-wrap{position:relative;display:inline-flex;flex-shrink:0;}
+.rev-unseen-dot{position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--pink);border:2px solid #fff;padding:0;cursor:pointer;box-shadow:0 0 0 1px rgba(0,0,0,.04);transition:transform .12s;}
+.rev-unseen-dot:hover{transform:scale(1.35);}
 .tx-icon.green{background:var(--green-bg);}
 .tax-cell{font-size:16px;line-height:1.35;color:var(--text);}
 .tax-code{font-size:16px;font-weight:600;color:var(--text);}
@@ -2278,24 +2294,29 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .activity-sub{font-size:14px;color:var(--muted);line-height:1.45;}
 .activity-time{font-size:13px;color:var(--muted);flex-shrink:0;}
 /* ── MONTHLY CHECK — guided wizard replacing the old Pre-BAS transaction table ── */
-.mc-page{max-width:760px;margin:0 auto;padding-bottom:40px;}
-.mc-hero{text-align:center;padding:32px 16px 28px;}
+.mc-page{max-width:900px;margin:0 auto;padding-bottom:40px;}
+.mc-hero{text-align:center;padding:32px 16px 20px;}
 .mc-hero-kicker{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--purple);background:var(--brand-subtle);padding:4px 12px;border-radius:999px;margin-bottom:14px;}
 .mc-hero-title{font-family:var(--font-heading);font-size:26px;font-weight:700;color:var(--text);margin:0 0 10px;}
-.mc-hero-sub{font-size:15px;color:var(--muted);line-height:1.55;max-width:560px;margin:0 auto 20px;}
+.mc-hero-sub{font-size:15px;color:var(--muted);line-height:1.55;max-width:560px;margin:0 auto;}
 .mc-start-btn{padding:11px 22px;background:var(--purple);color:#fff;border:none;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font);}
 .mc-start-btn:hover{background:#5a0cb5;}
-.mc-alldone{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--success-bg);color:var(--success);font-weight:600;font-size:14px;}
-.mc-summary-grid{display:flex;flex-direction:column;gap:10px;}
-.mc-summary-card{display:flex;align-items:center;gap:14px;padding:16px 18px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);cursor:pointer;transition:box-shadow .12s,border-color .12s;text-align:left;}
-.mc-summary-card:hover{border-color:var(--lavender);box-shadow:0 2px 8px rgba(0,0,0,.05);}
-.mc-summary-card.is-clear{opacity:.62;}
-.mc-summary-ico{font-size:20px;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--stone20);border-radius:var(--r8);}
-.mc-summary-body{flex:1;min-width:0;}
-.mc-summary-title{font-size:15px;font-weight:700;color:var(--text);}
-.mc-summary-desc{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4;}
-.mc-summary-count{flex-shrink:0;min-width:32px;height:32px;padding:0 8px;border-radius:16px;background:var(--warning-bg);color:var(--warning);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-.mc-summary-count.ok{background:var(--success-bg);color:var(--success);}
+.mc-acct-picker{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.mc-acct-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;font-family:var(--font);}
+.mc-acct-pill:hover{border-color:var(--lavender);}
+.mc-acct-pill.act{background:var(--purple);border-color:var(--purple);color:#fff;}
+.mc-sync-banner{border-radius:var(--r8);padding:18px 20px;margin-bottom:24px;text-align:center;}
+.mc-sync-banner.mc-sync-warn{background:var(--warning-bg);border:1px solid var(--warning-border);}
+.mc-sync-banner.mc-sync-ok{background:var(--success-bg);border:1px solid var(--success);}
+.mc-sync-title{font-size:17px;font-weight:700;margin-bottom:6px;}
+.mc-sync-banner.mc-sync-warn .mc-sync-title{color:var(--warning);}
+.mc-sync-banner.mc-sync-ok .mc-sync-title{color:var(--success);}
+.mc-sync-body{font-size:14px;color:var(--text);line-height:1.55;max-width:640px;margin:0 auto;}
+.mc-start-wrap{text-align:center;margin:4px 0 28px;padding:0 16px;}
+.mc-start-hint{font-size:14px;color:var(--muted);line-height:1.5;margin:12px auto 0;max-width:560px;}
+.mc-viewall{text-align:center;margin-top:16px;}
+.mc-viewall-link{border:none;background:none;color:var(--purple);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.mc-viewall-link:hover{text-decoration:underline;}
 .mc-flow-hd{display:flex;align-items:center;gap:16px;padding:16px 0 8px;}
 .mc-exit-btn{border:none;background:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);padding:4px 6px;flex-shrink:0;}
 .mc-exit-btn:hover{color:var(--red);}
@@ -2312,7 +2333,8 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .mc-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);cursor:pointer;}
 .mc-row:hover{border-color:var(--lavender);}
 .mc-row-main{min-width:0;flex:1;}
-.mc-row-title{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mc-row-title-line{display:flex;align-items:center;min-width:0;}
+.mc-row-title{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1;}
 .mc-row-sub{font-size:13px;color:var(--muted);margin-top:2px;}
 .mc-row-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .mc-row-sug{font-size:13px;color:var(--text);white-space:nowrap;}
@@ -2339,6 +2361,48 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .mc-recon-status.ok{background:var(--success-bg);color:var(--success);}
 .mc-recon-status.warn{background:var(--warning-bg);color:var(--warning);}
 .mc-recon-causes-hd{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;text-align:left;}
+.mc-acct-pill-status{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:700;flex-shrink:0;background:var(--success-bg);color:var(--success);}
+.mc-acct-pill-status.warn{background:var(--warning-bg);color:var(--warning);}
+.mc-acct-pill.act .mc-acct-pill-status{background:rgba(255,255,255,.3);color:#fff;}
+.mc-state-toggle{display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;}
+.mc-state-toggle-label{font-size:12px;color:var(--muted);font-weight:600;}
+.mc-state-btn{padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.mc-state-btn.act{background:var(--text);border-color:var(--text);color:#fff;}
+.mc-anomaly-badge{flex-shrink:0;display:inline-flex;align-items:center;gap:3px;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--warning-bg);color:var(--warning);font-size:11px;font-weight:700;white-space:nowrap;}
+.mc-row.mc-row-anomaly{border-left:3px solid var(--warning);}
+.mc-transition{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px;gap:14px;}
+.mc-transition-spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--brand-subtle);border-top-color:var(--purple);animation:mcSpin .8s linear infinite;}
+@keyframes mcSpin{to{transform:rotate(360deg);}}
+.mc-transition-title{font-size:16px;font-weight:700;color:var(--text);}
+.mc-transition-body{font-size:14px;color:var(--muted);max-width:420px;line-height:1.5;}
+.tx-nav-tab.mc-tab-due{background:var(--warning-bg);color:var(--warning);}
+.tx-nav-tab.mc-tab-due:hover{background:var(--warning-bg);}
+.tx-nav-tab.mc-tab-due.act{background:var(--warning);color:#fff;}
+.mc-tab-due-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warning);margin-right:2px;animation:mcPulse 1.6s ease-in-out infinite;}
+.tx-nav-tab.mc-tab-due.act .mc-tab-due-dot{background:#fff;}
+.fx-tab-count.mc-tab-due-badge{background:var(--danger,#dc2626);color:#fff;}
+@keyframes mcPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(1.4);}}
+/* per-account "reconcile" cards on the home hub, Figma ToDoCardsV3 */
+.acct-rec-wrap{margin-bottom:28px;}
+.acct-rec-grid{display:flex;flex-direction:column;gap:16px;}
+.acct-rec-card{display:flex;gap:16px;background:#fff;border:1px solid var(--border);border-radius:var(--r8);padding:20px;}
+.acct-rec-ico{flex-shrink:0;width:36px;height:36px;border-radius:8px;background:var(--stone20);display:flex;align-items:center;justify-content:center;color:var(--text);}
+.acct-rec-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;}
+.acct-rec-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.acct-rec-title-row{display:flex;align-items:center;gap:8px;}
+.acct-rec-title{font-size:16px;font-weight:600;color:var(--text);}
+.acct-rec-desc{font-size:14px;color:var(--muted);margin-top:6px;}
+.acct-rec-card.is-clear .acct-rec-desc{color:var(--success);}
+.acct-rec-actions{flex-shrink:0;}
+.acct-rec-tasks{display:flex;flex-direction:column;gap:4px;}
+.acct-rec-task{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--stone20);border-radius:8px;padding:10px 12px;cursor:pointer;border:none;width:100%;text-align:left;font-family:var(--font);}
+.acct-rec-task:hover{background:var(--mauve);}
+.acct-rec-task-left{display:flex;align-items:center;gap:8px;min-width:0;}
+.acct-rec-badge{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:18px;padding:0 6px;border-radius:10px;background:var(--purple);color:#fff;font-size:12px;font-weight:600;}
+.acct-rec-badge.warn{background:var(--warning);}
+.acct-rec-task-label{font-size:14px;color:var(--text);}
+.acct-rec-arrow{flex-shrink:0;width:28px;height:28px;border:none;background:none;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;}
+.acct-rec-arrow:hover{background:var(--border);}
 
 /* ── Feelix v8.17 component primitives (from MCP) ── */
 .fx-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:var(--r4);padding:8px 16px;font-size:16px;font-weight:500;font-family:var(--font);cursor:pointer;border:1px solid transparent;line-height:1.4;white-space:nowrap;}
@@ -2461,6 +2525,7 @@ body.tx-pane-dragging.tx-pane-drag-h{cursor:row-resize;}
 .fx-tab-count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 6px;border-radius:var(--r4);font-size:13px;font-weight:600;background:var(--brand-subtle);color:var(--purple);}
 .tab.act .fx-tab-count,.tx-nav-tab.act .fx-tab-count{background:var(--purple);color:#fff;}
 .tx-nav-tab .fx-tab-count{margin-left:0;min-width:16px;height:16px;padding:0 5px;font-size:12px;}
+.tx-nav-tab .fx-tab-count-unseen{min-width:0;height:auto;padding:2px 7px;border-radius:10px;white-space:nowrap;}
 
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 .fade-in{animation:fadeIn .2s ease;}
@@ -2598,9 +2663,9 @@ const TX = [
   {id:19, bank:'cba', source:'bank', date:'04/10/2025', desc:'Beacon Lighting – LED downlights & drivers – Unit 12 fit-out', ref:'CBA-00131', amount:-892.40, status:'pending', attach:1, newContext:false,
    ai:{cat:{val:'Electrical supplies',conf:90,st:'idle'}, match:{val:null,conf:0,st:'idle'}, tax:{val:'GST',conf:91,st:'idle'}, job:{val:'ECO-0231',conf:74,st:'idle'}, file:{val:null,st:'idle'}}},
   {id:20, bank:'cba', source:'bank', date:'03/10/2025', desc:'Jaycar Electronics – Test leads, fuses & crimp terminals', ref:'CBA-00129', amount:-156.80, status:'pending', attach:0, newContext:false,
-   ai:{cat:{val:'Electrical supplies',conf:88,st:'idle'}, match:{val:null,conf:0,st:'idle'}, tax:{val:'GST',conf:90,st:'idle'}, job:{val:'ECO-0234',conf:62,st:'idle'}, file:{val:null,st:'idle'}}},
+   ai:{cat:{val:'Electrical supplies',conf:88,st:'idle'}, match:{val:null,conf:0,st:'idle'}, tax:{val:'GST',conf:90,st:'idle'}, job:{val:'ECO-0234',conf:62,st:'idle'}, file:{val:'Jaycar_receipt_email.pdf',conf:82,st:'idle'}}},
   {id:21, bank:'cba', source:'bank', date:'02/10/2025', desc:'BP Connect – Diesel – Service van Penrith–Blue Mountains runs', ref:'CBA-00127', amount:-128.60, status:'pending', attach:0, newContext:false,
-   ai:{cat:{val:'Motor vehicle expenses',conf:84,st:'idle'}, match:{val:null,conf:0,st:'idle'}, tax:{val:'GST',conf:85,st:'idle'}, job:{val:null,conf:0,st:'idle'}, file:{val:null,st:'idle'}}},
+   ai:{cat:{val:'Motor vehicle expenses',conf:84,st:'idle'}, match:{val:null,conf:0,st:'idle'}, tax:{val:'GST',conf:85,st:'idle'}, job:{val:null,conf:0,st:'idle'}, file:{val:'BP_fuel_receipt.jpg',conf:78,st:'idle'}}},
   {id:22, bank:'cba', source:'bank', date:'01/10/2025', desc:'Test & Tag Co – Portable appliance testing – Q3 compliance', ref:'CBA-00126', amount:-440.00, status:'pending', attach:1, newContext:false,
    ai:{cat:{val:'Compliance & testing',conf:92,st:'idle'}, match:{val:'BILL-091 · Test & Tag Co',conf:94,st:'idle'}, tax:{val:'GST',conf:91,st:'idle'}, job:{val:null,conf:0,st:'idle'}, file:{val:null,st:'idle'}}},
   {id:23, bank:'anz', source:'bank', date:'28/09/2025', desc:'Telstra Business – Mobile data – Field electricians Sep', ref:'TXN-00243', amount:-128.90, status:'accepted', attach:0, newContext:false,
@@ -3022,6 +3087,7 @@ const S = {
   dismissMenuOpen: null,         // txId when row dismiss menu open
   showHiddenReview: false,
   reviewDone: new Set(),   // tx ids accepted in review — stay visible with done styling
+  autoMatchSeen: new Set(), // tx ids whose auto-match the user has already seen/acknowledged (pink "new" dot hides once seen)
   rowExit:null,           // {txId, snapshot, paused, progress, startTime, pauseAccum, pauseStarted, rafId, hadContext}
   rowReject:null,         // {txId, snapshot, progress, phaseStart, rafId}
   toastUndo:{},
@@ -3043,11 +3109,14 @@ const S = {
   simpleMoreOpen:null,    // txId whose "more actions" menu is open in Simple mode, or null
   mcActive:false,         // Monthly check — whether the guided step-by-step flow is open (vs. the summary screen)
   mcStep:0,               // Monthly check — current step index into MC_STEPS while mcActive
+  mcTransition:null,      // {from,to} step ids while the "AI is updating context" transition shows between steps
+  mcDue:true,             // Monthly check — true once the check is "due" (vs. just tracking mid-month); demo-togglable
 };
 initAttachments();
+initAutoMatchSeen();
 
 const COL_WIDTH_DEFAULTS={
-  all:{chk:34,date:96,tx:190,amt:104,gst:74,job:78,att:44,match:210,left:118},
+  all:{chk:34,src:100,date:96,tx:190,amt:104,gst:74,job:78,att:44,match:210,left:118},
   review:{chk:34,src:48,date:96,tx:220,amt:104,att:44,tax:120,code:360},
 };
 const COL_NON_RESIZABLE={
@@ -3261,6 +3330,48 @@ function srcIcon(src,{bankId}={}){
   const title=srcIconTitle(key,bankId);
   return `<span class="src-ico ${m.cls}" title="${title}" aria-label="${m.label}">${srcIconInner(key,bankId)}</span>`;
 }
+function allSourceLegMeta(tx,leg){
+  const src=tx.source||'bank';
+  const matched=src==='both'||tx.status==='accepted'||tx.status==='coded';
+  if(leg==='bank'){
+    const present=src==='bank'||src==='both';
+    const state=!present?'missing':matched?'matched':'open';
+    const label=!present?'No bank line':matched?'Bank — matched':'Bank — unmatched';
+    return {present,state,label};
+  }
+  const present=src==='myob'||src==='both';
+  let state=!present?'missing':matched?'matched':'open';
+  let label=!present?'No MYOB record':matched?'MYOB — matched':'MYOB — unmatched';
+  if(present&&!matched&&src==='myob'&&tx.status==='awaiting'){
+    state='awaiting';
+    label='MYOB — awaiting bank';
+  }
+  return {present,state,label};
+}
+function allSourceStatusMark(state){
+  if(state==='matched') return '<span class="all-src-mark matched" aria-hidden="true">✓</span>';
+  if(state==='awaiting') return '<span class="all-src-mark awaiting" aria-hidden="true">⏳</span>';
+  if(state==='open') return '<span class="all-src-mark open" aria-hidden="true">·</span>';
+  return '<span class="all-src-mark missing" aria-hidden="true">—</span>';
+}
+function buildAllSourceCell(tx){
+  const bank=allSourceLegMeta(tx,'bank');
+  const myob=allSourceLegMeta(tx,'myob');
+  const linked=bank.state==='matched'&&myob.state==='matched';
+  const aria=`Bank: ${bank.label}. MYOB: ${myob.label}.`;
+  return `
+  <div class="all-src-de${linked?' is-linked':''}" title="${aria}" aria-label="${aria}">
+    <div class="all-src-leg ${bank.state}" title="${bank.label}">
+      <span class="all-src-ico-wrap">${bank.present?bankLogoImg(tx.bank):'<span class="all-src-ghost" aria-hidden="true"></span>'}</span>
+      ${allSourceStatusMark(bank.state)}
+    </div>
+    <div class="all-src-leg ${myob.state}" title="${myob.label}">
+      <span class="all-src-ico-wrap">${myob.present?`<img class="src-ico-img src-ico-img--myob" src="${SRC_ASSETS.myobMark}" alt="" aria-hidden="true">`:'<span class="all-src-ghost" aria-hidden="true"></span>'}</span>
+      ${allSourceStatusMark(myob.state)}
+    </div>
+    ${linked?`<img class="all-src-link src-ico-img src-ico-img--matched" src="${SRC_ASSETS.matchedLink}" alt="" aria-hidden="true" title="Matched in bank and MYOB">`:''}
+  </div>`;
+}
 function txRevisionValues(tx,field){
   if(!txHasChanged(tx)||!tx.ctxOld||!tx.ctxNew) return null;
   const oldVal=tx.ctxOld[field];
@@ -3334,6 +3445,32 @@ function txIsSuggestionReview(tx){
 }
 function automatchReviewCount(){return reviewInboxActive().filter(txIsAutomatchReview).length;}
 function suggestionReviewCount(){return reviewInboxActive().filter(txIsSuggestionReview).length;}
+function txIsUnseenAutomatch(tx){return txIsAutomatchReview(tx)&&!S.autoMatchSeen.has(tx.id);}
+function unseenAutomatchCount(){return reviewInboxActive().filter(txIsUnseenAutomatch).length;}
+function markAutoMatchSeen(txId,ev){
+  if(ev) ev.stopPropagation();
+  if(S.autoMatchSeen.has(txId)) return;
+  S.autoMatchSeen.add(txId);
+  render();
+}
+function markAllAutoMatchSeen(ev){
+  if(ev) ev.stopPropagation();
+  const ids=reviewInboxActive().filter(txIsUnseenAutomatch).map(t=>t.id);
+  if(!ids.length) return;
+  ids.forEach(id=>S.autoMatchSeen.add(id));
+  render();
+  showSuccessToast({
+    title:`${ids.length} auto-match${ids.length!==1?'es':''} marked as seen`,
+    undo:()=>{ids.forEach(id=>S.autoMatchSeen.delete(id));render();},
+  });
+}
+function initAutoMatchSeen(){
+  // Simulate a returning user: everything already sat in the queue before today is "seen",
+  // only the handful of most recent auto-matches still carry the unseen dot.
+  const auto=TX.filter(txIsAutomatchReview);
+  const recent=[...auto].sort((a,b)=>parseAusDate(b.date)-parseAusDate(a.date)).slice(0,3).map(t=>t.id);
+  auto.forEach(t=>{if(!recent.includes(t.id)) S.autoMatchSeen.add(t.id);});
+}
 function readyToVerifyCount(){
   const inbox=reviewInboxActive();
   const ready=inbox.filter(txIsReadyForBulk);
@@ -3351,6 +3488,7 @@ function filterReviewQueue(list){
   if(S.revQueue==='automatch') return list.filter(txIsAutomatchReview);
   if(S.revQueue==='suggestions') return list.filter(txIsSuggestionReview);
   if(S.revQueue==='ready') return list.filter(t=>!txReviewDone(t)&&txIsReadyForBulk(t));
+  if(S.revQueue==='new') return list.filter(txIsUnseenAutomatch);
   return list.filter(t=>txIsAutomatchReview(t)||txIsSuggestionReview(t));
 }
 function filterReviewMatchStatus(list){
@@ -4696,6 +4834,7 @@ function removeClearEntry(id){
 
 function toggleRevSel(id){if(S.reviewSel.has(id))S.reviewSel.delete(id);else S.reviewSel.add(id);render();}
 function toggleRevSelAll(ids){const all=ids.every(id=>S.reviewSel.has(id));ids.forEach(id=>all?S.reviewSel.delete(id):S.reviewSel.add(id));render();}
+function clearRevSel(){S.reviewSel=new Set();render();}
 function bulkAcceptAll(){bulkAcceptReadyOnly();}
 function bulkAcceptReadyOnly(){
   const targets=S.reviewSel.size?Array.from(S.reviewSel):filterReviewList(reviewInboxList(),'ready').map(t=>t.id);
@@ -5272,6 +5411,7 @@ function openAside(id,from='all',tab='matches'){
   const horizontalRowSwitch=S.txLayout==='horizontal'&&prevId&&prevId!==id&&useTxPaneForMain();
   S.asideRule=null;
   S.asideId=id;S.asideFrom=from;S.asideTab=tab;
+  if(!S.autoMatchSeen.has(id)) S.autoMatchSeen.add(id); // opening a row is itself an acknowledgment
   if(S.txNoteOpenId&&S.txNoteOpenId!==id) S.txNoteOpenId=null;
   S.asideSearch='';
   // Pre-populate AI-suggested match shortlist if not already set
@@ -5475,12 +5615,6 @@ function bankBalanceInfo(){
   const myobAmount=active.myobBal??active.bal;
   return {label:'Bank balance',amount:active.bal,myobAmount,accounts:[active]};
 }
-function fmtBalVariance(bank,myob){
-  const diff=bank-myob;
-  if(Math.abs(diff)<0.01) return '';
-  const s=fmtBankBal(Math.abs(diff));
-  return diff<0?`(${s})`:`+${s}`;
-}
 function fmtBalVarianceHtml(bank,myob){
   const diff=bank-myob;
   if(Math.abs(diff)<0.01) return '';
@@ -5494,7 +5628,6 @@ const SCROLL_CTX_ARROW=`<svg width="18" height="18" viewBox="0 0 18 18" fill="no
 const SCROLL_CTX_CAL=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="12" height="11" rx="1.5"/><line x1="3" y1="7" x2="15" y2="7"/><line x1="6" y1="2.5" x2="6" y2="5"/><line x1="12" y1="2.5" x2="12" y2="5"/></svg>`;
 const SCROLL_CTX_SEARCH_ICO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>`;
 const SCROLL_CTX_FILTER_ICO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4h14l-5 5v4l-3-1.5V9L2 4z"/></svg>`;
-const SCROLL_CTX_INFO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="9" r="7"/><line x1="9" y1="8" x2="9" y2="12"/><circle cx="9" cy="6" r=".8" fill="currentColor" stroke="none"/></svg>`;
 function setTxSearch(v){
   S.txSearch=v;
   render();
@@ -5578,7 +5711,7 @@ function buildScrollCtxDatePill(){
   const menuOpen=S.allFilterMenu==='date'&&S.allFilterMenuFrom==='scroll';
   return `
   <div class="scroll-ctx-menu-wrap">
-    <button type="button" class="scroll-ctx-pill scroll-ctx-date-pill${menuOpen?' open':''}" onclick="toggleAllFilterMenu('date',event,'scroll')" title="Change date range" aria-expanded="${menuOpen}">
+    <button type="button" class="scroll-ctx-pill scroll-ctx-date-pill scroll-ctx-box${menuOpen?' open':''}" onclick="toggleAllFilterMenu('date',event,'scroll')" title="Change date range" aria-expanded="${menuOpen}">
       <span class="scroll-ctx-date-inner">
         <span>${S.allFilters.dateFrom}</span>
         ${SCROLL_CTX_ARROW}
@@ -5589,14 +5722,13 @@ function buildScrollCtxDatePill(){
     ${menuOpen?buildAllFilterDateMenu():''}
   </div>`;
 }
-function buildScrollCtxSearchChip(q){
-  const safe=q.replace(/"/g,'&quot;');
-  const display=q.length>20?q.slice(0,20)+'…':q;
+function buildScrollCtxSearchBox(){
+  const val=(S.txSearch||'').replace(/"/g,'&quot;');
   return `
-  <button type="button" class="scroll-ctx-pill scroll-ctx-search-chip" onclick="scrollToPageFilters('search')" title="Search: ${safe}" aria-label="Search active: ${safe}">
-    <span class="scroll-ctx-search-chip-ico">${SCROLL_CTX_SEARCH_ICO}</span>
-    <span class="scroll-ctx-pill-val">${display}</span>
-  </button>`;
+  <div class="scroll-ctx-search">
+    <span class="scroll-ctx-search-ico" aria-hidden="true">${SCROLL_CTX_SEARCH_ICO}</span>
+    <input id="tx-search-sticky" type="search" placeholder="Search all transactions" autocomplete="off" aria-label="Search all transactions" value="${val}" oninput="setTxSearch(this.value)">
+  </div>`;
 }
 function buildScrollCtxFilterBtn(count){
   const labels=scrollCtxActiveFilterLabels();
@@ -5609,14 +5741,33 @@ function buildScrollCtxFilterBtn(count){
     ${badge}
   </button>`;
 }
+function buildScrollCtxViewPill(){
+  const labels={all:'All transactions',review:'To review',prebas:'Monthly check'};
+  const menuOpen=S.allFilterMenu==='scrollView'&&S.allFilterMenuFrom==='scroll';
+  return `
+  <div class="scroll-ctx-menu-wrap">
+    <button type="button" class="scroll-ctx-pill scroll-ctx-fillpill${menuOpen?' open':''}" onclick="toggleAllFilterMenu('scrollView',event,'scroll')" title="Switch view" aria-expanded="${menuOpen}" aria-haspopup="listbox">
+      <span class="scroll-ctx-pill-val">${labels[S.tab]||'All transactions'}</span>
+      <span class="scroll-ctx-pill-chev">${SCROLL_CTX_CHEV}</span>
+    </button>
+    ${menuOpen?buildScrollCtxViewMenu():''}
+  </div>`;
+}
+function buildScrollCtxViewMenu(){
+  const opts=[{id:'all',label:'All transactions'},{id:'review',label:'To review'},{id:'prebas',label:'Monthly check'}];
+  return `<div class="all-filter-menu" role="listbox" aria-label="Switch view" onclick="event.stopPropagation()">
+    ${opts.map(o=>`<button type="button" class="all-filter-menu-item" role="option" aria-selected="${S.tab===o.id}" onclick="closeAllFilterMenu(false);setTab('${o.id}')">${S.tab===o.id?'✓ ':''}${o.label}</button>`).join('')}
+  </div>`;
+}
 function buildScrollCtxToolbarLeft(){
   let html=buildScrollCtxAcctBtn();
+  html+=`<span class="scroll-ctx-flow-chev">${SCROLL_CTX_FLOW}</span>`;
+  html+=buildScrollCtxViewPill();
   if(S.tab==='all'){
     html+=`<span class="scroll-ctx-flow-chev">${SCROLL_CTX_FLOW}</span>`;
     html+=buildScrollCtxDatePill();
   }
-  const q=(S.txSearch||'').trim();
-  if(q) html+=buildScrollCtxSearchChip(q);
+  html+=buildScrollCtxSearchBox();
   html+=buildScrollCtxFilterBtn(scrollCtxFilterBadgeCount());
   return html;
 }
@@ -5628,38 +5779,21 @@ function buildScrollCtxAcctBtn(){
   const menuOpen=S.acctMenuOpen&&S.acctMenuFrom==='scroll';
   return `
   <div class="scroll-ctx-menu-wrap">
-    <button type="button" class="scroll-ctx-acct${menuOpen?' open':''}" onclick="toggleAcctMenu(event,'scroll')" title="Change account" aria-expanded="${menuOpen}" aria-haspopup="listbox">
+    <button type="button" class="scroll-ctx-acct scroll-ctx-fillpill${menuOpen?' open':''}" onclick="toggleAcctMenu(event,'scroll')" title="Change account" aria-expanded="${menuOpen}" aria-haspopup="listbox">
       ${dot}<span class="scroll-ctx-acct-label">${active.label}</span>
       <span class="scroll-ctx-acct-chev">${SCROLL_CTX_CHEV}</span>
     </button>
     ${menuOpen?buildAcctMenuDropdown():''}
   </div>`;
 }
-function buildScrollCtxBalances(){
-  const bal=bankBalanceInfo();
-  const varianceHtml=fmtBalVarianceHtml(bal.amount,bal.myobAmount);
-  return `
-  <div class="scroll-ctx-balances" data-page-filter="balance">
-    <div class="scroll-ctx-bal-item">
-      <span class="scroll-ctx-bal-label">Bank balance</span>
-      <span class="scroll-ctx-bal-val">${fmtBankBal(bal.amount)}</span>
-    </div>
-    <span class="scroll-ctx-vdiv" aria-hidden="true"></span>
-    <div class="scroll-ctx-bal-item scroll-ctx-bal-myob">
-      <span class="scroll-ctx-bal-label">MYOB balance</span>
-      <span class="scroll-ctx-bal-val">${fmtBankBal(bal.myobAmount)}</span>
-      ${varianceHtml}
-      <span class="scroll-ctx-bal-info" title="Difference between bank feed and MYOB">${SCROLL_CTX_INFO}</span>
-    </div>
-  </div>`;
-}
 function buildScrollCtxToolbar(){
+  // Figma 11888:17571 keeps this row to the account/view/date/search/filter controls only —
+  // balances stay in the full-size header above; scrolling back up is one motion away.
   return `
   <div class="scroll-ctx-toolbar">
     <div class="scroll-ctx-toolbar-left">
       ${buildScrollCtxToolbarLeft()}
     </div>
-    ${buildScrollCtxBalances()}
   </div>
   <div class="scroll-ctx-toolbar-divider" aria-hidden="true"></div>`;
 }
@@ -5751,7 +5885,7 @@ function buildModernReviewRow(tx,sel){
       </div>
       ${srcCol}
       <div class="rev-mod-tx" style="position:relative">
-        ${revModVendorLogo(tx)}
+        <span class="tx-icon-wrap">${revModVendorLogo(tx)}${txIsUnseenAutomatch(tx)?`<button type="button" class="rev-unseen-dot" title="New auto-match — click to mark as seen" onclick="markAutoMatchSeen(${tx.id},event)"></button>`:''}</span>
         <div style="min-width:0">
           <div class="rev-mod-ref">${tx.ref||'—'}${doneBadge}</div>
           <div class="rev-mod-desc">${revModTxDesc(tx)}</div>
@@ -5918,8 +6052,13 @@ function buildTxNavSearch(){
 function buildTxNavTabs(){
   const rc=reviewCount();
   const pbc=preBasCount();
-  const tab=(id,label,count)=>`<button type="button" role="tab" class="tx-nav-tab${S.tab===id?' act':''}" aria-selected="${S.tab===id}" onclick="setTab('${id}')">${label}${count?`<span class="fx-tab-count">${count}</span>`:''}</button>`;
-  return `<div class="tx-nav-tabs" role="tablist" aria-label="Transaction views">${tab('all','All')}${tab('review','To Review',rc)}${tab('prebas','Monthly check',pbc)}</div>`;
+  const mcDue=mcIsDue()&&pbc>0;
+  const tab=(id,label,count,countSuffix)=>{
+    const badge=count?`<span class="fx-tab-count${countSuffix?' fx-tab-count-unseen':''}">${count}${countSuffix?` ${countSuffix}`:''}</span>`:'';
+    return `<button type="button" role="tab" class="tx-nav-tab${S.tab===id?' act':''}" aria-selected="${S.tab===id}" onclick="setTab('${id}')">${label}${badge}</button>`;
+  };
+  const mcTab=`<button type="button" role="tab" class="tx-nav-tab${S.tab==='prebas'?' act':''}${mcDue?' mc-tab-due':''}" aria-selected="${S.tab==='prebas'}" onclick="setTab('prebas')">${mcDue?`<span class="mc-tab-due-dot" aria-hidden="true"></span>`:''}Monthly check${mcDue?`<span class="fx-tab-count mc-tab-due-badge">Due</span>`:pbc?`<span class="fx-tab-count">${pbc}</span>`:''}</button>`;
+  return `<div class="tx-nav-tabs" role="tablist" aria-label="Transaction views">${tab('all','All')}${tab('review','To Review',rc,'unseen')}${mcTab}</div>`;
 }
 function buildAllFilterViewsWrap(){
   return `
@@ -6063,7 +6202,8 @@ function buildReviewAttentionPanel(){
   const autoCt=automatchReviewCount();
   const sugCt=suggestionReviewCount();
   const readyCt=readyToVerifyCount();
-  if(!autoCt&&!sugCt&&!readyCt) return '';
+  const newCt=unseenAutomatchCount();
+  if(!autoCt&&!sugCt&&!readyCt&&!newCt) return '';
   const card=(count,title,sub,queue)=>!count?'':`
     <button type="button" class="tx-attn-card${S.revQueue===queue?' act':''}" onclick="setRevQueue('${queue}')">
       <span class="tx-attn-badge">${count}</span>
@@ -6073,10 +6213,23 @@ function buildReviewAttentionPanel(){
       </span>
       <span class="tx-attn-chev" aria-hidden="true">›</span>
     </button>`;
+  const newCard=!newCt?'':`
+    <div class="tx-attn-card tx-attn-card-new${S.revQueue==='new'?' act':''}">
+      <button type="button" class="tx-attn-card-main" onclick="setRevQueue('new')">
+        <span class="tx-attn-badge tx-attn-badge-pink">${newCt}</span>
+        <span class="tx-attn-body">
+          <span class="tx-attn-title">New auto-matched, unseen</span>
+          <span class="tx-attn-sub">The AI matched these since you last looked — worth a quick trust check.</span>
+        </span>
+        <span class="tx-attn-chev" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="tx-attn-mark-seen" onclick="markAllAutoMatchSeen(event)">Mark all as seen</button>
+    </div>`;
   return `
   <section class="tx-attn-panel" data-recon-target="review-attention" aria-label="Needs your attention">
     <h2 class="tx-attn-hd">Needs your attention</h2>
     <div class="tx-attn-cards">
+      ${newCard}
       ${card(readyCt,'Ready to verify','Pre-scored matches ranked by confidence — verify exceptions first, then work through the rest.','ready')}
       ${card(autoCt,'Auto matched transactions','Review and verify these transactions','automatch')}
       ${card(sugCt,'Transactions with match suggestions','Review and verify these transactions','suggestions')}
@@ -6227,16 +6380,6 @@ function buildTabs(){
 /* ═══════════════════════════════════════════════
    ALL TAB
 ═══════════════════════════════════════════════ */
-function reconTodoCounts(){
-  const inbox=reviewInboxList();
-  const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
-  const receipts=reconReceiptReviewList(inbox).filter(bankOk).length;
-  const bas=preBasList().filter(bankOk).length;
-  const suggestedRules=S.rules.filter(r=>r.suggested&&r.active!==false).length;
-  const learnedPatterns=S.memory.filter(m=>m.source==='learned'&&m.active).length;
-  const patterns=suggestedRules+learnedPatterns;
-  return {receipts,bas,patterns};
-}
 function reconTodoScrollTo(target){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     const scrollRoot=document.querySelector('.main');
@@ -6246,76 +6389,63 @@ function reconTodoScrollTo(target){
     scrollRoot.scrollTo({top:Math.max(0,top),behavior:'smooth'});
   }));
 }
-function reconTodoScrollToFirstRow(){
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    const scrollRoot=document.querySelector('.main');
-    const row=document.querySelector('.rev-mod-row.is-focus');
-    if(!row||!scrollRoot) return;
-    const top=row.getBoundingClientRect().top-scrollRoot.getBoundingClientRect().top+scrollRoot.scrollTop-80;
-    scrollRoot.scrollTo({top:Math.max(0,top),behavior:'smooth'});
-  }));
+/* Per-account "reconcile" cards — Figma ToDoCardsV3 (Dashboard-Activity-Feed-2.0, node 8088:78076),
+   one card per bank account instead of one combined card, each showing the 3 main monthly-check
+   steps scoped to that account. */
+function goPreBasForBank(bankId,stepId){
+  S.bankFilter=bankId;
+  S.acctMenuOpen=false;S.acctMenuFrom=null;
+  S.page='main';S.tab='prebas';
+  S.mcTransition=null;
+  S.mcActive=!!stepId;
+  if(stepId) S.mcStep=mcStepIndex(stepId);
+  closeAside();render();
 }
-function reconTodoReview(kind){
-  if(kind==='receipts'){
-    S.page='main';S.tab='review';S.revFilters=new Set(['receiptmatch']);S.revFilter='receiptmatch';S.reviewView='modern';S.reconReceiptFocus=true;S.reviewSel=new Set();S.revFilterMenuOpen=false;S.revQueue='suggestions';S.revMatchFilters=new Set(['all']);closeAside();render();
-    reconTodoScrollTo('review-list');
-    reconTodoScrollToFirstRow();
-  }else if(kind==='bas'){
-    goPreBas('adjustments');
-  }else if(kind==='patterns'){
-    S.memFilter='all';
-    S.page='settings';S.stgSection='all';S.ruleWiz=null;S.asideId=null;S.hubSection=null;closeAside();render();
-    reconTodoScrollTo('stg-patterns');
-  }
-}
-function buildReconTodoCard({icoCls,icoSvg,title,sub,action}){
+const ACCT_REC_BANK_ICO=`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l7-4 7 4"/><rect x="3" y="7" width="12" height="7"/><line x1="1.5" y1="15.5" x2="16.5" y2="15.5"/><line x1="5" y1="9" x2="5" y2="12.5"/><line x1="9" y1="9" x2="9" y2="12.5"/><line x1="13" y1="9" x2="13" y2="12.5"/></svg>`;
+const ACCT_REC_ARROW_ICO=`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg>`;
+function buildAccountRecCard(bank){
+  const rows=[
+    {count:mcListFor('receipts',bank.id).length,     label:'Transactions are missing receipts',       step:'receipts'},
+    {count:mcListFor('unmatched',bank.id).length,     label:'Transactions need matching and coding',   step:'unmatched'},
+    {count:mcListFor('adjustments',bank.id).length,   label:'Tax codes need confirming',               step:'adjustments'},
+  ].filter(r=>r.count>0);
+  const allClear=!rows.length;
   return `
-  <div class="recon-todo-card" role="listitem">
-    <div class="recon-todo-ico ${icoCls}" aria-hidden="true">${icoSvg}</div>
-    <div class="recon-todo-body">
-      <div class="recon-todo-title">${title}</div>
-      <div class="recon-todo-sub">${sub}</div>
-    </div>
-    <div class="recon-todo-act">
-      <button type="button" class="recon-todo-btn" onclick="event.stopPropagation();reconTodoReview('${action}')">Review</button>
+  <div class="acct-rec-card${allClear?' is-clear':''}">
+    <div class="acct-rec-ico" aria-hidden="true">${ACCT_REC_BANK_ICO}</div>
+    <div class="acct-rec-mid">
+      <div class="acct-rec-top">
+        <div class="acct-rec-content">
+          <div class="acct-rec-title-row">
+            <span class="acct-dot" style="background:${bank.dot}"></span>
+            <span class="acct-rec-title">${bank.label}</span>
+          </div>
+          <p class="acct-rec-desc">${allClear?'✓ All caught up — nothing outstanding this month.':'Confirm these before your next reconciliation.'}</p>
+        </div>
+        <div class="acct-rec-actions">
+          <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="goPreBasForBank('${bank.id}')">Reconcile</button>
+        </div>
+      </div>
+      ${rows.length?`
+      <div class="acct-rec-tasks">
+        ${rows.map(r=>`
+        <button type="button" class="acct-rec-task" onclick="goPreBasForBank('${bank.id}','${r.step}')">
+          <span class="acct-rec-task-left">
+            <span class="acct-rec-badge">${r.count}</span>
+            <span class="acct-rec-task-label">${r.label}</span>
+          </span>
+          <span class="acct-rec-arrow" aria-hidden="true">${ACCT_REC_ARROW_ICO}</span>
+        </button>`).join('')}
+      </div>`:''}
     </div>
   </div>`;
 }
 function buildReconTodo(){
-  const {receipts,bas,patterns}=reconTodoCounts();
-  if(!receipts&&!bas&&!patterns) return '';
-  const cards=[];
-  if(receipts){
-    cards.push(buildReconTodoCard({
-      icoCls:'recon-todo-ico--receipt',
-      icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h10a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V5a2 2 0 0 1 2-2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>',
-      title:`${receipts} new receipt${receipts!==1?'s':''} matched to your transactions in the bank feed`,
-      sub:'We\'ve derived enough from these matches to suggest records or categories.',
-      action:'receipts',
-    }));
-  }
-  if(bas){
-    cards.push(buildReconTodoCard({
-      icoCls:'recon-todo-ico--bas',
-      icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>',
-      title:`${bas} tax code${bas!==1?'s':''} the AI wants you to confirm`,
-      sub:'Part of this month\'s guided check-in before BAS.',
-      action:'bas',
-    }));
-  }
-  if(patterns){
-    cards.push(buildReconTodoCard({
-      icoCls:'recon-todo-ico--pattern',
-      icoSvg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.4 4.3H18l-3.6 2.6 1.4 4.3L12 11.6 8.2 14.2l1.4-4.3L6 7.3h4.6L12 3z"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/></svg>',
-      title:`${patterns} pattern${patterns!==1?'s':''} you could turn into rules`,
-      sub:'Approve patterns to auto-match similar transactions later.',
-      action:'patterns',
-    }));
-  }
+  const accounts=S.bankFilter==='all'?BANKS.filter(b=>b.id!=='all'):BANKS.filter(b=>b.id===S.bankFilter);
   return `
-  <section class="recon-todo-wrap" aria-label="Reconciliation tasks">
+  <section class="acct-rec-wrap" aria-label="Reconcile your bank accounts">
     <h2 class="recon-todo-hd">Reconcile your bank accounts</h2>
-    <div class="recon-todo-stack" role="list">${cards.join('')}</div>
+    <div class="acct-rec-grid">${accounts.map(buildAccountRecCard).join('')}</div>
   </section>`;
 }
 function buildFilterBar(){
@@ -6738,6 +6868,7 @@ function buildAllTableRow(tx,sel=S.allSel){
   return `
   <tr class="${rowCls}" data-tx-pane-id="${tx.id}" onclick="selectTxPaneRow(${tx.id},'all','matches',event)">
     <td class="col-chk" data-col="chk" onclick="event.stopPropagation()"><input type="checkbox" ${sel.has(tx.id)?'checked':''} onclick="event.stopPropagation();toggleAllSel(${tx.id})"></td>
+    <td class="col-src" data-col="src">${buildAllSourceCell(tx)}</td>
     <td class="col-date" data-col="date">${tx.date}</td>
     <td class="col-tx" data-col="tx">${buildAllTxCell(tx)}</td>
     <td class="col-amt r" data-col="amt"><span class="all-amt-main ${amtCls}">${fmt(tx.amount)}</span></td>
@@ -6753,6 +6884,7 @@ function buildAllTableHeadCells(list=[]){
   const chk=ids.length?`<input type="checkbox" ${ids.every(id=>S.allSel.has(id))?'checked':''} onclick="toggleAllSelAll(${JSON.stringify(ids)},event)">`:`<input type="checkbox" disabled>`;
   return `
     ${thResize('all','chk',chk,'col-chk')}
+    ${thResize('all','src','Source','col-src')}
     ${thResize('all','date',`Date${colSortIndicator('all','date')}`,'col-date')}
     ${thResize('all','tx',`Bank transaction${colSortIndicator('all','tx')}`,'col-tx')}
     ${thResize('all','amt',`Amount ($)${colSortIndicator('all','amt')}`,'col-amt r')}
@@ -6766,7 +6898,7 @@ function buildAllTableHeadRow({sticky=false,list=[]}={}){
   return `<tr${sticky?'':' data-scroll-table-head'}>${buildAllTableHeadCells(list)}</tr>`;
 }
 function buildAllTableHeadHtml(list=[]){
-  const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
+  const allCols=['chk','src','date','tx','amt','gst','job','att','match','left'];
   return `
   <div class="scroll-ctx-tbl-wrap scroll-ctx-all-tbl-wrap all-tbl-v2-wrap">
     <table class="all-tbl-v2 scroll-ctx-all-tbl">
@@ -6799,12 +6931,12 @@ function bindAllTableHeadSync(){
 }
 function buildAllTableBodyRows(list){
   if(!list.length){
-    return `<tr><td colspan="9" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`;
+    return `<tr><td colspan="10" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`;
   }
   return list.map(tx=>buildAllTableRow(tx)).join('');
 }
 function buildAllTablePaneHtml(list){
-  const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
+  const allCols=['chk','src','date','tx','amt','gst','job','att','match','left'];
   return `
     <div class="all-tbl-v2-wrap">
       <table class="all-tbl-v2">
@@ -6907,6 +7039,15 @@ function bulkAllRejectSuggestions(){
     undo:()=>{snapshots.forEach(s=>restoreTx(s));render();},
   });
 }
+function buildBulkFloatBar({countLabel,actions,onClear,ariaLabel='Bulk actions'}){
+  return `
+  <div class="bulk-float-bar" role="region" aria-label="${ariaLabel}" onclick="event.stopPropagation()">
+    <span class="bulk-float-count">${countLabel}</span>
+    <div class="bulk-float-sp" aria-hidden="true"></div>
+    <div class="bulk-float-actions">${actions}</div>
+    ${onClear?`<div class="bulk-float-sep" aria-hidden="true"></div><button type="button" class="bulk-float-close" onclick="${onClear}" aria-label="Clear selection">✕</button>`:''}
+  </div>`;
+}
 function buildAllBulkCatMenu(){
   return `<div class="all-filter-menu all-bulk-cat-menu" role="listbox" onclick="event.stopPropagation()">
     ${ALL_BULK_CATS.map(c=>`<button type="button" class="all-filter-menu-item" role="option" onclick="bulkAllSetCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('')}
@@ -6915,36 +7056,45 @@ function buildAllBulkCatMenu(){
 function buildAllBulkPill(){
   const n=S.allSel.size;
   const catOpen=S.allBulkMenu==='cat';
-  return `
-  <div class="all-bulk-pill" role="region" aria-label="Bulk actions" onclick="event.stopPropagation()">
-    <span class="all-bulk-count">${n} selected</span>
-    <div class="all-bulk-sep" aria-hidden="true"></div>
-    <div class="all-bulk-actions">
-      <button type="button" class="fx-btn fx-btn-success fx-btn-sm" onclick="bulkAllAccept()">✓ Accept all</button>
+  return buildBulkFloatBar({
+    countLabel:`${n} transaction${n!==1?'s':''} selected`,
+    ariaLabel:'Bulk actions',
+    onClear:'clearAllSel()',
+    actions:`
+      <button type="button" class="fx-btn fx-btn-success fx-btn-sm" onclick="bulkAllAccept()">Accept all</button>
       <div class="all-filter-wrap">
         <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" aria-expanded="${catOpen}" aria-haspopup="listbox" onclick="toggleAllBulkMenu('cat',event)">
-          Categorise to… <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.5 5.5l3.5 3.5 3.5-3.5"/></svg>
+          Select category <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.5 5.5l3.5 3.5 3.5-3.5"/></svg>
         </button>
         ${catOpen?buildAllBulkCatMenu():''}
       </div>
       <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="bulkAllSetTax('GST')">Code to GST</button>
-      <button type="button" class="btn-rev-reject" onclick="bulkAllRejectSuggestions()">Reject all</button>
-    </div>
-    <div class="all-bulk-sep" aria-hidden="true"></div>
-    <button type="button" class="all-bulk-pill-close" onclick="clearAllSel()" aria-label="Clear selection">✕</button>
-  </div>`;
+      <button type="button" class="fx-btn fx-btn-neutral-ghost fx-btn-sm" onclick="bulkAllRejectSuggestions()">Reject all</button>`,
+  });
+}
+function buildReviewBulkFloatBar(opts={}){
+  const n=S.reviewSel.size;
+  const acceptAll=opts.acceptAll;
+  return buildBulkFloatBar({
+    countLabel:`${n} transaction${n!==1?'s':''} selected`,
+    ariaLabel:'Review bulk actions',
+    onClear:'clearRevSel()',
+    actions:acceptAll
+      ?`<button type="button" class="fx-btn fx-btn-success fx-btn-sm" onclick="bulkAcceptAll()">Accept all AI suggestions</button>`
+      :`<button type="button" class="fx-btn fx-btn-success fx-btn-sm" onclick="bulkAcceptReadyOnly()">Accept selected (ready only)</button>`,
+  });
 }
 function buildAllTab(){
   const list=tableFilteredTx();
   const sel=S.allSel;
   const paneOpen=shouldShowTxPaneSplit();
-  const allCols=['chk','date','tx','amt','gst','job','att','match','left'];
+  const allCols=['chk','src','date','tx','amt','gst','job','att','match','left'];
   const fullTable=`
     <div class="all-tbl-v2-wrap">
       <table class="all-tbl-v2">
         ${buildTableColgroup('all',allCols)}
         <thead>${buildAllTableHeadRow({list})}</thead>
-        <tbody>${list.length?list.map(tx=>buildAllTableRow(tx,sel)).join(''):`<tr><td colspan="9" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`}</tbody>
+        <tbody>${list.length?list.map(tx=>buildAllTableRow(tx,sel)).join(''):`<tr><td colspan="10" style="padding:48px 16px;text-align:center;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🔍</div><div style="font-weight:600;color:var(--text);margin-bottom:4px">No transactions match</div><div style="font-size:14px">Try adjusting the date range, source, or type filters — or click Reset.</div></td></tr>`}</tbody>
       </table>
     </div>`;
   const listPanel=paneOpen?buildTxPaneShell({
@@ -7305,15 +7455,18 @@ function buildReviewTableRowHtml(tx,sel){
   const colSpan=showReviewSourceCol()?8:7;
   return `
     <tr class="${rowCls}" data-tx-pane-id="${tx.id}" data-exit-id="${tx.id}" onclick="${rowLocked?'event.stopPropagation()':`selectTxPaneRow(${tx.id},'review','matches',event)`}" style="cursor:pointer;${exitStyle}">
-      <td class="col-chk" data-col="chk" style="padding:8px 12px" onclick="event.stopPropagation()">
+      <td class="col-chk" data-col="chk" style="padding:16px 12px" onclick="event.stopPropagation()">
         <input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple);cursor:pointer" ${sel.has(tx.id)?'checked':''} ${rowLocked?'disabled':''}
           onclick="event.stopPropagation();toggleRevSel(${tx.id})">
       </td>
-      ${showReviewSourceCol()?`<td class="col-src" data-col="src" style="text-align:center;padding:8px 10px">${srcIcon(tx.source,{bankId:tx.bank})}</td>`:''}
+      ${showReviewSourceCol()?`<td class="col-src" data-col="src" style="text-align:center;padding:16px 10px">${srcIcon(tx.source,{bankId:tx.bank})}</td>`:''}
       <td class="col-date" data-col="date" style="color:var(--muted);font-size:14px;white-space:nowrap">${tx.date}</td>
       <td class="col-tx" data-col="tx" style="position:relative">
         <div style="display:flex;align-items:flex-start;gap:10px">
-          <div class="tx-icon${tx.amount>0?' green':''}">${tx.desc.charAt(0).toUpperCase()}</div>
+          <div class="tx-icon-wrap">
+            <div class="tx-icon${tx.amount>0?' green':''}">${tx.desc.charAt(0).toUpperCase()}</div>
+            ${txIsUnseenAutomatch(tx)?`<button type="button" class="rev-unseen-dot" title="New auto-match — click to mark as seen" onclick="markAutoMatchSeen(${tx.id},event)"></button>`:''}
+          </div>
           <div style="min-width:0">
             <div class="tx-ref">${tx.ref||tx.desc}</div>
             <div class="tx-bank">${tx.desc}</div>
@@ -7559,12 +7712,6 @@ function buildReviewTab(){
     ),'review');
   const readyCount=filterCount('ready');
   const sel=S.reviewSel;
-  const bulkBar=sel.size>0?`
-    <div class="bulk-bar">
-      <span>${sel.size} selected</span>
-      <div class="bulk-sp"></div>
-      <button class="btn-bulk-ok" onclick="bulkAcceptReadyOnly()">✓ Accept selected (ready only)</button>
-    </div>`:'';
   const rows=filtered.length?filtered.map(tx=>{
     const isCtx=txHasChanged(tx);
     const isDone=txReviewDone(tx);
@@ -7576,15 +7723,18 @@ function buildReviewTab(){
     const exitStyle=`${revExitStyle(tx.id)}${revRejectStyle(tx.id)}`;
     return `
     <tr class="${rowCls}" data-exit-id="${tx.id}" onclick="${rowLocked?'event.stopPropagation()':`openAside(${tx.id},'review','matches')`}" style="cursor:pointer;${exitStyle}">
-      <td class="col-chk" data-col="chk" style="padding:8px 12px" onclick="event.stopPropagation()">
+      <td class="col-chk" data-col="chk" style="padding:16px 12px" onclick="event.stopPropagation()">
         <input type="checkbox" style="width:13px;height:13px;accent-color:var(--purple);cursor:pointer" ${sel.has(tx.id)?'checked':''} ${rowLocked?'disabled':''}
           onclick="event.stopPropagation();toggleRevSel(${tx.id})">
       </td>
-      ${showReviewSourceCol()?`<td class="col-src" data-col="src" style="text-align:center;padding:8px 10px">${srcIcon(tx.source,{bankId:tx.bank})}</td>`:''}
+      ${showReviewSourceCol()?`<td class="col-src" data-col="src" style="text-align:center;padding:16px 10px">${srcIcon(tx.source,{bankId:tx.bank})}</td>`:''}
       <td class="col-date" data-col="date" style="color:var(--muted);font-size:14px;white-space:nowrap">${tx.date}</td>
       <td class="col-tx" data-col="tx" style="position:relative">
         <div style="display:flex;align-items:flex-start;gap:10px">
-          <div class="tx-icon${tx.amount>0?' green':''}">${tx.desc.charAt(0).toUpperCase()}</div>
+          <div class="tx-icon-wrap">
+            <div class="tx-icon${tx.amount>0?' green':''}">${tx.desc.charAt(0).toUpperCase()}</div>
+            ${txIsUnseenAutomatch(tx)?`<button type="button" class="rev-unseen-dot" title="New auto-match — click to mark as seen" onclick="markAutoMatchSeen(${tx.id},event)"></button>`:''}
+          </div>
           <div style="min-width:0">
             <div class="tx-ref">${tx.ref||tx.desc}</div>
             <div class="tx-bank">${tx.desc}</div>
@@ -7636,7 +7786,6 @@ function buildReviewTab(){
   return `
   <div class="fade-in${S.txTableExpanded?' is-table-expanded':''}">
     ${buildReviewAttentionPanel()}
-    ${bulkBar}
     ${revFilterIsReceiptMatchFocus()&&filtered.length?`
     <div class="rev-focus-banner" role="status">
       <span aria-hidden="true">📎</span>
@@ -7651,8 +7800,9 @@ function buildReviewTab(){
     </div>
     ${readyCount&&!paneOpen?`
     <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:8px">
-      <button class="btn-bulk-ok" onclick="bulkAcceptReadyOnly()">✓ Accept all ready (${readyCount})</button>
+      <button class="btn-bulk-ok" onclick="bulkAcceptReadyOnly()">Accept all ready (${readyCount})</button>
     </div>`:''}
+    ${sel.size?buildReviewBulkFloatBar():''}
   </div>`;
 }
 
@@ -7661,12 +7811,6 @@ function buildReviewTable(pending, ctxItems){
   if(!all.length) return `<div style="padding:48px;text-align:center;color:var(--muted)"><div style="font-size:32px;margin-bottom:8px">✓</div><div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px">All caught up</div><div>No transactions need review right now.</div></div>`;
   const sel=S.reviewSel;
   const allChk=all.length>0&&all.every(t=>sel.has(t.id));
-  const bulkBar=sel.size>0?`
-    <div class="bulk-bar">
-      <span>${sel.size} selected</span>
-      <div class="bulk-sp"></div>
-      <button class="btn-bulk-ok" onclick="bulkAcceptAll()">✓ Accept all AI suggestions</button>
-    </div>`:'';
 
   function aiTd(tx, field){
     const f=tx.ai[field];
@@ -7721,7 +7865,7 @@ function buildReviewTable(pending, ctxItems){
   }).join('');
 
   return `
-  ${bulkBar}
+  ${sel.size?buildReviewBulkFloatBar({acceptAll:true}):''}
   <div class="rtbl-card">
     <div class="rtbl-w">
       <table style="width:100%;border-collapse:collapse;font-size:15px">
@@ -9236,43 +9380,84 @@ function buildActivityPage(){
 }
 
 /* ═══════════════════════════════════════════════
-   MONTHLY CHECK — a guided wizard that ladders unmatched transactions,
-   missing receipts, AI-flagged anomalies, and recommended tax adjustments
-   up to a bank reconciliation, so BAS/EOFY prep needs no separate pass.
+   MONTHLY CHECK — a guided wizard covering the 3 things that need doing before
+   a reconciliation: receipts attached, transactions matched/coded, and tax codes
+   confirmed. AI-flagged anomalies aren't a separate step — they're surfaced inline
+   wherever the affected transaction already lands. Ladders up to a bank
+   reconciliation, so BAS/EOFY prep needs no separate pass.
 ═══════════════════════════════════════════════ */
 const MC_STEPS=[
-  {id:'unmatched',   label:'Unmatched transactions',      icon:'🔗', desc:"Match these to an existing MYOB record, or create a new one, so the AI has the context it needs."},
-  {id:'receipts',    label:'Missing receipts',            icon:'🧾', desc:'Attach a receipt so the AI can extract the details and code it correctly.'},
-  {id:'anomalies',   label:'Anomalies',                   icon:'⚡', desc:'New information changed something the AI had already coded — give these a second look.'},
-  {id:'adjustments', label:'AI-recommended adjustments',  icon:'✦', desc:"Confirm the tax codes the AI is recommending before they flow into your BAS."},
-  {id:'reconcile',   label:'Reconciliation check',        icon:'⚖️', desc:'MYOB reconciles your bank feed automatically — you only need to look at genuine exceptions.'},
+  {id:'receipts',    label:'Missing receipts',       icon:'🧾', desc:'Attach a receipt — or confirm one the AI already found — so it can extract the details and code it correctly.'},
+  {id:'unmatched',   label:'Unmatched transactions', icon:'🔗', desc:"Match these to an existing MYOB record, or create a new one, so the AI has the context it needs."},
+  {id:'adjustments', label:'Tax codes',              icon:'✦', desc:"Confirm the tax codes and categories the AI is recommending — including anything it flagged after new information came in."},
+  {id:'reconcile',   label:'Reconciliation check',   icon:'⚖️', desc:'MYOB reconciles your bank feed automatically — you only need to look at genuine exceptions.'},
 ];
+const MC_TRANSITION_COPY={
+  'receipts>unmatched':"Because you added receipts, the AI has clearer details to work with — it's re-checking suggested matches for the next step.",
+  'unmatched>adjustments':"Now that those transactions are matched, the AI is recalculating which tax codes and categories still need confirming.",
+  'adjustments>reconcile':"With coding confirmed, the AI is re-running your reconciliation to see what's left to explain.",
+};
 function mcStepIndex(id){const i=MC_STEPS.findIndex(s=>s.id===id);return i<0?0:i;}
-function mcListFor(stepId){
-  const bankOk=t=>S.bankFilter==='all'||t.bank===S.bankFilter;
+function mcListFor(stepId,bankId=S.bankFilter){
+  const bankOk=t=>bankId==='all'||t.bank===bankId;
   if(stepId==='unmatched') return TX.filter(t=>bankOk(t)&&t.status!=='awaiting'&&!txReviewIsMatched(t)&&!txReviewDone(t));
   if(stepId==='receipts') return TX.filter(t=>bankOk(t)&&t.amount<0&&t.status!=='accepted'&&dimStatus(t,'receipt')==='none');
-  if(stepId==='anomalies') return ctxList();
-  if(stepId==='adjustments') return preBasList().filter(bankOk);
+  if(stepId==='adjustments'){
+    const base=preBasList().filter(bankOk);
+    // Anomalies (AI-flagged after new info arrived) fold into this step rather than needing their own —
+    // this catches any anomaly that isn't already surfaced via the GST/tax dimension above.
+    const extra=TX.filter(t=>bankOk(t)&&t.newContext&&!S.dismissedCtx.has(t.id)&&!base.some(b=>b.id===t.id));
+    return [...base,...extra];
+  }
   return [];
 }
-function mcReconcileVarianceAccounts(){
-  return BANKS.filter(b=>b.id!=='all'&&Math.abs(b.bal-(b.myobBal??b.bal))>=0.01);
+function mcKindForTx(tx){
+  if(mcListFor('receipts').some(t=>t.id===tx.id)) return 'receipts';
+  if(mcListFor('unmatched').some(t=>t.id===tx.id)) return 'unmatched';
+  return 'adjustments';
+}
+function mcOutstandingIds(bankId=S.bankFilter){
+  const ids=new Set();
+  ['receipts','unmatched','adjustments'].forEach(id=>mcListFor(id,bankId).forEach(t=>ids.add(t.id)));
+  return ids;
+}
+function mcOutstandingTx(bankId=S.bankFilter){
+  const ids=mcOutstandingIds(bankId);
+  return TX.filter(t=>ids.has(t.id));
+}
+function mcOutstandingAmount(bankId=S.bankFilter){
+  return mcOutstandingTx(bankId).reduce((s,t)=>s+Math.abs(t.amount),0);
+}
+function mcAccountsNeedingRecon(){
+  return BANKS.filter(b=>b.id!=='all'&&mcOutstandingTx(b.id).length>0);
 }
 function mcCount(stepId){
-  return stepId==='reconcile'?mcReconcileVarianceAccounts().length:mcListFor(stepId).length;
+  return stepId==='reconcile'?mcAccountsNeedingRecon().length:mcListFor(stepId).length;
 }
-function mcTotalCount(){return MC_STEPS.reduce((sum,s)=>sum+mcCount(s.id),0);}
-function mcStart(stepIndex){S.mcActive=true;S.mcStep=typeof stepIndex==='number'?stepIndex:0;render();}
-function mcExit(){S.mcActive=false;render();}
-function mcGoStep(i){S.mcStep=i;render();}
-function mcPrev(){if(S.mcStep>0){S.mcStep--;render();}}
+function mcTotalCount(){
+  return ['receipts','unmatched','adjustments'].reduce((sum,id)=>sum+mcListFor(id).length,0);
+}
+function mcIsDue(){return !!S.mcDue;}
+function mcStart(stepIndex){S.mcActive=true;S.mcStep=typeof stepIndex==='number'?stepIndex:0;S.mcTransition=null;render();}
+function mcExit(){S.mcActive=false;S.mcTransition=null;render();}
+function mcGoStep(i){S.mcTransition=null;S.mcStep=i;render();}
+function mcPrev(){if(S.mcStep>0){S.mcTransition=null;S.mcStep--;render();}}
 function mcNext(){
   if(S.mcStep>=MC_STEPS.length-1){mcFinish();return;}
-  S.mcStep++;render();
+  const from=MC_STEPS[S.mcStep].id;
+  const to=MC_STEPS[S.mcStep+1].id;
+  S.mcTransition={from,to};
+  render();
+  setTimeout(()=>{
+    if(!S.mcTransition||S.mcTransition.from!==from) return; // exited/jumped away mid-transition
+    S.mcTransition=null;
+    S.mcStep++;
+    render();
+  },1500);
 }
 function mcFinish(){
   S.mcActive=false;
+  S.mcTransition=null;
   showToast('✓ Monthly check complete — nice work!',3200);
   render();
 }
@@ -9294,9 +9479,51 @@ function mcAcceptTax(txId,ev){
     undo:()=>{restoreTx(snapshot);render();},
   });
 }
+function mcAcceptSuggestedReceipt(txId,ev){
+  if(ev) ev.stopPropagation();
+  const tx=ftx(txId); if(!tx||!tx.ai.file?.val) return;
+  const fileName=tx.ai.file.val;
+  const prevAttach=tx.attach;
+  const prevSt=tx.ai.file.st;
+  const amt=Math.abs(tx.amount);
+  const atts=ATTACH_DATA[txId]?[...ATTACH_DATA[txId]]:[];
+  atts.push({
+    id:`att-${txId}-mc-${Date.now()}`,
+    name:fileName,
+    vendor:revModPartyName(tx),
+    extractedAmt:amt,
+    extractedGst:+(amt/11).toFixed(2),
+    extractedDate:tx.date,
+    extractedCat:tx.ai.cat?.val||'',
+    extractedTax:tx.ai.tax?.val||'GST',
+    invoiceRef:tx.ai.match?.val||null,
+    confidence:tx.ai.file.conf||85,
+    fields:['vendor','amount','date','gst'],
+    isNew:true,
+  });
+  ATTACH_DATA[txId]=atts;
+  tx.attach=atts.length;
+  tx.ai.file.st='accepted';
+  render();
+  showSuccessToast({
+    title:'Receipt added',
+    message:`${fileName} linked to ${revModPartyName(tx)}`,
+    undo:()=>{
+      ATTACH_DATA[txId]=atts.slice(0,-1);
+      if(!ATTACH_DATA[txId].length) delete ATTACH_DATA[txId];
+      tx.attach=prevAttach;
+      tx.ai.file.st=prevSt;
+      render();
+    },
+  });
+}
+function mcViewAllLink(){
+  return `<div class="mc-viewall"><button type="button" class="mc-viewall-link" onclick="goTransactions()">View all transactions →</button></div>`;
+}
 function buildMcRow(tx,kind){
   const amtCls=tx.amount<0?'amt-neg':'amt-pos';
   const tab=kind==='unmatched'?'matches':'create';
+  const isAnomaly=txHasChanged(tx);
   let right='';
   if(kind==='unmatched'){
     right=tx.ai.match?.val
@@ -9304,60 +9531,132 @@ function buildMcRow(tx,kind){
       :`<div class="mc-row-sug muted">No suggestion yet</div>`;
     right+=`<button type="button" class="mc-row-btn" onclick="mcReviewTx(${tx.id},'${tab}',event)">Review</button>`;
   }else if(kind==='receipts'){
-    right=`<button type="button" class="mc-row-btn" onclick="event.stopPropagation();openInlineAttach(${tx.id})">+ Add receipt</button>`;
-  }else if(kind==='anomalies'){
-    const rev=txRevisionValues(tx,'cat')||txRevisionValues(tx,'tax')||txRevisionValues(tx,'match');
-    right=rev?revRevisionHtml(rev.oldVal,rev.newVal):`<div class="mc-row-sug muted">Receipt just linked</div>`;
-    right+=`<button type="button" class="mc-row-btn" onclick="mcReviewTx(${tx.id},'${tab}',event)">Review</button>`;
+    const suggested=tx.ai.file?.val;
+    right=suggested
+      ?`<div class="mc-row-sug">✦ AI found <strong>${suggested}</strong></div><button type="button" class="mc-row-btn success" onclick="mcAcceptSuggestedReceipt(${tx.id},event)">Use this receipt</button>`
+      :`<div class="mc-row-sug muted">No receipt yet</div>`;
+    right+=`<button type="button" class="mc-row-btn" onclick="event.stopPropagation();openInlineAttach(${tx.id})">+ Add receipt</button>`;
   }else if(kind==='adjustments'){
     right=`<div class="mc-row-sug">AI suggests <strong>${tx.ai.tax.val||'—'}</strong> <span class="muted">${tx.ai.tax.conf||0}%</span></div>
       <button type="button" class="mc-row-btn success" onclick="mcAcceptTax(${tx.id},event)">Accept</button>
       <button type="button" class="mc-row-btn" onclick="mcReviewTx(${tx.id},'${tab}',event)">Review</button>`;
   }
+  // Anomalies don't get their own step — flag them inline, wherever they land, with what changed.
+  if(isAnomaly){
+    const rev=txRevisionValues(tx,'cat')||txRevisionValues(tx,'tax')||txRevisionValues(tx,'match');
+    if(rev) right=revRevisionHtml(rev.oldVal,rev.newVal)+right;
+  }
   return `
-  <div class="mc-row" onclick="mcReviewTx(${tx.id},'${tab}',event)">
+  <div class="mc-row${isAnomaly?' mc-row-anomaly':''}" onclick="mcReviewTx(${tx.id},'${tab}',event)">
     <div class="mc-row-main">
-      <div class="mc-row-title">${tx.desc}</div>
+      <div class="mc-row-title-line">
+        <span class="mc-row-title">${tx.desc}</span>
+        ${isAnomaly?`<span class="mc-anomaly-badge" title="The AI flagged this after new information came in">⚡ Anomaly</span>`:''}
+      </div>
       <div class="mc-row-sub">${tx.date} · <span class="${amtCls}">${fmt(tx.amount)}</span></div>
     </div>
     <div class="mc-row-right" onclick="event.stopPropagation()">${right}</div>
   </div>`;
 }
+function buildMcUnmatchedTable(list){
+  return `
+  <div class="all-tbl-v2-wrap">
+    <table class="all-tbl-v2">
+      ${buildTableColgroup('all',['chk','src','date','tx','amt','gst','job','att','match','left'])}
+      <thead>${buildAllTableHeadRow({list})}</thead>
+      <tbody>${list.map(tx=>buildAllTableRow(tx,new Set())).join('')}</tbody>
+    </table>
+  </div>`;
+}
 function buildMcReconcileStep(){
-  const accounts=BANKS.filter(b=>b.id!=='all');
+  const accounts=S.bankFilter==='all'?BANKS.filter(b=>b.id!=='all'):BANKS.filter(b=>b.id===S.bankFilter);
   const rows=accounts.map(b=>{
-    const myob=b.myobBal??b.bal;
-    const ok=Math.abs(b.bal-myob)<0.01;
+    const outstanding=mcOutstandingTx(b.id);
+    const amt=outstanding.reduce((s,t)=>s+Math.abs(t.amount),0);
+    const ok=!outstanding.length;
     return `
     <div class="mc-recon-row">
       <div class="mc-recon-acct"><span class="acct-dot" style="background:${b.dot}"></span>${b.label}</div>
-      <div class="mc-recon-vals">Bank ${fmtBankBal(b.bal)} <span class="mc-recon-sep">·</span> MYOB ${fmtBankBal(myob)}</div>
-      <span class="mc-recon-status ${ok?'ok':'warn'}">${ok?'✓ Reconciled':`Off by ${fmtBalVariance(b.bal,myob)}`}</span>
+      <div class="mc-recon-vals">Bank ${fmtBankBal(b.bal)} <span class="mc-recon-sep">·</span> MYOB ${fmtBankBal(b.myobBal??b.bal)}</div>
+      <span class="mc-recon-status ${ok?'ok':'warn'}">${ok?'✓ Reconciled':`${outstanding.length} item${outstanding.length!==1?'s':''} · ${fmtBankBal(amt)}`}</span>
     </div>`;
   }).join('');
-  const causes=mcListFor('unmatched').slice(0,3);
+  const causes=mcOutstandingTx().slice(0,4);
   return `
   <div class="mc-recon-wrap">
-    <div class="mc-recon-note">MYOB automatically matches and reconciles the vast majority of your bank activity. Once the items in the earlier steps are cleared, these balances should line up on their own — you're only checking for genuine exceptions here.</div>
+    <div class="mc-recon-note">MYOB automatically matches and reconciles the vast majority of your bank activity. This recalculates live as you clear the steps above — once everything's resolved, every account below reads $0 to explain.</div>
     <div class="mc-recon-accounts">${rows}</div>
     ${causes.length?`
     <div class="mc-recon-causes">
-      <div class="mc-recon-causes-hd">Likely causes of the difference</div>
-      <div class="mc-row-list">${causes.map(tx=>buildMcRow(tx,'unmatched')).join('')}</div>
+      <div class="mc-recon-causes-hd">Still outstanding</div>
+      <div class="mc-row-list">${causes.map(tx=>buildMcRow(tx,mcKindForTx(tx))).join('')}</div>
+      ${mcViewAllLink()}
     </div>`:''}
   </div>`;
 }
 function buildMcStepBody(step){
   if(step.id==='reconcile') return buildMcReconcileStep();
   const list=mcListFor(step.id);
-  if(!list.length) return `<div class="mc-empty">✓ Nothing here — all clear.</div>`;
-  return `<div class="mc-row-list">${list.map(tx=>buildMcRow(tx,step.id)).join('')}</div>`;
+  if(!list.length) return `<div class="mc-empty">✓ Nothing here — all clear.</div>${mcViewAllLink()}`;
+  if(step.id==='unmatched') return buildMcUnmatchedTable(list)+mcViewAllLink();
+  return `<div class="mc-row-list">${list.map(tx=>buildMcRow(tx,step.id)).join('')}</div>${mcViewAllLink()}`;
+}
+function buildMcAccountPicker(){
+  return `
+  <div class="mc-acct-picker" role="tablist" aria-label="Choose account to reconcile">
+    ${BANKS.map(b=>{
+      if(b.id==='all') return `<button type="button" class="mc-acct-pill${S.bankFilter===b.id?' act':''}" role="tab" aria-selected="${S.bankFilter===b.id}" onclick="setBankFilter('all')">${b.label}</button>`;
+      const ok=!mcOutstandingTx(b.id).length;
+      return `<button type="button" class="mc-acct-pill${S.bankFilter===b.id?' act':''}" role="tab" aria-selected="${S.bankFilter===b.id}" onclick="setBankFilter('${b.id}')">
+        <span class="mc-acct-pill-status ${ok?'ok':'warn'}" aria-hidden="true">${ok?'✓':'!'}</span>${b.label}
+      </button>`;
+    }).join('')}
+  </div>`;
+}
+function buildMcStartCta(){
+  return `
+  <div class="mc-start-wrap">
+    <button type="button" class="mc-start-btn" onclick="mcStart(0)">Get started</button>
+    <p class="mc-start-hint">Work through receipts, matches, tax codes and reconciliation in one guided check. Focus on a single bank account or all accounts — you can choose and switch during the flow.</p>
+  </div>`;
+}
+function mcOutOfSyncBanner(){
+  const count=mcOutstandingIds(S.bankFilter).size;
+  const amount=mcOutstandingAmount(S.bankFilter);
+  const dateStr=formatAusDate(new Date());
+  if(!count){
+    return `
+    <div class="mc-sync-banner mc-sync-ok">
+      <div class="mc-sync-title">✓ Your balances are in sync</div>
+      <div class="mc-sync-body">Nothing is causing a difference as at ${dateStr}. You're ready for BAS and EOFY whenever they come around.</div>
+    </div>`;
+  }
+  return `
+  <div class="mc-sync-banner mc-sync-warn">
+    <div class="mc-sync-title">⚠ Your balances are out of sync!</div>
+    <div class="mc-sync-body">${count} transaction${count!==1?'s':''} ${count!==1?'are':'is'} causing a ${fmtBankBal(amount)} difference as at ${dateStr}. Run the guided check to resolve them and keep your reports, BAS and smart insights accurate.</div>
+  </div>`;
+}
+function buildMcTransition(){
+  const t=S.mcTransition;
+  const fromStep=MC_STEPS[mcStepIndex(t.from)];
+  const copy=MC_TRANSITION_COPY[`${t.from}>${t.to}`]||"The AI is factoring in what you just changed before showing you the next step.";
+  return `
+  <div class="mc-page fade-in">
+    <div class="mc-transition">
+      <div class="mc-transition-spinner" aria-hidden="true"></div>
+      <div class="mc-transition-title">Updating AI context…</div>
+      <p class="mc-transition-body">${copy}</p>
+    </div>
+  </div>`;
 }
 function buildMcFlow(){
+  if(S.mcTransition) return buildMcTransition();
   const step=MC_STEPS[S.mcStep]||MC_STEPS[0];
   const isLast=S.mcStep===MC_STEPS.length-1;
   return `
   <div class="mc-page fade-in">
+    ${buildMcAccountPicker()}
     <div class="mc-flow-hd">
       <button type="button" class="mc-exit-btn" onclick="mcExit()">✕ Exit check</button>
       <div class="mc-stepper" role="tablist" aria-label="Monthly check steps">
@@ -9379,28 +9678,22 @@ function buildMcFlow(){
   </div>`;
 }
 function buildMcIntro(){
-  const steps=MC_STEPS.map(s=>({...s,count:mcCount(s.id)}));
-  const total=steps.reduce((sum,s)=>sum+s.count,0);
+  const due=mcIsDue();
   return `
   <div class="mc-page fade-in">
     <div class="mc-hero">
       <div class="mc-hero-kicker">Monthly check</div>
-      <h1 class="mc-hero-title">${total?`${total} item${total!==1?'s':''} need a look before BAS`:"You're all caught up"}</h1>
-      <p class="mc-hero-sub">MYOB reconciles your bank feed and prepares your BAS and EOFY figures automatically behind the scenes. Once a month, spend a few minutes clearing the exceptions below — the AI has already done the rest.</p>
-      ${total?`<button type="button" class="mc-start-btn" onclick="mcStart(0)">Start monthly check →</button>`
-        :`<div class="mc-alldone">✓ Nothing outstanding this month</div>`}
+      <div class="mc-state-toggle" role="group" aria-label="Preview check state">
+        <span class="mc-state-toggle-label">Preview:</span>
+        <button type="button" class="mc-state-btn${due?'':' act'}" onclick="S.mcDue=false;render()">Tracking</button>
+        <button type="button" class="mc-state-btn${due?' act':''}" onclick="S.mcDue=true;render()">Due</button>
+      </div>
+      <h1 class="mc-hero-title">${due?'Your monthly check is due':'Get in sync before BAS'}</h1>
+      <p class="mc-hero-sub">${due?"It's time to finalise this month — run the guided check to lock in your reconciled balance.":"Here's how your reconciliation is tracking so far this month. Nothing's due yet, but clearing items early makes the end-of-month check quick."}</p>
     </div>
-    <div class="mc-summary-grid">
-      ${steps.map((s,i)=>`
-      <div class="mc-summary-card${s.count?'':' is-clear'}" onclick="mcStart(${i})">
-        <div class="mc-summary-ico" aria-hidden="true">${s.icon}</div>
-        <div class="mc-summary-body">
-          <div class="mc-summary-title">${s.label}</div>
-          <div class="mc-summary-desc">${s.desc}</div>
-        </div>
-        <div class="mc-summary-count ${s.count?'':'ok'}">${s.count?s.count:'✓'}</div>
-      </div>`).join('')}
-    </div>
+    ${mcOutOfSyncBanner()}
+    ${buildMcStartCta()}
+    ${buildReconTodo()}
   </div>`;
 }
 function buildPreBasTab(){

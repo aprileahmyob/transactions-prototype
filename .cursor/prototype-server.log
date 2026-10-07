@@ -1,0 +1,47 @@
+
+> start
+> npx --yes serve -l 8765 .
+
+ INFO  Accepting connections at http://localhost:8765
+ INFO  Accepting connections at http://localhost:8765
+ HTTP  9/8/2026 1:13:24 PM ::1 GET /banking-screen
+ HTTP  9/8/2026 1:13:24 PM ::1 Returned 200 in 13 ms
+ HTTP  9/8/2026 1:14:48 PM ::1 GET /assets/receipt-officeworks.png
+ HTTP  9/8/2026 1:14:48 PM ::1 Returned 304 in 4 ms
+ HTTP  9/8/2026 1:14:55 PM ::1 GET /assets/receipt-officeworks.png
+ HTTP  9/8/2026 1:14:55 PM ::1 Returned 304 in 1 ms
+ HTTP  9/8/2026 1:15:34 PM ::1 GET /banking-screen
+ HTTP  9/8/2026 1:15:34 PM ::1 Returned 200 in 3 ms
+ HTTP  9/8/2026 1:15:35 PM ::1 GET /assets/source-icons/bank-cba.png
+ HTTP  9/8/2026 1:15:35 PM ::1 GET /assets/source-icons/bank-anz.png
+ HTTP  9/8/2026 1:15:35 PM ::1 GET /assets/source-icons/matched-link.svg
+ HTTP  9/8/2026 1:15:35 PM ::1 Returned 304 in 2 ms
+ HTTP  9/8/2026 1:15:35 PM ::1 Returned 304 in 2 ms
+ HTTP  9/8/2026 1:15:35 PM ::1 Returned 304 in 1 ms
+ HTTP  9/8/2026 1:15:35 PM ::1 GET /assets/source-icons/myob-mark.svg
+ HTTP  9/8/2026 1:15:35 PM ::1 Returned 304 in 1 ms
+ HTTP  9/11/2026 1:50:22 PM ::1 GET /banking-screen
+ HTTP  9/11/2026 1:50:22 PM ::1 Returned 200 in 108 ms
+ HTTP  9/11/2026 1:50:22 PM ::1 GET /assets/source-icons/bank-cba.png
+ HTTP  9/11/2026 1:50:22 PM ::1 Returned 304 in 4 ms
+ HTTP  9/11/2026 1:50:22 PM ::1 GET /assets/source-icons/bank-anz.png
+ HTTP  9/11/2026 1:50:22 PM ::1 GET /assets/source-icons/matched-link.svg
+ HTTP  9/11/2026 1:50:22 PM ::1 Returned 304 in 1 ms
+ HTTP  9/11/2026 1:50:22 PM ::1 GET /assets/source-icons/myob-mark.svg
+ HTTP  9/11/2026 1:50:22 PM ::1 Returned 304 in 7 ms
+ HTTP  9/11/2026 1:50:22 PM ::1 Returned 304 in 2 ms
+ HTTP  9/11/2026 1:51:22 PM ::1 GET /assets/source-icons/bank-anz.png
+ HTTP  9/11/2026 1:51:22 PM ::1 Returned 304 in 4 ms
+ HTTP  9/11/2026 1:52:38 PM ::1 GET /assets/source-icons/bank-anz.png
+ HTTP  9/11/2026 1:52:38 PM ::1 GET /assets/source-icons/matched-link.svg
+ HTTP  9/11/2026 1:52:38 PM ::1 Returned 304 in 9 ms
+ HTTP  9/11/2026 1:52:38 PM ::1 GET /assets/source-icons/myob-mark.svg
+ HTTP  9/11/2026 1:52:38 PM ::1 Returned 304 in 6 ms
+ HTTP  9/11/2026 1:52:38 PM ::1 Returned 304 in 2 ms
+ INFO  Accepting connections at http://localhost:8765
+ HTTP  10/7/2026 11:42:56 AM ::1 HEAD /banking-screen
+ HTTP  10/7/2026 11:42:56 AM ::1 Returned 200 in 21 ms
+ HTTP  10/7/2026 11:42:56 AM ::1 GET /banking-screen
+ HTTP  10/7/2026 11:42:56 AM ::1 Returned 200 in 1 ms
+ HTTP  10/7/2026 11:43:17 AM ::1 GET /banking-screen
+ HTTP  10/7/2026 11:43:17 AM ::1 Returned 200 in 1 ms
